@@ -38,3 +38,7 @@ body {
 .ck-editor__editable {
     height: 70vh;
 }
+
+.table, .table td, .table th {
+    text-align: center;
+}

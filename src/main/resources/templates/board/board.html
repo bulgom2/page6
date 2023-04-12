@@ -11,9 +11,15 @@
             <hr class="my-4">
             <div th:text="'작성자: ' + '${board.writer}' + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}">게시물 정보</div>
         </div>
-            <div class="card">
-                <div class="card-body" th:utext="${board.content}">게시물 내용</div>
-            </div>
+        <div class="card">
+            <div class="card-body" th:utext="${board.content}">게시물 내용</div>
+        </div>
+
+        <br><br>
+
+        <!-- 댓글 영역 시작 -->
+        <div th:replace="board/comment::#comment"></div>
+        <!-- 댓글 영역 끝 -->
 
 
     </div> <!-- /container -->
