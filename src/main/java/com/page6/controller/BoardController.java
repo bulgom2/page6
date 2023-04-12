@@ -1,6 +1,10 @@
 package com.page6.controller;
 
+import com.page6.entity.Board;
+import com.page6.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,17 +13,37 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/")
-public class TestController {
+public class BoardController {
 
-    @GetMapping(value = "/write")
-    public String writeBoard() { return "board/write"; }
+    @Autowired
+    private BoardService boardService;
 
-    @GetMapping(value = "/view")
-    public String boardView() { return "board/view"; }
+    @GetMapping("/board/write") //localhost:8090/board/write
+    public String boardWriteForm(){
+
+        return "board/write";
+    }
+
+    @PostMapping("/board/write")
+    public String boardWritePro(Board board){
+
+        boardService.write(board);
+
+        return "board/list";
+    }
+
+//    @GetMapping("/board/list")
+//    public String boardList(Model model) {
+//        List<Board> boardList = boardService.getBoardList();
+//        model.addAttribute("boardList", boardList);
+//
+//        return "board/list";
+//    }
 
     @PostMapping(value = "/image/upload")
     public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
@@ -46,11 +70,11 @@ public class TestController {
         String realPath = request.getServletContext().getRealPath("/");
 
         // 현재경로/upload/파일명이 저장 경로
-        String savePath = realPath + "upload/" + newFileName;
+        String savePath = realPath + "/" + newFileName;
 
         // 브라우저에서 이미지 불러올 때 절대 경로로 불러오면 보안의 위험 있어 상대경로를 쓰거나 이미지 불러오는 jsp 또는 클래스 파일을 만들어 가져오는 식으로 우회해야 함
         // 때문에 savePath와 별개로 상대 경로인 uploadPath 만들어줌
-        String uploadPath = "./upload/" + newFileName;
+        String uploadPath = "./" + newFileName;
 
         // 저장 경로로 파일 객체 생성
         File file = new File(savePath);
@@ -64,4 +88,6 @@ public class TestController {
 
         return mav;
     }
+
 }
+
