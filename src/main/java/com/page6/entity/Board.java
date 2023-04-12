@@ -32,10 +32,10 @@ public class Board {
     private String content;   //본문
 
     @Column(name="BOARD_LIKE_COUNT", nullable = false, columnDefinition = "integer default 0")
-    private int like_count;
+    private int like_cnt;
 
     @Column(name="BOARD_VIEW_COUNT", nullable = false, columnDefinition = "integer default 0")
-    private int view_count;
+    private int view_cnt;
 
     @Column(name="BOARD_DELFL", nullable = false, columnDefinition = "bit(1) default 0")
     private boolean delete_flag;

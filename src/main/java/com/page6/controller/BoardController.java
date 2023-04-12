@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,22 +15,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = "/board")
 public class BoardController {
 
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/board/write") //localhost:8090/board/write
+    @GetMapping("/write") //localhost:8090/board/write
     public String boardWriteForm(){
 
         return "board/write";
     }
 
-    @PostMapping("/board/write")
+    @PostMapping("/write")
     public String boardWritePro(Board board){
 
         boardService.write(board);
@@ -37,14 +39,26 @@ public class BoardController {
         return "board/list";
     }
 
-//    @GetMapping("/board/list")
-//    public String boardList(Model model) {
-//        List<Board> boardList = boardService.getBoardList();
-//        model.addAttribute("boardList", boardList);
-//
-//        return "board/list";
-//    }
+    @GetMapping("/list")
+    public String boardList(Model model) {
+        List<Board> boardList = boardService.getBoardList();
+        model.addAttribute("boardList", boardList);
 
+        return "board/list";
+    }
+
+    //게시글 조회 페이지
+    @GetMapping("/{id}")
+    public String board(@PathVariable("id") long id, Model model) {
+        //조회수 기능
+        Optional<Board> result = boardService.BoardOne(id);
+        Board board = result.get();
+        model.addAttribute("board", board);
+//        log.info("board={}", board);
+        return "/board/board";
+    }
+
+    //이미지 오류 났을 시 write.html에서 uploadUrl에 '/image/upload' -> '/board/image/upload'
     @PostMapping(value = "/image/upload")
     public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
 
