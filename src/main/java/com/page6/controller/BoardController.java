@@ -27,16 +27,13 @@ public class BoardController {
 
     @GetMapping("/write") //localhost:8090/board/write
     public String boardWriteForm(){
-
         return "board/write";
     }
 
     @PostMapping("/write")
     public String boardWritePro(Board board){
-
         boardService.write(board);
-
-        return "board/list";
+        return "redirect:/board/" + board.getId();
     }
 
     @GetMapping("/list")

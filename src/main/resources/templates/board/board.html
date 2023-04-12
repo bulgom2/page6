@@ -1,52 +1,23 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="utf-8">-->
-<!--    <link th:href="@{/css/bootstrap.min.css}"-->
-<!--          href="../css/bootstrap.min.css" rel="stylesheet">-->
-<!--</head>-->
-<!--<body>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<div layout:fragment="content">
+    <!--  본문 영역 시작  -->
 
-<!--<div class="container" style="max-width: 1000px">-->
-<!--    <div class="py-5 text-center">-->
-<!--        <h2 th:text="#{page.boards}">글 목록</h2>-->
-<!--    </div>-->
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${board.title}">게시물 제목</h2>
+            <hr class="my-4">
+            <div th:text="'작성자: ' + '${board.writer}' + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}">게시물 정보</div>
+        </div>
+            <div class="card">
+                <div class="card-body" th:utext="${board.content}">게시물 내용</div>
+            </div>
 
-<!--    <div class="row">-->
-<!--        <div class="col">-->
-<!--            <button class="btn btn-primary float-end"-->
-<!--                    onclick="location.href='addForm.html'"-->
-<!--                    th:onclick="|location.href='@{/boards/add}'|"-->
-<!--                    type="button" th:text="#{page.addBoard}">글 등록</button>-->
-<!--        </div>-->
-<!--    </div>-->
 
-<!--    <hr class="my-4">-->
-<!--    <div>-->
-<!--        <table class="table">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th th:text="#{label.board.id}">ID</th>-->
-<!--                <th th:text="#{label.board.subject}">제목</th>-->
-<!--                <th th:text="#{label.board.name}">작성자</th>-->
-<!--                <th th:text="#{label.board.viewcnt}">조회수</th>-->
-<!--                <th th:text="#{label.board.regdate}">등록일</th>-->
+    </div> <!-- /container -->
 
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="board : ${boards}">-->
-<!--                <td><a href="item.html" th:href="@{/boards/{uid}(uid=${board.uid})}" th:text="${board.uid}">글 ID</a></td>-->
-<!--                <td><a href="item.html" th:href="@{/boards/{uid}(uid=${board.uid})}" th:text="${board.subject}">제목</a></td>-->
-<!--                <td th:text="${board.name}">작성자</td>-->
-<!--                <td th:text="${board.viewcnt}">조회수</td>-->
-<!--                <td th:text="${board.regdate}">등록일</td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-
-<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
-
-<!--</body>-->
-<!--</html>-->
+    <!--  본문 영역 끝  -->
+</div>
+</html>
