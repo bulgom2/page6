@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<div layout:fragment="content">
+  <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+
+  <div class="container-write">
+    <form action="/publishing" method="post" enctype="multipart/form-data">
+      <div id="content-view">
+        <div id="content-view-inner">
+          <input type="text" id="write-title" name="title" placeholder="글 제목" maxlength="30" style="width: 100%; max-width: 800px; border:none; outline: none; font-size:20px;"><hr>
+          <textarea id="editor" name="desc" placeholder="비디오 설명(1000자 이내)" maxlength="1000"></textarea><hr>
+          <input type="button" class="btn btn-secondary mt-3 mx-2" value="작성취소" />
+          <input type="submit" class="btn btn-primary mt-3 mx-2" value="작성완료" />
+          <hr><br><br>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+<!-- CKEditor -->
+  <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+  <script>
+    ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+              console.log('Editor was initialized');
+            })
+            .catch(error => {
+              console.error(error);
+            });
+  </script>
+</div>
+</html>
