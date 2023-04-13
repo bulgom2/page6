@@ -27,4 +27,11 @@ public class ApplicationTests {
         }
         System.out.println("테스트 끝");
     }
+
+//    @DisplayName("조회수 테스트")
+//    @Test
+//    void 조회수_테스트() {
+//        boardService.viewCntUpdate(2);
+//        System.out.println("테스트 끝");
+//    }
 }

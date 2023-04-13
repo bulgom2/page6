@@ -3,6 +3,7 @@ package com.page6.controller;
 import com.page6.entity.Board;
 import com.page6.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class BoardController {
     //게시글 조회 페이지
     @GetMapping("/{id}")
     public String board(@PathVariable("id") long id, Model model) {
-        //조회수 기능
+        boardService.viewCntUpdate(id);
         Optional<Board> result = boardService.BoardOne(id);
         Board board = result.get();
         model.addAttribute("board", board);
