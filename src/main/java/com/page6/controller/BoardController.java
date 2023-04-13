@@ -42,7 +42,7 @@ public class BoardController {
         List<Board> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
 
-        return "board/list";
+        return "board/galleryList";
     }
 
     //게시글 조회 페이지

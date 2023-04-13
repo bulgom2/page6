@@ -39,6 +39,20 @@ body {
     height: 70vh;
 }
 
-.table, .table td, .table th {
-    text-align: center;
+.card {
+    min-width: 350px;
+    max-width: 350px;
 }
+
+.card-deck > .card {
+    margin-bottom: 1rem;
+}
+
+.card-img-top {
+    min-width: 300px;
+}
+
+/*.table, .table td, .table th {*/
+/*    text-align: center;*/
+/*}*/
+
