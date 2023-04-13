@@ -2,25 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:fragment="header">
-  <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #679289;">
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/">PAGE6</a>
+<div class="header" th:fragment="header">
+  <nav class="navbar navbar-expand-sm navbar-dark ">
+<!--    <button class="navbar-toggler" type="button" data-toggle="collapse"-->
+<!--            data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"-->
+<!--            aria-expanded="false" aria-label="Toggle navigation">-->
+<!--      <span class="navbar-toggler-icon"></span>-->
+<!--    </button>-->
+<!--    <a class="navbar-brand" href="/">PAGE6</a>-->
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/members/login" sec:authorize="isAnonymous()">로그인</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/members/logout" sec:authorize="isAuthenticated()">로그아웃</a>
-        </li>
-      </ul>
+<!--    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">-->
+<!--      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">-->
+<!--        <li class="nav-item" id="login">-->
+<!--          <a class="nav-link" href="/members/login" sec:authorize="isAnonymous()">로그인</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" id="logout">-->
+<!--          <a class="nav-link" style="align:right;" href="/members/logout" sec:authorize="isAuthenticated()">로그아웃</a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+    <div class="header-content">
+<!--      <div class="noleft">-->
+
+      <div class="main-logo">
+        <a href="/"><img src="../../css/page6.png" id="logo-img"></a>
+      </div>
+
+      <div class="login-out">
+        <div class="login-btn"><a class="nav-link" href="/members/login" sec:authorize="isAnonymous()" style="font-size:25px; font-weight:900; color:#4F5E5A;">로그인</a></div>
+        <div class="logout-btn"><a class="nav-link" href="/members/logout" sec:authorize="isAuthenticated()" style="font-size:25px; font-weight:900; bolder; color:#4F5E5A;">로그아웃</a></div>
+      </div>
+
+<!--      </div>-->
     </div>
+
   </nav>
 </div>
 

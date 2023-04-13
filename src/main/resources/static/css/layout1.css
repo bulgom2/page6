@@ -6,6 +6,20 @@ html {
 body {
     min-height: 100%;
 }
+
+a {
+    text-align: center;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+a:hover{
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+.header {
+    /*background: linear-gradient( to top, white, #B2DBD1 );*/
+    height: 150px;
+}
 .footer {
     background-color: #292c2f;
     color: #8f9296;
@@ -50,6 +64,38 @@ body {
 
 .card-img-top {
     min-width: 300px;
+}
+
+/*.noleft {*/
+/*    line-height: 150px;*/
+/*    width: 50%;*/
+/*    float: right;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+
+.header-content {
+    width: 100%;
+    line-height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*.main-logo {*/
+/*    width:100px;*/
+/*}*/
+.login-btn, .login-out {
+    width: 200px;
+    text-align: right;
+    vertical-align:middle;
+}
+#logo-img {
+    width: 200px;
+    height: 112px;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 /*.table, .table td, .table th {*/
