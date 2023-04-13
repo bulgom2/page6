@@ -26,9 +26,9 @@ public class Comment {
     @JoinColumn(name = "BOARD_FK")
     private Board board;    // 작성 게시글
 
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_FK")
-//    private Member member; // 작성자
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_FK")
+    private Member member; // 작성자
 
     @Column(name="COMMENT_CONTENT", columnDefinition = "TEXT", nullable = false)
     private String comment; // 댓글 내용
@@ -38,5 +38,5 @@ public class Comment {
 
     @CreationTimestamp
     @Column(name="COMMENT_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime regdate;
+    private LocalDateTime regdate;  //등록일
 }

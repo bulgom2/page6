@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 
 @Entity
-@Table(name="member2")
+@Table(name="member")
 @Getter
 @Setter
 @ToString

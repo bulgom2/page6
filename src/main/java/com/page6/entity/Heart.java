@@ -18,9 +18,9 @@ public class Heart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;        //좋아요 인덱스
 
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="MEMBER_FK")
-//    private Member member;    //멤버
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="MEMBER_FK")
+    private Member member;    //댓글 작성자 id
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="BOARD_FK")

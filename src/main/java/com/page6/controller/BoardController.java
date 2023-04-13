@@ -4,6 +4,7 @@ import com.page6.entity.Board;
 import com.page6.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +27,13 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/write") //localhost:8090/board/write
     public String boardWriteForm(){
         return "board/write";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/write")
     public String boardWritePro(Board board){
         boardService.write(board);
