@@ -20,7 +20,7 @@
                     <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>
                     <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a>
                     </h4>
-                    <h5 class="card-text" th:text="'${board.writer}'">작성자</h5>
+                    <h5 class="card-text" th:text="${board.writer}">작성자</h5>
                     <p th:text="${board.view_cnt}">조회수</p>
                 </div>
                 <div class="card-footer">

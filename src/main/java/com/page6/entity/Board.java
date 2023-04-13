@@ -18,7 +18,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;        //게시글 인덱스
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOARD_WRITER")
     private Member member;  //작성자
 
