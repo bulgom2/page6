@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     MemberService memberService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+//        http.csrf().disable();
 
         http.formLogin()
                 .loginPage("/members/login")    //로그인페이지 url설정
@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/**", "/board/**").permitAll()
                 .mvcMatchers("/board/write", "/write").hasRole("USER")
-                .mvcMatchers("/board/write", "/write").access("hasRole('USER')")
                 .anyRequest().authenticated();
     }
 
