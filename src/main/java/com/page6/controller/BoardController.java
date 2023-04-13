@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/")
 public class BoardController {
 
     @Autowired
@@ -34,10 +34,10 @@ public class BoardController {
     @PostMapping("/write")
     public String boardWritePro(Board board){
         boardService.write(board);
-        return "redirect:/board/" + board.getId();
+        return "redirect:/" + board.getId();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/main")
     public String boardList(Model model) {
         List<Board> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);

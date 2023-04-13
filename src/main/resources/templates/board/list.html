@@ -24,8 +24,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="board : ${boardList}">
-                    <td><a href="item.html" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</a></td>
-                    <td style="width: 50%;"><a href="item.html" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a></td>
+                    <td><a href="item.html" th:href="@{/{id}(id=${board.id})}" th:text="${board.id}">글 ID</a></td>
+                    <td style="width: 50%;"><a href="item.html" th:href="@{/{id}(id=${board.id})}" th:text="${board.title}">제목</a></td>
                     <td th:text="'${board.writer}'">작성자</td>
                     <td th:text="${board.view_cnt}">조회수</td>
                     <td th:text="${board.regdate}">등록일</td>
@@ -38,8 +38,7 @@
 
 
         <button class="btn btn-primary float-end"
-                onclick="location.href='addForm.html'"
-                th:onclick="|location.href='@{/board/write}'|"
+                th:onclick="|location.href='@{/write}'|"
                 type="button">글 등록</button>
         <!--                        type="button" th:text="#{page.addBoard}">글 등록</button>-->
 
