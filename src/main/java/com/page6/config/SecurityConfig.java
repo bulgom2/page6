@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,16 +23,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage("/members/login")    //로그인페이지 url설정
-                .defaultSuccessUrl("/main")         //로그인성공시 이동할 url
+                .defaultSuccessUrl("/")         //로그인성공시 이동할 url
                 .usernameParameter("email")     //로그인성공시 파라미터 이름으로 email지정
                 .failureUrl("/members/login/error") //로그인실패시 이동할 url 설정
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")) //로그아웃url설정
-                .logoutSuccessUrl("/main"); //로그아웃 성공시 이동할 url 설정
+                .logoutSuccessUrl("/"); //로그아웃 성공시 이동할 url 설정
 
         http.authorizeRequests()
-                .mvcMatchers("/write").hasRole("USER");
+                .mvcMatchers("/", "/members/**", "/board/**").permitAll()
+                .mvcMatchers("/board/write", "/write").hasRole("USER")
+                .anyRequest().authenticated();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**");
     }
 
     @Bean

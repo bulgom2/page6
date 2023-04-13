@@ -34,10 +34,10 @@ public class BoardController {
     @PostMapping("/write")
     public String boardWritePro(Board board){
         boardService.write(board);
-        return "redirect:/" + board.getId();
+        return "redirect:/board/" + board.getId();
     }
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String boardList(Model model) {
         List<Board> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     //게시글 조회 페이지
-    @GetMapping("/{id}")
+    @GetMapping("/board/{id}")
     public String board(@PathVariable("id") long id, Model model) {
         boardService.viewCntUpdate(id);
         Optional<Board> result = boardService.BoardOne(id);
