@@ -35,7 +35,13 @@ public class BoardService {
     }
 
     //게시글 조회 시 하나 선택하는 기능
+//    public Optional<Board> BoardOne(long id) {
+//        return boardRepository.findById(id);
+//    }
+
     public Optional<Board> BoardOne(long id) {
+        Optional<Board> board = boardRepository.findById(id);
+
         return boardRepository.findById(id);
     }
 
