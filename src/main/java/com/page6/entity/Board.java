@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class Board {
+
+
     @Id
     @Column(name="BOARD_PK", nullable = false, updatable = false, insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
