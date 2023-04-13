@@ -13,7 +13,9 @@
 
         <div class="card-deck">
             <div class="card" th:each="board: ${boardList}">
-                <img src="../../css/garlic6.jpg" class="card-img-top" alt="...">
+<!--                <img class="card-img-top" th:if="${not #strings.isEmpty(board.image)}" th:src="${board.image}" alt="게시물 이미지">-->
+<!--                <img class="card-img-top" th:if="${#strings.isEmpty(board.image)}" src="" alt="이미지 없음">-->
+                <img src="../../css/garlic6.jpg" class="card-img-top" alt="garlic6">
                 <div class="card-body">
                     <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>
                     <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a>
@@ -26,32 +28,22 @@
                 </div>
             </div>
         </div>
-
-<!--        <div class="card-deck d-flex flex-wrap" th:each="board : ${boardList}">-->
-<!--            <div class="card" style="width: 350px;">-->
-<!--                <img src="C:\page6\src\main\resources\static\css\garlic6.jpg" class="card-img-top" alt="garlic6">-->
-<!--                <div class="card-body">-->
-<!--                    <p th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>-->
-<!--                    <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a>-->
-<!--                    </h4>-->
-<!--                    <p class="card-text" th:text="'${board.writer}'">작성자</p>-->
-<!--                    <p class="card-text" th:text="${board.view_cnt}">조회수</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <small class="text-muted" th:text="${board.regdate}">등록일</small>-->
-<!--                </div> &lt;!&ndash; card-footer end &ndash;&gt;-->
-<!--            </div> &lt;!&ndash; card end &ndash;&gt;-->
-<!--        </div> &lt;!&ndash; card-deck end &ndash;&gt;-->
-
     </div> <!-- /container -->
 
-        <hr class="my-4">
+    <hr class="my-4">
 
+    <div style="align-: center;">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="get" style="align-content: center;">
+            <input name="searchQuery" class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">검색</button>
+        </form>
+    </div>
+    <br>
 
-                <button class="btn btn-primary float-end"
-                        th:onclick="|location.href='@{/board/write}'|"
-                        type="button">글 등록</button>
-                <!--                        type="button" th:text="#{page.addBoard}">글 등록</button>-->
+    <button class="btn btn-primary float-end"
+            th:onclick="|location.href='@{/board/write}'|"
+            type="button">글 등록</button>
+                <!--type="button" th:text="#{page.addBoard}">글 등록</button>-->
 
     <!--  본문 영역 끝  -->
 </div>
