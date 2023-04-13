@@ -39,7 +39,7 @@ a:hover{
 }
 
 .container, .ck.ck-editor, .container-write {
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 .ck.ck-editor, .container-write {
@@ -54,8 +54,8 @@ a:hover{
 }
 
 .card {
-    min-width: 350px;
-    max-width: 350px;
+    min-width: 300px;
+    max-width: 300px;
 }
 
 .card-deck > .card {
@@ -63,7 +63,7 @@ a:hover{
 }
 
 .card-img-top {
-    min-width: 300px;
+    max-width: 295px;
 }
 
 /*.noleft {*/
