@@ -18,12 +18,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;        //게시글 인덱스
 
-//    @Column(name="BOARD_WRITER", nullable = false)
-//    private long writer;    //작성자 인덱스
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "BOARD_WRITER")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "BOARD_WRITER")
+    private Member member;  //작성자
 
     @Column(name="BOARD_TITLE", nullable = false)
     private String title;   //제목

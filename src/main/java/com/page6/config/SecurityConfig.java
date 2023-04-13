@@ -21,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     MemberService memberService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
+
         http.formLogin()
                 .loginPage("/members/login")    //로그인페이지 url설정
                 .defaultSuccessUrl("/")         //로그인성공시 이동할 url
