@@ -21,6 +21,16 @@
         <div th:replace="board/comment::#comment"></div>
         <!-- 댓글 영역 끝 -->
 
+        <!-- 버튼 영역 시작 -->
+        <button class="btn btn-primary float-end"
+                th:onclick="|location.href='@{/board/write}'|"
+                type="button">글쓰기</button>
+
+        <button class="btn btn-primary float-end"
+                th:onclick="|location.href='@{/board/list}'|"
+                type="button">목록</button>
+        <!-- 버튼 영역 끝 -->
+
 
     </div> <!-- /container -->
 
