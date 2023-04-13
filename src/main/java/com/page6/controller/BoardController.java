@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.data.domain.Page;
 
+import java.awt.print.Pageable;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +36,23 @@ public class BoardController {
         return "redirect:/board/" + board.getId();
     }
 
+//    @GetMapping("/")
+//    public String boardList(Model model) {
+//        List<Board> boardList = boardService.getBoardList();
+//        model.addAttribute("boardList", boardList);
+//
+//        return "board/galleryList";
+//    }
+
     @GetMapping("/")
-    public String boardList(Model model) {
+    public String boardList(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+        Page<Board> listPage = boardService.list(page);
+
+        int totalPage = listPage.getTotalPages();
+
+        model.addAttribute("board", listPage.getContent());
+        model.addAttribute("totalPage", totalPage);
+
         List<Board> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
 
@@ -55,6 +69,8 @@ public class BoardController {
 //        log.info("board={}", board);
         return "/board/board";
     }
+
+
 
     //이미지 오류 났을 시 write.html에서 uploadUrl에 '/image/upload' -> '/board/image/upload'
     @PostMapping(value = "/image/upload")
