@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Builder
 public class BoardDto {
-    public long id;            //게시글 인덱스
+    public Long id;            //게시글 인덱스
 
     public String writer;        // 작성자
 

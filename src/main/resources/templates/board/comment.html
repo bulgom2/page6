@@ -52,7 +52,8 @@
   <form method="post" action="/comment/add" sec:authorize="isAuthenticated()">
     <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    <input type="hidden" th:name="bid" th:value="${board.id}">
+<!--    <input type="hidden" th:name="bid" th:value="${board.id}">-->
+    <input type="text" th:name="bid" th:value="${board.id}">
     <div class="form-group d-flex">
       <textarea class="form-control" rows="3" placeholder="댓글을 입력하세요" th:name="content" required></textarea>
       <button type="submit" class="btn" style="width:150px; font-weight:500;">등록</button>
