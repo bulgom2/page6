@@ -21,7 +21,6 @@ public class CommentController {
     //댓글 등록
     @PostMapping("/add")
     public String commentAdd(CommentFormDto dto, Principal principal){
-//        dto.setBid(bid);
         dto.setWriter(principal.getName());
         dto.setDepth(0);
         dto.setGroup(0L);
