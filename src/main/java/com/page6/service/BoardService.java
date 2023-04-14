@@ -2,7 +2,9 @@ package com.page6.service;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
+import com.page6.entity.Member;
 import com.page6.repository.BoardRepository;
+import com.page6.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,12 @@ public class BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-    //저장 기능
-    public void write(Board board){
+    //글쓰기 저장 기능
+    public void write(Board board, String email){
+        board.setMember(memberRepository.findByEmail(email));
         boardRepository.save(board);
     }
 
@@ -40,10 +45,10 @@ public class BoardService {
 //        return boardRepository.findById(id);
 //    }
 
-    public Optional<Board> BoardOne(long id) {
+    //게시글 조회 시 하나 선택하는 기능
+    public BoardDto BoardOne(long id) {
         Optional<Board> board = boardRepository.findById(id);
-
-        return boardRepository.findById(id);
+        return BoardDto.of(board.get());
     }
 
     //게시물 조회수 증가
