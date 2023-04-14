@@ -53,6 +53,10 @@ public class Board {
         this.title = title;
         this.content = content;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
 }
 /*
 @Entity

@@ -13,21 +13,20 @@
         <div class="card">
           <ul class="list-group list-group-flush" style="max-width: 100%; min-width: 100%;">
             <!-- 댓글 리스트 반복문 시작 -->
-            <li class="list-group-item">
-              <!--            <li class="list-group-item" th:each="comment : ${commentList}">-->
+            <li class="list-group-item" th:each="comment : ${commentList}">
               <h5 class="card-title">
-                <span class="fw-bold" th:text="'${comment.writer}'"></span>
-                <span class="text-muted" th:text="'${comment.regdate}'"></span>
+                <span class="fw-bold" th:text="${comment.writer}"></span>
+                <span class="text-muted" th:text="${comment.regdate}"></span>
               </h5>
-              <p class="card-text" th:text="'${comment.content}'"></p>
+              <p class="card-text" th:text="${comment.content}"></p>
             </li>
-            <li class="list-group-item">
-              <h5 class="card-title">
-                <span class="fw-bold" th:text="'${작성자}'"></span>
-                <span class="text-muted" th:text="'${날짜}'"></span>
-              </h5>
-              <p class="card-text" th:text="'${댓글 내용}'"></p>
-            </li>
+<!--            <li class="list-group-item">-->
+<!--              <h5 class="card-title">-->
+<!--                <span class="fw-bold" th:text="'${작성자}'"></span>-->
+<!--                <span class="text-muted" th:text="'${날짜}'"></span>-->
+<!--              </h5>-->
+<!--              <p class="card-text" th:text="'${댓글 내용}'"></p>-->
+<!--            </li>-->
             <!-- 댓글 리스트 반복문 끝 -->
           </ul>
         </div>

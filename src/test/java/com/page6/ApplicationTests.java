@@ -4,6 +4,7 @@ import com.page6.controller.BoardController;
 import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
+import com.page6.entity.Comment;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +16,6 @@ import java.util.List;
 
 @SpringBootTest
 public class ApplicationTests {
-    @Autowired
-    private BoardController boardController;
 
     @Autowired
     private BoardService boardService;
@@ -24,8 +23,9 @@ public class ApplicationTests {
     @DisplayName("보드 테스트")
     @Test
     void 보드_테스트_시작(@Autowired CommentService commentService) {
-        CommentFormDto dto = new CommentFormDto(1, "test@test", "111", 0, 1);
-        commentService.commentAdd(dto);
+        List<CommentFormDto> list = commentService.getCommentList(2L);
+        for(int i = 0; i < list.size(); i++)
+            System.out.println(list.get(i).toString());
         System.out.println("테스트 끝");
     }
 

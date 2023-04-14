@@ -36,13 +36,14 @@ public class CommentService {
         commentRepository.save(commentEntity);
     }
 
-//    public List<CommentFormDto> getCommentList(Long bid) {
-//        Board board = boardRepository.findById(bid).get();
-//        List<Comment> list = commentRepository.findByBoard(board);
-//        return list
-//                .stream()
-//                .map(CommentFormDto::of)
-//                .collect(Collectors.toList());
-//    }
+    //bid 게시물의 댓글 리스트 얻기
+    public List<CommentFormDto> getCommentList(Long bid) {
+        Board board = boardRepository.findById(bid).get();
+        List<Comment> list = commentRepository.findByBoard(board);
+        return list
+                .stream()
+                .map(CommentFormDto::of)
+                .collect(Collectors.toList());
+    }
 
 }

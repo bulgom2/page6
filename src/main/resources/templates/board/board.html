@@ -22,7 +22,7 @@
         <br><br>
 
         <!-- 댓글 영역 시작 -->
-        <div th:replace="board/comment::#comment"></div>
+        <div th:replace="board/comment::#comment" th:with="commentList=${commentList}, board=${board}"></div>
         <!-- 댓글 영역 끝 -->
 
         <!-- 버튼 영역 시작 -->

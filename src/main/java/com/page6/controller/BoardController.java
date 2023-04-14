@@ -1,9 +1,11 @@
 package com.page6.controller;
 
 import com.page6.dto.BoardDto;
+import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Member;
 import com.page6.service.BoardService;
+import com.page6.service.CommentService;
 import com.page6.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,6 +33,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentService commentService;
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -67,9 +72,16 @@ public class BoardController {
     //게시글 조회 페이지
     @GetMapping("/board/{id}")
     public String board(@PathVariable("id") long id, Model model) {
+        //조회수 증가
         boardService.viewCntUpdate(id);
+
+        //조회 페이지 받기
         BoardDto board = boardService.BoardOne(id);
         model.addAttribute("board", board);
+
+        //댓글 리스트 받기
+        List<CommentFormDto> list = commentService.getCommentList(id);
+        model.addAttribute("commentList", list);
 //        log.info("board={}", board);
         return "/board/board";
     }

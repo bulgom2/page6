@@ -1,17 +1,22 @@
 package com.page6.dto;
 
 import com.page6.entity.Comment;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.format.DateTimeFormatter;
+
 @Data
 @Builder
+@AllArgsConstructor
 public class CommentFormDto {
     public long bid;        //작성 게시글 인덱스
     public String writer;   //작성자
     public String content;  //댓글 내용
     public int depth;       //깊이
     public long group;       //댓글 그룹
+    public String regdate; //등록일
 
     public CommentFormDto() {}
 
@@ -38,6 +43,7 @@ public class CommentFormDto {
                 .content(comment.getContent())
                 .depth(comment.getDepth())
                 .group(comment.getGroup())
+                .regdate(comment.getRegdate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
 }
