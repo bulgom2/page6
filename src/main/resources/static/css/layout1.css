@@ -12,6 +12,12 @@ body {
     display: none;
 }
 
+.eye {
+    width: 17px;
+    height: 12px;
+    margin-bottom: 3px;
+}
+
 .scroll {
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
@@ -66,17 +72,21 @@ a:hover{
 }
 
 .card {
-    min-width: 300px;
+    min-width: 250px;
     max-width: 300px;
 }
 
 .card-deck > .card {
     margin-bottom: 1rem;
 }
-
-
 .card-img-top {
     max-width: 295px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* input 기본 스타일 초기화 */

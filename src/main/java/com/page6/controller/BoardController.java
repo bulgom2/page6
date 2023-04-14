@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Page;
 
-import java.awt.print.Pageable;
+
 import java.io.File;
 import java.security.Principal;
 import java.util.List;
@@ -55,16 +55,11 @@ public class BoardController {
 //    }
 
     @GetMapping("/")
-    public String boardList(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
-        Page<Board> listPage = boardService.list(page);
-
-        int totalPage = listPage.getTotalPages();
-
-        model.addAttribute("board", listPage.getContent());
-        model.addAttribute("totalPage", totalPage);
-
+    public String boardList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         List<BoardDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
+
+        // 페이징
 
         return "board/galleryList";
     }

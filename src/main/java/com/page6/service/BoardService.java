@@ -7,9 +7,7 @@ import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +53,10 @@ public class BoardService {
 
     //게시물 조회수 증가
     @Transactional
-    public void viewCntUpdate(long id) {
+    public void viewCntUpdate(Long id) {
         boardRepository.updateView(id);
     }
 
-    public Page<Board> list(int page) {
-        return boardRepository.findAll(PageRequest.of(page, 12, Sort.by(Sort.Direction.DESC, "id")));
-    }
+    // 페이징
+
 }
