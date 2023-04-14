@@ -2,8 +2,10 @@ package com.page6;
 
 import com.page6.controller.BoardController;
 import com.page6.dto.BoardDto;
+import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.service.BoardService;
+import com.page6.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,9 @@ public class ApplicationTests {
 
     @DisplayName("보드 테스트")
     @Test
-    void 보드_테스트_시작() {
-        List<BoardDto> boardList = boardService.getBoardList();
-        for(int i = 0; i < boardList.size(); i++) {
-            System.out.println(boardList.get(i).toString());
-        }
+    void 보드_테스트_시작(@Autowired CommentService commentService) {
+        CommentFormDto dto = new CommentFormDto(1, "test@test", "111", 0, 1);
+        commentService.commentAdd(dto);
         System.out.println("테스트 끝");
     }
 
