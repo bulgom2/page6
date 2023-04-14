@@ -42,10 +42,10 @@ public class BoardService {
 //        return boardRepository.findById(id);
 //    }
 
-    public Optional<Board> BoardOne(long id) {
+    //게시글 조회 시 하나 선택하는 기능
+    public BoardDto BoardOne(long id) {
         Optional<Board> board = boardRepository.findById(id);
-
-        return boardRepository.findById(id);
+        return BoardDto.of(board.get());
     }
 
     //게시물 조회수 증가

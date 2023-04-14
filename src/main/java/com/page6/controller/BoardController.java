@@ -64,8 +64,7 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String board(@PathVariable("id") long id, Model model) {
         boardService.viewCntUpdate(id);
-        Optional<Board> result = boardService.BoardOne(id);
-        Board board = result.get();
+        BoardDto board = boardService.BoardOne(id);
         model.addAttribute("board", board);
 //        log.info("board={}", board);
         return "/board/board";
