@@ -53,7 +53,7 @@ public class BoardService {
 
     //게시물 조회수 증가
     @Transactional
-    public void viewCntUpdate(long id) {
+    public void viewCntUpdate(Long id) {
         boardRepository.updateView(id);
     }
 
