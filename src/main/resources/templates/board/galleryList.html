@@ -18,16 +18,20 @@
                 <img src="../../css/garlic6.jpg" class="card-img-top" alt="garlic6">
                 <div class="card-body">
 <!--                    <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>-->
-                    <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}" style="color:#4F5E5A">제목</a>
-                    </h4>
+                    <h3 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}" style="color:#4F5E5A">제목</a>
+                    </h3>
                     <h5 class="card-text" th:text="${board.writer}" style="color:#4F5E5A">작성자</h5>
-                    <p th:text="${board.view_cnt}" style="color:#4F5E5A">조회수</p>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted" th:text="${board.regdate}" style="color:#4F5E5A">등록일</small>
+            <div class="card-footer">
+                <small class="text-muted" th:text="${board.regdate}" style="color:#4F5E5A">등록일</small>
+                <div class="views">
+                    <img src="../../css/eye.png" class="eye" alt="eye">
+                    <span th:text="${board.view_cnt}" style="color:#4F5E5A">조회수</span>
                 </div>
             </div>
+            </div>
         </div>
+
     </div> <!-- /container -->
 
     <hr class="my-4">
@@ -48,14 +52,39 @@
     </div>
     <br>
 
-    <div class="pagination">
-        <ul>
-            <li th:each="page:${#numbers.sequence(0, totalPage -1)}">
-                <a th:href="@{|/?page=${pageStat.index}|}" th:text="${pageStat.index + 1}" style="color:#4F5E5A"></a>
-            </li>
-        </ul>
-    </div>
 
+
+
+
+<!--    <div class="pagination" th:with="start=${(pages.number/maxPage)*maxPage + 1},-->
+<!--                  end=(${(pages.totalPages == 0) ? 1 : (start + (maxPage - 1) < pages.totalPages ? start + (maxPage - 1) : pages.totalPages)})" >-->
+<!--        <ul>-->
+<!--            <li th:if="${start > 1}">-->
+<!--                <a th:href="@{/galleryList?(page=${start - maxPage})}" th:text="'<'"></a>-->
+<!--            </li>-->
+
+<!--            <li th:each="page: ${#numbers.sequence(start, end)}">-->
+<!--                <a th:href="@{/galleryList?(page=${page-1})}" th:text="${page}"></a>-->
+<!--            </li>-->
+
+<!--            <li th:if="${end < pages.totalPages}">-->
+<!--                <a th:href="@{/galleryList?(page=${start + maxPage})}" th:text="'>'"></a>-->
+<!--            </li>-->
+
+<!--            <li th:if="${end < pages.totalPages}">-->
+<!--                <a th:href="@{/galleryList?(page=${pages.totalPages-1})}" th:text="'>>'"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+
+
+
+
+<!--        <ul>-->
+<!--            <li th:each="page:${#numbers.sequence(0, totalPage -1)}">-->
+<!--                <a th:href="@{|/?page=${pageStat.index}|}" th:text="${pageStat.index + 1}" style="color:#4F5E5A"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+    </div>
 <!--    <button class="btn btn-primary float-end"-->
 <!--            th:onclick="|location.href='@{/write}'|"-->
 <!--            type="button">글 등록</button>-->
