@@ -4,9 +4,7 @@ import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
 import com.page6.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +52,6 @@ public class BoardService {
         boardRepository.updateView(id);
     }
 
-    public Page<Board> list(int page) {
-        return boardRepository.findAll(PageRequest.of(page, 12, Sort.by(Sort.Direction.DESC, "id")));
-    }
+    // 페이징
+
 }
