@@ -9,7 +9,7 @@
         <div class="py-5 text-center">
             <h2 th:text="${board.title}" style="color:#4F5E5A">게시물 제목</h2>
             <hr class="my-4">
-            <div th:text="'작성자: ' + '${board.writer}' + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
+            <div th:text="'작성자: ' + ${board.writer} + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
         </div>
 
         <div class="jumbotron jumbotron-fluid" style="background-color:transparent">

@@ -1,5 +1,6 @@
 package com.page6.controller;
 
+import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
 import com.page6.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class BoardController {
         model.addAttribute("board", listPage.getContent());
         model.addAttribute("totalPage", totalPage);
 
-        List<Board> boardList = boardService.getBoardList();
+        List<BoardDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
 
         return "board/galleryList";
