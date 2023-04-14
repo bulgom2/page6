@@ -2,9 +2,14 @@ package com.page6.controller;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
+import com.page6.entity.Member;
 import com.page6.service.BoardService;
+import com.page6.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,7 @@ import org.springframework.data.domain.Page;
 
 
 import java.io.File;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,14 +32,17 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
     public String boardWriteForm(){
         return "board/write";
     }
 
+    //글쓰기 요청
     @PostMapping("/write")
-    public String boardWritePro(Board board){
-        boardService.write(board);
+    public String boardWritePro(Board board, Principal principal){
+        String email = principal.getName();
+        boardService.write(board, email);
         return "redirect:/board/" + board.getId();
     }
 
