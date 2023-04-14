@@ -5,6 +5,16 @@ html {
 }
 body {
     min-height: 100%;
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
 
 a {
@@ -81,7 +91,7 @@ input {
 
 .box {
     outline: none;
-    font-weight: bold;
+    /*font-weight: bold;*/
     color: #4F5E5A;
 }
 
@@ -94,13 +104,19 @@ input {
 .btn {
     border: 2px #4F5E5A;
     background-color: transparent;
-    font-weight: bolder;
+    font-weight: bold;
     color: #4F5E5A;
     outline: none;
 }
 .btn:hover {
     background-color: #4F5E5A;
     color: white;
+}
+
+.btn:active, .btn:focus {
+    border: none;
+    box-shadow: none;
+    background-color: #4F5E5A;
 }
 
 .search-btn:focus {
@@ -111,6 +127,15 @@ input {
     outline: none;
 }
 
+.form-control, .form-control:focus {
+    border: none;
+    box-shadow: none;
+}
+
+ul {
+    list-style:none;
+    padding-left:0px;
+}
 
 /*.noleft {*/
 /*    line-height: 150px;*/
@@ -134,6 +159,7 @@ input {
     width: 150px;
     text-align: right;
     vertical-align:middle;
+    font-weight: bolder;
 }
 #logo-img {
     width: 200px;

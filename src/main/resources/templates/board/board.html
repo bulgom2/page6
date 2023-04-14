@@ -7,15 +7,15 @@
 
     <div class="container">
         <div class="py-5 text-center">
-            <h2 th:text="${board.title}">게시물 제목</h2>
+            <h2 th:text="${board.title}" style="color:#4F5E5A">게시물 제목</h2>
             <hr class="my-4">
-            <div th:text="'작성자: ' + '${board.writer}' + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}">게시물 정보</div>
+            <div th:text="'작성자: ' + '${board.writer}' + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
         </div>
 
         <div class="jumbotron jumbotron-fluid" style="background-color:transparent">
             <div class="container">
 <!--                <h1 class="display-4">Fluid jumbotron</h1>-->
-                <p class="lead" th:utext="${board.content}">게시물 내용</p>
+                <p class="lead" th:utext="${board.content}" style="color:#4F5E5A">게시물 내용</p>
             </div>
         </div>
 
@@ -26,11 +26,11 @@
         <!-- 댓글 영역 끝 -->
 
         <!-- 버튼 영역 시작 -->
-        <button class="btn btn-primary float-end"
+        <button class="btn" style="font-weight:500;"
                 th:onclick="|location.href='@{/write}'|"
                 type="button">글쓰기</button>
 
-        <button class="btn btn-primary float-end"
+        <button class="btn" style="font-weight:500;"
                 th:onclick="|location.href='@{/}'|"
                 type="button">목록</button>
         <!-- 버튼 영역 끝 -->

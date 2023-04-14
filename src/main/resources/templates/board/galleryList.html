@@ -17,14 +17,14 @@
 <!--                <img class="card-img-top" th:if="${#strings.isEmpty(board.image)}" src="" alt="이미지 없음">-->
                 <img src="../../css/garlic6.jpg" class="card-img-top" alt="garlic6">
                 <div class="card-body">
-                    <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>
-                    <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a>
+<!--                    <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>-->
+                    <h4 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}" style="color:#4F5E5A">제목</a>
                     </h4>
-                    <h5 class="card-text" th:text="${board.writer}">작성자</h5>
-                    <p th:text="${board.view_cnt}">조회수</p>
+                    <h5 class="card-text" th:text="'${board.writer}'" style="color:#4F5E5A">작성자</h5>
+                    <p th:text="${board.view_cnt}" style="color:#4F5E5A">조회수</p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted" th:text="${board.regdate}">등록일</small>
+                    <small class="text-muted" th:text="${board.regdate}" style="color:#4F5E5A">등록일</small>
                 </div>
             </div>
         </div>
@@ -48,6 +48,14 @@
     </div>
     <br>
 
+    <div class="pagination">
+        <ul>
+            <li th:each="page:${#numbers.sequence(0, totalPage -1)}">
+                <a th:href="@{|/?page=${pageStat.index}|}" th:text="${pageStat.index + 1}" style="color:#4F5E5A"></a>
+            </li>
+        </ul>
+    </div>
+
 <!--    <button class="btn btn-primary float-end"-->
 <!--            th:onclick="|location.href='@{/write}'|"-->
 <!--            type="button">글 등록</button>-->
@@ -55,7 +63,6 @@
 
 
     <!--  본문 영역 끝  -->
-
 </div>
 
 
