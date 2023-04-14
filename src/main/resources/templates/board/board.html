@@ -26,14 +26,21 @@
         <!-- 댓글 영역 끝 -->
 
         <!-- 버튼 영역 시작 -->
-        <button class="btn" style="font-weight:500;"
-                th:onclick="|location.href='@{/write}'|"
-                type="button">글쓰기</button>
+        <div class="board-btn-div">
+<!--            <button class="btn" style="font-weight:500;"-->
+<!--                    th:onclick="|location.href='@{/write}'|"-->
+<!--                    type="button">글쓰기</button>-->
 
-        <button class="btn" style="font-weight:500;"
-                th:onclick="|location.href='@{/}'|"
-                type="button">목록</button>
+            <button class="btn" style="font-weight:500;"
+                    th:onclick="|location.href='@{/}'|"
+                    type="button">목록</button>
+        </div>
         <!-- 버튼 영역 끝 -->
+        <div class="floating-button">
+            <span class="move-write">
+                <a class="write-btn" href="/write"></a>
+            </span>
+        </div>
 
 
     </div> <!-- /container -->
