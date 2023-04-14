@@ -5,6 +5,7 @@ import com.page6.entity.Board;
 import com.page6.entity.Member;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,13 +17,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
-    private MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
+    private final  MemberRepository memberRepository;
 
     //글쓰기 저장 기능
     public void write(Board board, String email){

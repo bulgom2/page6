@@ -30,4 +30,14 @@ public class CommentFormDto {
                 .group(group)
                 .build();
     }
+
+    public static CommentFormDto of(Comment comment) {
+        return CommentFormDto.builder()
+                .bid(comment.getId())
+                .writer(comment.getWriter().getName())
+                .content(comment.getContent())
+                .depth(comment.getDepth())
+                .group(comment.getGroup())
+                .build();
+    }
 }

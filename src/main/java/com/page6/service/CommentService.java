@@ -10,7 +10,9 @@ import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +31,18 @@ public class CommentService {
 
         commentEntity.setWriter(member);
         commentEntity.setBoard(board);
+//        commentEntity.setGroup(commentEntity.getId());
 
         commentRepository.save(commentEntity);
     }
+
+//    public List<CommentFormDto> getCommentList(Long bid) {
+//        Board board = boardRepository.findById(bid).get();
+//        List<Comment> list = commentRepository.findByBoard(board);
+//        return list
+//                .stream()
+//                .map(CommentFormDto::of)
+//                .collect(Collectors.toList());
+//    }
+
 }
