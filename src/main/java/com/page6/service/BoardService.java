@@ -2,12 +2,11 @@ package com.page6.service;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
-import com.page6.entity.Member;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,9 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final  MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
+
 
     //글쓰기 저장 기능
     public void write(Board board, String email){

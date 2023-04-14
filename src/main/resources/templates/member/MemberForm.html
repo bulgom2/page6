@@ -51,8 +51,8 @@
             <p th:if="${#fields.hasErrors('number')}" th:errors="*{number}" class="fieldError">Incorrect data</p>
         </div>
         <div style="text-align:center" class="py-3">
-            <button type="submit" class="btn">Submit</button>
-            <button type="button" class="btn" onclick="history.back();">Cancel</button>
+            <button type="submit" class="btn">등록</button>
+            <button type="button" class="btn" onclick="history.back();">취소</button>
         </div>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>

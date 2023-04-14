@@ -111,10 +111,16 @@ input {
     align-items: center;
 }
 
+.board-btn-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn {
     border: 2px #4F5E5A;
     background-color: transparent;
-    font-weight: bold;
+    font-weight:900;
     color: #4F5E5A;
     outline: none;
 }
@@ -168,7 +174,7 @@ ul {
 .login-btn, .login-out {
     width: 150px;
     text-align: right;
-    vertical-align:middle;
+    vertical-align: middle;
     font-weight: bolder;
 }
 #logo-img {

@@ -7,8 +7,12 @@ import com.page6.entity.Member;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
 import com.page6.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,12 +31,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/")
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService;
+    private final BoardService boardService;
 
     @Autowired
     private CommentService commentService;
@@ -51,23 +55,14 @@ public class BoardController {
         return "redirect:/board/" + board.getId();
     }
 
-//    @GetMapping("/")
-//    public String boardList(Model model) {
-//        List<Board> boardList = boardService.getBoardList();
-//        model.addAttribute("boardList", boardList);
-//
-//        return "board/galleryList";
-//    }
-
     @GetMapping("/")
-    public String boardList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String boardList(Model model) {
         List<BoardDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
 
-        // 페이징
-
         return "board/galleryList";
     }
+
 
     //게시글 조회 페이지
     @GetMapping("/board/{id}")
