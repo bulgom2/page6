@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @AllArgsConstructor
 public class CommentFormDto {
+    public Long cid;         //댓글 인덱스
     public Long bid;        //작성 게시글 인덱스
     public String writer;   //작성자
     public String content;  //댓글 내용
@@ -24,7 +25,8 @@ public class CommentFormDto {
 
     public CommentFormDto() {}
 
-    public CommentFormDto(Long bid, String writer, String content, int depth, Long group) {
+    public CommentFormDto(Long cid, Long bid, String writer, String content, int depth, Long group) {
+        this.cid = cid;
         this.bid = bid;
         this.writer = writer;
         this.content = content;
@@ -42,6 +44,7 @@ public class CommentFormDto {
 
     public static CommentFormDto of(Comment comment) {
         return CommentFormDto.builder()
+                .cid(comment.getId())
                 .bid(comment.getBoard().getId())
                 .writer(comment.getWriter().getName())
                 .content(comment.getContent())

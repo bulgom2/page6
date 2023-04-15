@@ -18,11 +18,21 @@ public class CommentController {
     @Autowired
     private final CommentService commentService;
 
-    //댓글 등록
+    //일반 댓글 등록
     @PostMapping("/add")
     public String commentAdd(CommentFormDto dto, Principal principal){
         dto.setWriter(principal.getName());
         dto.setDepth(0);
+        dto.setGroup(0L);
+        commentService.commentAdd(dto);
+        return "redirect:/board/" + dto.getBid();
+    }
+
+    //일반 댓글 등록
+    @PostMapping("/add/recomment")
+    public String recommentAdd(CommentFormDto dto, Principal principal){
+        dto.setWriter(principal.getName());
+        dto.setDepth(1);
         dto.setGroup(0L);
         commentService.commentAdd(dto);
         return "redirect:/board/" + dto.getBid();
