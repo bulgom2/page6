@@ -23,7 +23,7 @@ public class ApplicationTests {
     @DisplayName("보드 테스트")
     @Test
     void 보드_테스트_시작(@Autowired CommentService commentService) {
-        List<CommentFormDto> list = commentService.getCommentList(2L);
+        List<CommentFormDto> list = commentService.getCommentList(1L);
         for(int i = 0; i < list.size(); i++)
             System.out.println(list.get(i).toString());
         System.out.println("테스트 끝");

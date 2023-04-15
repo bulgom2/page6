@@ -1,10 +1,7 @@
 package com.page6.dto;
 
 import com.page6.entity.Comment;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Builder
 @Setter
+@Getter
 @AllArgsConstructor
 public class CommentFormDto {
     public Long cid;         //댓글 인덱스

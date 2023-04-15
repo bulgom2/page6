@@ -10,6 +10,7 @@ import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +41,23 @@ public class CommentService {
     public List<CommentFormDto> getCommentList(Long bid) {
         Board board = boardRepository.findById(bid).get();
         List<Comment> list = commentRepository.findByBoard(board);
-        return list
+        List<Comment> result = new ArrayList<>();
+
+        for(int i = 0; i < list.size(); i++) {
+            Comment c = list.get(i);
+            if(c.getDepth() == 0) {
+                result.add(c);
+                for(int j = i + 1; j < list.size(); j++) {
+                    Comment child = list.get(j);
+                    if(child.getDepth() == 1 && child.getGroup() == c.getId()) {
+                        result.add(child);
+                    }
+                }
+            }
+        }
+
+
+        return result
                 .stream()
                 .map(CommentFormDto::of)
                 .collect(Collectors.toList());

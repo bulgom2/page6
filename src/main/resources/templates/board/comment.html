@@ -26,12 +26,16 @@
 
 
   <div class="jumbotron" th:each="comment : ${commentList}">
-    <h6 class="display-4" th:text="${comment.content}">내용</h6>
+    <th:block th:if="${comment.depth} == 1"> 답글 내용 :</th:block>
+    <h6 class="display-4" th:text="${comment.content}">
+      내용</h6>
     <p class="lead" th:text="${comment.regdate}">등록일</p>
     <hr class="my-4">
     <p class="lead" th:text="${comment.writer}" style="font-weight:bold">작성자</p>
-    <button type="button" class="btn btn-primary" id="replyBtn" sec:authorize="isAuthenticated()"
-            th:attr="data-cid=${comment.cid}" onclick="showRecommentForm(this)">답글</button>
+    <th:block th:if="${comment.depth} == 0">
+      <button type="button" class="btn btn-primary" id="replyBtn" sec:authorize="isAuthenticated()"
+              th:attr="data-cid=${comment.cid}" onclick="showRecommentForm(this)">답글</button>
+    </th:block>
 
   <!--  대댓글 입력 폼  -->
     <div th:id="'re-form-' + ${comment.cid}" style="display:none" action="/comment/add/recomment" sec:authorize="isAuthenticated()">
