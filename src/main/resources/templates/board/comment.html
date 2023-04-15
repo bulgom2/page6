@@ -26,16 +26,15 @@
 
 
   <div class="jumbotron" th:each="comment : ${commentList}">
-    <p th:text="${comment.cid}"></p>
     <h6 class="display-4" th:text="${comment.content}">내용</h6>
     <p class="lead" th:text="${comment.regdate}">등록일</p>
     <hr class="my-4">
     <p class="lead" th:text="${comment.writer}" style="font-weight:bold">작성자</p>
-    <button type="button" class="btn btn-primary" id="replyBtn"
-            onclick="showRecommentForm(${comment.cid})" sec:authorize="isAuthenticated()">답글 달기</button>
+    <button type="button" class="btn btn-primary" id="replyBtn" sec:authorize="isAuthenticated()"
+            th:attr="data-cid=${comment.cid}" onclick="showRecommentForm(this)">답글</button>
 
   <!--  대댓글 입력 폼  -->
-    <div th:id="'recomment-form-' + ${comment.cid}" style="display:none" sec:authorize="isAuthenticated()">
+    <div th:id="'re-form-' + ${comment.cid}" style="display:none" sec:authorize="isAuthenticated()">
       <form method="post" action="/comment/add/recomment">
         <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -55,24 +54,27 @@
   <!-- 댓글 영역 끝 -->
 
   <!-- 댓글 입력 폼 -->
-<!--  <form method="post" action="/comment/add" sec:authorize="isAuthenticated()">-->
-<!--    &lt;!&ndash; CSRF 공격에 대비한 임의의 난수 생성 &ndash;&gt;-->
-<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
-<!--    <input type="hidden" th:name="bid" th:value="${board.id}">-->
-<!--    <div class="form-group d-flex">-->
-<!--      <textarea class="form-control" rows="3" placeholder="댓글을 입력하세요" th:name="content" required></textarea>-->
-<!--      <button type="submit" class="btn" style="width:150px; font-weight:500;">등록</button>-->
-<!--    </div>-->
-<!--  </form>-->
+  <form method="post" action="/comment/add" sec:authorize="isAuthenticated()">
+    <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <input type="hidden" th:name="bid" th:value="${board.id}">
+    <div class="form-group d-flex">
+      <textarea class="form-control" rows="3" placeholder="댓글을 입력하세요" th:name="content" required></textarea>
+      <button type="submit" class="btn" style="width:150px; font-weight:500;">등록</button>
+    </div>
+  </form>
   <!-- 댓글 입력 폼 끝 -->
 
 
   <!-- 답글 JavaScript 영역 -->
   <script>
-    function showRecommentForm(commentId) {
-      var commentForm = document.getElementById("recomment-form-" + commentId);
+    function showRecommentForm(button) {
+      var cid = button.getAttribute("data-cid");
+      var commentForm = document.getElementById("re-form-" + cid);
       commentForm.style.display = "block";
+      button.style.display = "none";
     }
+
   </script>
   <!-- 답글 JavaScript 영역 끝 -->
 </div>
