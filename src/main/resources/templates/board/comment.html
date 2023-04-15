@@ -34,7 +34,7 @@
             th:attr="data-cid=${comment.cid}" onclick="showRecommentForm(this)">답글</button>
 
   <!--  대댓글 입력 폼  -->
-    <div th:id="'re-form-' + ${comment.cid}" style="display:none" sec:authorize="isAuthenticated()">
+    <div th:id="'re-form-' + ${comment.cid}" style="display:none" action="/comment/add/recomment" sec:authorize="isAuthenticated()">
       <form method="post" action="/comment/add/recomment">
         <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

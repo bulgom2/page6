@@ -33,7 +33,6 @@ public class CommentController {
     public String recommentAdd(CommentFormDto dto, Principal principal){
         dto.setWriter(principal.getName());
         dto.setDepth(1);
-        dto.setGroup(0L);
         commentService.commentAdd(dto);
         return "redirect:/board/" + dto.getBid();
     }
