@@ -49,7 +49,9 @@ public class BoardController {
     @PostMapping("/write")
     public String boardWritePro(@RequestParam ("tags") String tags, Board board, Principal principal){
         System.out.println("tags=" + tags);
-        tagService.addTag(board.getId(), tags);
+        String[] tagArr = tags.split("#");
+        for(int i = 0; i < tagArr.length; i++)
+            tagService.addTag(board.getId(), tagArr[i]);
 
         String email = principal.getName();
         boardService.write(board, email);
