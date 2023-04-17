@@ -5,8 +5,11 @@ import com.page6.entity.Board;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,10 +80,11 @@ public class BoardService {
         return boardRepository.findAll(pageable).map(BoardDto::of);
     }
 
-//    // 내 페이징
-//    public Page<Board> boardList(Pageable pageable){
-//        //기존 List<Board>값으로 넘어가지만 페이징 설정을 해주면 Page<Board>로 넘어갑니다.
-//        return boardRepository.findAll(pageable);
+    // 제목 오름차순 정렬 페이징
+//    public Page<BoardDto> getAllBoardsSortedByTitle(int pageNum, Sort.Direction direction) {
+//        Sort sort = direction == Sort.Direction.ASC ? Sort.by("title").ascending() : Sort.by("title").descending();
+//        Pageable pageable = PageRequest.of(pageNum - 1, 15, sort);
+//        return boardRepository.findAll(pageable).map(BoardDto::of);
 //    }
 
 }

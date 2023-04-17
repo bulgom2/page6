@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Page;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.io.File;
@@ -104,6 +105,37 @@ public class BoardController {
 
         return "board/galleryList";
     }
+
+//    @GetMapping("/sorted-by-title")
+//    public String boardListSortedByTitle(Model model,
+//                                         @RequestParam(value = "page", defaultValue = "1") int pageNum) {
+//        Page<Board> list = boardService.getAllBoardsSortedByTitle(pageNum);
+//
+//        //페이지블럭 처리
+//        //1을 더해주는 이유는 pageable은 0부터라 1을 처리하려면 1을 더해서 시작해주어야 한다.
+//        int nowPage = list.getPageable().getPageNumber() + 1;
+//        //-1값이 들어가는 것을 막기 위해서 max값으로 두 개의 값을 넣고 더 큰 값을 넣어주게 된다.
+//        int startPage =  Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+//        int lastPage = list.getTotalPages() - 1;
+//
+//        if (nowPage < 5){
+//            endPage = 10;
+//        }
+//        else if (nowPage < 10){
+//            endPage = 10 + (nowPage - 5);
+//        }
+//        if (nowPage == 0) {
+//            startPage = 1;
+//        }
+//
+//        model.addAttribute("boardList", list.getContent());
+//        model.addAttribute("nowPage", pageNum);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("lastPage", lastPage);
+//        return "board/galleryList";
+//    }
 
     //게시글 조회 페이지
     @GetMapping("/board/{id}")
