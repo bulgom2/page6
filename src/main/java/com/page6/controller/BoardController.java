@@ -72,6 +72,7 @@ public class BoardController {
 
         //조회 페이지 받기
         BoardDto board = boardService.BoardOne(id);
+        board.setComment_cnt(commentService.getCommentCount(id));
         model.addAttribute("board", board);
 
         //댓글 리스트 받기

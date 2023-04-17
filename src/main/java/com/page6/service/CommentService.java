@@ -63,4 +63,10 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    //bid 게시물의 댓글 개수 얻기
+    public Long getCommentCount(Long bid) {
+        Board board = boardRepository.findById(bid).get();
+        return commentRepository.countCommentByBoard(board);
+    }
+
 }

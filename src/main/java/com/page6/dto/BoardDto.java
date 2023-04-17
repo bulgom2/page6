@@ -23,6 +23,8 @@ public class BoardDto {
     public int view_cnt;     // 조회수
 
     public String regdate;    // 생성일자
+    
+    public Long comment_cnt;    //댓글 개수
 
 //    public boolean delete_flag;      // 삭제여부
 

@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{/board/board}">
 <div id="comment" layout:fragment="comment">
-  <h3 style="color:#4F5E5A;">COMMENT</h3>
+  <h3 style="color:#4F5E5A;">COMMENT<span th:text="${' [' + board.comment_cnt + ']'}"></span></h3>
   <hr>
   <!-- 댓글 영역 시작 -->
 <!--  <div class="row">-->
