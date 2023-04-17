@@ -18,4 +18,5 @@ public class Tag {
 
     @Column(name="TAG_NAME", nullable = false)
     private String name; //태그 내용
+
 }

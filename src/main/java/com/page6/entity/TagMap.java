@@ -6,10 +6,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Table(name="TAG_MAP_TB")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class TagMap {
     @Id
@@ -28,4 +30,5 @@ public class TagMap {
     @CreationTimestamp
     @Column(name="TAG_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;  //등록일
+
 }
