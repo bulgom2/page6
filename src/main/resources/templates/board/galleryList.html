@@ -18,7 +18,7 @@
                 <img src="../../css/garlic6.jpg" class="card-img-top" alt="garlic6">
                 <div class="card-body">
 <!--                    <p class="card-text" th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</p>-->
-                    <h3 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}" style="color:#4F5E5A">제목</a>
+                    <h3 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title} + ' [' + ${board.comment_cnt} + ']'" style="color:#4F5E5A">제목</a>
                     </h3>
                     <h5 class="card-text" th:text="${board.writer}" style="color:#4F5E5A">작성자</h5>
                 </div>

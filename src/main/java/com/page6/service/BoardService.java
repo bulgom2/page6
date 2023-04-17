@@ -21,6 +21,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     private final MemberRepository memberRepository;
+    private final CommentService commentService;
 
 
     //글쓰기 저장 기능
@@ -33,11 +34,23 @@ public class BoardService {
 //    public List<Board> getBoardList() {
 //        return boardRepository.findAll();
 //    }
+//    public List<BoardDto> getBoardList() {
+//        List<Board> list = boardRepository.findAll();
+//        return list
+//                .stream()
+//                .map(BoardDto::of)
+//                .collect(Collectors.toList());
+//    }
+
     public List<BoardDto> getBoardList() {
         List<Board> list = boardRepository.findAll();
         return list
                 .stream()
-                .map(BoardDto::of)
+                .map(board -> {
+                    BoardDto dto = BoardDto.of(board);
+                    dto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                    return dto;
+                        })
                 .collect(Collectors.toList());
     }
 
