@@ -71,6 +71,16 @@ public class BoardService {
         boardRepository.updateView(id);
     }
 
-    // 페이징
+    // 동진 페이징
+   // 페이징 리스트 조회 기능
+    public Page<BoardDto> findAll(Pageable pageable) {
+        return boardRepository.findAll(pageable).map(BoardDto::of);
+    }
+
+//    // 내 페이징
+//    public Page<Board> boardList(Pageable pageable){
+//        //기존 List<Board>값으로 넘어가지만 페이징 설정을 해주면 Page<Board>로 넘어갑니다.
+//        return boardRepository.findAll(pageable);
+//    }
 
 }

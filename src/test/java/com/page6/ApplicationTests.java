@@ -29,6 +29,16 @@ public class ApplicationTests {
             System.out.println(list.get(i).toString());
         System.out.println("테스트 끝");
     }
+      //  더미데이터 만들기
+//    @DisplayName("게시글 더미데이터")
+//    @Test
+//    void 게시글_더미데이터() {
+//        Board board = new Board("hello", "hello");
+//        for(int i = 0; i < 500; i++) {
+//            board = new Board("hello " + i, "hello " + i);
+//            boardService.write(board, "test@test");
+//        }
+//    }
 
     @DisplayName("좋아요 추가 테스트")
     @Test

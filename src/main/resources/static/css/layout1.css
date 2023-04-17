@@ -3,6 +3,7 @@ html {
     min-height: 100%;
     margin: 0;
 }
+
 body {
     min-height: 100%;
     -ms-overflow-style: none;
@@ -27,15 +28,19 @@ a {
     text-align: center;
     text-decoration: none; /* 링크의 밑줄 제거 */
     color: inherit; /* 링크의 색상 제거 */
+    cursor: pointer;  /* 포인터 생성 */
 }
+
 a:hover{
     text-decoration: none; /* 링크의 밑줄 제거 */
     color: inherit; /* 링크의 색상 제거 */
 }
+
 .header {
     /*background: linear-gradient( to top, white, #B2DBD1 );*/
-    height: 150px;
+    height: 120px;
 }
+
 .footer {
     background: linear-gradient( to bottom, white, #4F5E5A );
     color: #4F5E5A;
@@ -169,6 +174,16 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.paging-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blank-space {
+    width: 300px;
 }
 
 .login-btn, .login-out {

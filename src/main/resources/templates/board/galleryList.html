@@ -32,6 +32,18 @@
             </div>
         </div>
 
+        <br>
+
+        <div class="paging-btn">
+            <div class="blank-space"></div>
+            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>
+            <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>
+                <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
+            </th:block>
+            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>
+            <div class="blank-space"></div>
+        </div>
     </div> <!-- /container -->
 
     <hr class="my-4">
