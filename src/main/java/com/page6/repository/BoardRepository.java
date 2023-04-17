@@ -16,4 +16,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("update Board b set b.view_cnt = b.view_cnt + 1 where b.id = :id")
     int updateView(@Param("id") Long id);
 
+    // 동진 페이징
+//    Page<Board> findAllByOrderByIdDesc(Pageable pageable);
+
+//    //페이징
+    Page<Board> findAll(Pageable pageable);
 }
