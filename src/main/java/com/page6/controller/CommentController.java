@@ -28,7 +28,7 @@ public class CommentController {
         return "redirect:/board/" + dto.getBid();
     }
 
-    //일반 댓글 등록
+    //대댓글 등록
     @PostMapping("/add/recomment")
     public String recommentAdd(CommentFormDto dto, Principal principal){
         dto.setWriter(principal.getName());

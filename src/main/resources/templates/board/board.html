@@ -18,6 +18,38 @@
                 <p class="lead" th:utext="${board.content}" style="color:#4F5E5A">게시물 내용</p>
             </div>
         </div>
+        <!-- 좋아요 -->
+        <div style="display: flex">
+            <!-- 좋아요 누르지 않았을 때 -->
+            <i class="bi bi-suit-heart" id="heart-icon-false" th:if="${!likeFlag}" onclick="addLike(event); return;"></i>
+            <!-- 좋아요 눌렀을 때 -->
+            <i class="bi bi-suit-heart-fill" id="heart-icon-true" th:if="${likeFlag}"></i>
+            <span th:text="${board.like_cnt}"></span>
+            <form id="like-form" method="post" th:action="@{/like/add}">
+            <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="bid" th:name="bid" th:value="${board.id}" />
+            </form>
+        </div>
+
+        <!-- 자바 스크립트 영역 -->
+        <script>
+            function addLike(event) {
+                event.preventDefault();
+
+                let form = document.getElementById("like-form");
+                let iconFalse = document.getElementById("heart-icon-false");
+
+                form.submit();
+                iconFalse.classList.remove("bi-suit-heart");
+                iconFalse.classList.add("bi-suit-heart-fill");
+                iconFalse.onclick = null;
+            }
+        </script>
+
+        <!-- 좋아요 영역 끝 -->
+
+
 
         <br><br>
 

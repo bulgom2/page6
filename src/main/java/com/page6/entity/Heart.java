@@ -25,4 +25,9 @@ public class Heart {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="BOARD_FK")
     private Board board;    //게시글 id
+
+    public Heart(Board board, Member member) {
+        this.member = member;
+        this.board = board;
+    }
 }

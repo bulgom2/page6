@@ -7,6 +7,7 @@ import com.page6.entity.Board;
 import com.page6.entity.Comment;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
+import com.page6.service.HeartService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class ApplicationTests {
         System.out.println("테스트 끝");
     }
 
+    @DisplayName("좋아요 추가 테스트")
+    @Test
+    void 좋아요_추가(@Autowired HeartService heartService) {
+        heartService.addHeart(1L, "test@test");
+    }
+
+    @DisplayName("좋아요 조회 테스트")
+    @Test
+    void 좋아요_조회(@Autowired HeartService heartService) {
+        boolean flag = heartService.heartFlag(1L, "test@test");
+        System.out.println("flag값=" + flag);
+    }
 //    @DisplayName("조회수 테스트")
 //    @Test
 //    void 조회수_테스트() {

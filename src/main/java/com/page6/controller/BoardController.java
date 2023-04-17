@@ -6,6 +6,7 @@ import com.page6.entity.Board;
 import com.page6.entity.Member;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
+import com.page6.service.HeartService;
 import com.page6.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,8 @@ import java.util.UUID;
 public class BoardController {
 
     private final BoardService boardService;
-
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
+    private final HeartService heartService;
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -66,7 +66,7 @@ public class BoardController {
 
     //게시글 조회 페이지
     @GetMapping("/board/{id}")
-    public String board(@PathVariable("id") long id, Model model) {
+    public String board(@PathVariable("id") long id, Model model, Principal principal) {
         //조회수 증가
         boardService.viewCntUpdate(id);
 
@@ -78,6 +78,14 @@ public class BoardController {
         //댓글 리스트 받기
         List<CommentFormDto> list = commentService.getCommentList(id);
         model.addAttribute("commentList", list);
+
+        //좋아요 플래그 받기
+        boolean likeFlag = false;
+        if(principal != null) {
+            String email = principal.getName();
+            likeFlag = heartService.heartFlag(id, email);
+        }
+        model.addAttribute("likeFlag", likeFlag);
 //        log.info("board={}", board);
         return "/board/board";
     }
