@@ -10,6 +10,12 @@
       <div id="content-view">
         <div id="content-view-inner">
           <input required type="text" id="write-title" name="title" placeholder="글 제목" maxlength="30" style="width: 100%; max-width: 800px; border:none; outline: none; font-size:20px; color:#4F5E5A;"><hr>
+          <div class="tagBox" style="display: flex">
+            <span class="innerBox"></span>
+            <input class="tagInput" type="text" placeholder="해시태그를 입력하세요.">
+            <input class="tagValue" type="hidden" name="tags">
+          </div>
+          <hr>
           <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
           <textarea id="editor" name="content" placeholder="내용을 입력하세요" style="color:#4F5E5A"></textarea><hr>
@@ -23,6 +29,61 @@
     </form>
   </div>
 
+<!-- 해시태그 스크립트 -->
+  <!-- 해시태그 스크립트 -->
+  <script>
+    window.onload = function() {
+      initHandler();
+    }
+
+    const box = document.querySelector('.tagBox');
+    const innerBox = document.querySelector('.innerBox');
+    const tagInput = document.querySelector('.tagInput');
+    const tagValue = document.querySelector('.tagValue');
+    let tags = [];
+
+    function initHandler(){ // 초기화
+      // Events
+      box.addEventListener('click', ()=>{ tagInput.focus() });
+      box.addEventListener('click', removeTagHandler);
+      tagInput.addEventListener('keydown', addTagHandler);
+      render();
+    }
+
+    // 태그 추가
+    function addTagHandler(ev){ // 태그 추가
+      if(ev.target === tagInput && ev.key === "Enter"){
+        ev.preventDefault();
+        let arr = tagInput.value.split("#").filter(item => item !== "");
+        for(let i = 0; i < arr.length; i++)
+          tags.push(arr[i]);
+        tagValue.value = tagValue.value + "#" + tagInput.value;
+        render();
+        tagInput.value = "";
+      }
+    }
+
+    // 태그 제거
+    function removeTagHandler(ev){
+      let target = ev.target;
+      let textNode = target.previousElementSibling.innerText.trim();
+      if(target.tagName === "SPAN" && target.className === "close"){
+        tags = tags.filter(tag=> textNode !== tag);
+        tagValue.value = tagValue.value.replace("#" + textNode, "");
+        render();
+      }
+    }
+
+    // 출력부
+    function render(){
+      let tmp = '';
+      let template = tag => `<span class="tag"><span>${tag}</span><span class="close">&times;</span></span>`;
+      tags.forEach(tag=>{
+        tmp += template(tag);
+      });
+      innerBox.innerHTML = tmp;
+    }
+  </script>
 
 <!-- CKEditor -->
   <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
