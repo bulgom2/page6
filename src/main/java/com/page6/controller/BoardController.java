@@ -4,10 +4,7 @@ import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Member;
-import com.page6.service.BoardService;
-import com.page6.service.CommentService;
-import com.page6.service.HeartService;
-import com.page6.service.MemberService;
+import com.page6.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +37,7 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
     private final HeartService heartService;
+    private final TagService tagService;
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -51,6 +49,7 @@ public class BoardController {
     @PostMapping("/write")
     public String boardWritePro(@RequestParam ("tags") String tags, Board board, Principal principal){
         System.out.println("tags=" + tags);
+        tagService.addTag(board.getId(), tags);
 
         String email = principal.getName();
         boardService.write(board, email);
