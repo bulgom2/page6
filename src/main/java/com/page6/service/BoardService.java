@@ -6,6 +6,7 @@ import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,7 +75,16 @@ public class BoardService {
     // 동진 페이징
    // 페이징 리스트 조회 기능
     public Page<BoardDto> findAll(Pageable pageable) {
-        return boardRepository.findAll(pageable).map(BoardDto::of);
+        Page<Board> boardPage = boardRepository.findAll(pageable);
+        List<BoardDto> boardDtoList = boardPage.getContent()
+                .stream()
+                .map(board -> {
+                    BoardDto boardDto = BoardDto.of(board);
+                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                    return boardDto;
+                })
+                .collect(Collectors.toList());
+        return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
     }
 
 //    // 내 페이징
