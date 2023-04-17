@@ -21,4 +21,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Modifying
     @Query("update Board b set b.like_cnt = b.like_cnt + 1 where b.id = :id")
     int updateLike(@Param("id") Long id);
+
+    // 페이징
+    Page<Board> findAll(Pageable pageable);
 }
