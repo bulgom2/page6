@@ -49,7 +49,9 @@ public class BoardController {
 
     //글쓰기 요청
     @PostMapping("/write")
-    public String boardWritePro(Board board, Principal principal){
+    public String boardWritePro(@RequestParam ("tags") String tags, Board board, Principal principal){
+        System.out.println("tags=" + tags);
+
         String email = principal.getName();
         boardService.write(board, email);
         return "redirect:/board/" + board.getId();
