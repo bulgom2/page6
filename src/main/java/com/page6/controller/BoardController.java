@@ -81,8 +81,9 @@ public class BoardController {
     //검색&정렬&페이징
     @GetMapping({"/search", "/search/{page}"})
     public String searchList(Model model,
-                                 @RequestParam(defaultValue = "id") String sortType,
                                  @RequestParam(defaultValue = "desc") String sortOrder,
+                                 @RequestParam(defaultValue = "id") String sortType,
+                                 @RequestParam(defaultValue = "title") String searchType,
                                  @RequestParam(defaultValue = "") String keyword,
                                  @RequestParam(defaultValue = "1") int page) {
         Sort sort;
@@ -93,7 +94,7 @@ public class BoardController {
             sort = sortOrder.equalsIgnoreCase("desc") ? Sort.by(sortType).descending() : Sort.by(sortType);
         }
         Pageable pageable = PageRequest.of(page - 1, 10, sort);
-        Page<BoardDto> list = boardService.findAll(keyword, pageable);
+        Page<BoardDto> list = boardService.findAll(keyword, searchType, pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);

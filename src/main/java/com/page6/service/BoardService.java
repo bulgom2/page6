@@ -87,10 +87,30 @@ public class BoardService {
    }
 
    //키워드 검색
-    public Page<BoardDto> findAll(String keyword, Pageable pageable) {
-        Page<Board> boardPage = keyword == null || keyword.isEmpty() || "".equals(keyword) ?
-                boardRepository.findAll(pageable) :
-                boardRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+   @Transactional
+    public Page<BoardDto> findAll(String keyword, String searchType, Pageable pageable) {
+        Page<Board> boardPage = null;
+        if(keyword == null || keyword.isEmpty() || "".equals(keyword))
+            boardPage = boardRepository.findAll(pageable);
+        else {
+            switch (searchType) {
+                case "title":
+                    boardPage = boardRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+                    break;
+                case "content":
+                    boardPage = boardRepository.findByContentContainingIgnoreCase(keyword, pageable);
+                    break;
+                case "titleContent":
+                    boardPage = boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+                    break;
+                case "member":
+                    boardPage = boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
+                    break;
+                case "tag":
+                    boardPage = boardRepository.findByTagContaing(keyword, pageable);
+                    break;
+            }
+        }
         List<BoardDto> boardDtoList = boardPage.getContent()
                 .stream()
                 .map(board -> {
@@ -187,15 +207,15 @@ public class BoardService {
     }
 
     //해시태그 포함 검색
-    @Transactional
-    public List<Board> searchByTagContaing(String keyword) {
-        return boardRepository.findByTagContaing(keyword);
-    }
-
-    //해시태그 검색
-    @Transactional
-    public List<Board> searchByTag(String keyword) {
-        return boardRepository.findByTagName(keyword);
-    }
+//    @Transactional
+//    public List<Board> searchByTagContaing(String keyword) {
+//        return boardRepository.findByTagContaing(keyword);
+//    }
+//
+//    //해시태그 검색
+//    @Transactional
+//    public List<Board> searchByTag(String keyword) {
+//        return boardRepository.findByTagName(keyword);
+//    }
 
 }

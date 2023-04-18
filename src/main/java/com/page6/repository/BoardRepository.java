@@ -30,11 +30,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     //해시태그 검색
     @Query("SELECT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name = :name")
-    List<Board> findByTagName(@Param("name") String name);
+    Page<Board> findByTagName(@Param("name") String name, Pageable pageable);
 
     //해시태그 포함 검색
     @Query("SELECT DISTINCT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name LIKE %:name%")
-    List<Board> findByTagContaing(@Param("name") String name);
+    Page<Board> findByTagContaing(@Param("name") String name, Pageable pageable);
 
 
     //조회수 개수 플러스

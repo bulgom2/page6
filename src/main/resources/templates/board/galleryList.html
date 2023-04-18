@@ -94,6 +94,16 @@
     <form id="searchForm" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
         <div style="margin: 0 auto; width: 290px">
             <div class="search-btn-div">
+                <div class="sort">
+                    <label for="searchType">Search By:</label>
+                    <select name="searchType" class="form-control mb-2" id="searchType">
+                        <option th:selected="${searchType == 'title'}" value="title">제목</option>
+                        <option th:selected="${searchType == 'content'}" value="content">본문</option>
+                        <option th:selected="${searchType == 'titleContent'}" value="titleContent">제목+본문</option>
+                        <option th:selected="${searchType == 'member'}" value="member">작성자</option>
+                        <option th:selected="${searchType == 'tag'}" value="tag">태그</option>
+                    </select>
+                </div>
                 <label for="keyword" class="sr-only">Search</label>
                 <input class="box" id="keyword" name="keyword" type="search" placeholder="키워드를 입력하세요" aria-label="Search" th:value="${keyword}">
                 <button class="btn" type="submit">검색</button>
