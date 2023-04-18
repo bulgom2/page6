@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name="TAG_TB")
+@Table(name="TAG_TB", uniqueConstraints={@UniqueConstraint(columnNames = {"TAG_NAME"})})
 @Getter
 @Setter
 @NoArgsConstructor

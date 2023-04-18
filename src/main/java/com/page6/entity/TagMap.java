@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
-@Table(name="TAG_MAP_TB")
+@Table(name="TAG_MAP_TB", uniqueConstraints={@UniqueConstraint(columnNames = {"BOARD_FK", "TAG_FK"})})
 @Getter
 @Setter
 @AllArgsConstructor

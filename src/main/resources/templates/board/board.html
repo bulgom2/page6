@@ -18,6 +18,14 @@
                 <p class="lead" th:utext="${board.content}" style="color:#4F5E5A">게시물 내용</p>
             </div>
         </div>
+
+        <!-- 해시태그 영역 -->
+        <div th:each="tag : ${tagList}" style="display: flex">
+            <span th:text="'#' + ${tag}" style="color: gray"></span>
+        </div>
+        <!-- 해시태그 영역 끝 -->
+
+
         <!-- 좋아요 -->
         <div style="display: flex">
             <!-- 좋아요 누르지 않았을 때 -->

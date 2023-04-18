@@ -25,9 +25,11 @@ import org.springframework.data.domain.Page;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -48,13 +50,20 @@ public class BoardController {
     //글쓰기 요청
     @PostMapping("/write")
     public String boardWritePro(@RequestParam ("tags") String tags, Board board, Principal principal){
-        System.out.println("tags=" + tags);
+        //글 저장
+        String email = principal.getName();
+        boardService.write(board, email);
+
+        //태그 저장
         String[] tagArr = tags.split("#");
+        tagArr = Arrays.stream(tagArr)
+                .filter(s -> !s.isEmpty())      //빈칸 없애줌
+                .collect(Collectors.toSet())    //중복 없애줌
+                .toArray(String[]::new);
+
         for(int i = 0; i < tagArr.length; i++)
             tagService.addTag(board.getId(), tagArr[i]);
 
-        String email = principal.getName();
-        boardService.write(board, email);
         return "redirect:/board/" + board.getId();
     }
 
@@ -130,6 +139,10 @@ public class BoardController {
             likeFlag = heartService.heartFlag(id, email);
         }
         model.addAttribute("likeFlag", likeFlag);
+
+        //태그 리스트 받기
+        List<String> tagList = tagService.getTagList(id);
+        model.addAttribute("tagList", tagList);
 //        log.info("board={}", board);
         return "/board/board";
     }
