@@ -52,6 +52,15 @@ public class ApplicationTests {
         boolean flag = heartService.heartFlag(1L, "test@test");
         System.out.println("flag값=" + flag);
     }
+
+    @DisplayName("검색 테스트")
+    @Test
+    void 검색_테스트() {
+//        String keyword = "불곰";
+//        List<Board> list = boardService.searchByWriter(keyword);
+//        for(int i = 0; i < list.size(); i++)
+//            System.out.println(list.get(i).toString());
+    }
 //    @DisplayName("조회수 테스트")
 //    @Test
 //    void 조회수_테스트() {

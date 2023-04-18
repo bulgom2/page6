@@ -93,4 +93,26 @@ public class BoardService {
 //        return boardRepository.findAll(pageable);
 //    }
 
+
+    ////////////////////////    서치    ////////////////////////
+    //제목 포함 검색
+    public Page<Board> searchByTitle(String title, Pageable pageable) {
+        return boardRepository.findByTitleContainingIgnoreCase(title, pageable);
+    }
+
+    //본문 포함 검색
+    public Page<Board> searchByContent(String content, Pageable pageable) {
+        return boardRepository.findByContentContainingIgnoreCase(content, pageable);
+    }
+
+    //제목+본문 포함 검색
+    public Page<Board> searchByTitleContent(String keyword, Pageable pageable) {
+        return boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+    }
+
+    //작성자 포함 검색
+    public Page<Board> searchByWriter(String keyword, Pageable pageable) {
+        return boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
+    }
+
 }

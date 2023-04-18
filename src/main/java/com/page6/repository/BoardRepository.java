@@ -8,9 +8,23 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    ////////////////////// 검색 //////////////////////
+    //제목 포함 검색
+    Page<Board> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+
+    //본문 포함 검색
+    Page<Board> findByContentContainingIgnoreCase(String content, Pageable pageable);
+
+    //제목+본문 포함 검색
+    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content, Pageable pageable);
+
+    //작성자 포함 검색
+    Page<Board> findByMemberNameContainingIgnoreCase(String keyword, Pageable pageable);
 
     //조회수 개수 플러스
     @Modifying
