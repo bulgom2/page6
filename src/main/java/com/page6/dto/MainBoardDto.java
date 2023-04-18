@@ -15,9 +15,9 @@ public class MainBoardDto {
 
     public long content;       // 본문 내용
 
-    public int like_count;     // 좋아요 개수
+    public int likes;     // 좋아요 개수
 
-    public int view_count;     // 조회수
+    public int views;     // 조회수
 
     public String regdt;    // 생성일자
 

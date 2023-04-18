@@ -7,8 +7,7 @@ import com.page6.entity.Member;
 import com.page6.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.data.domain.Page;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.io.File;
@@ -77,13 +76,6 @@ public class BoardController {
 //        return "board/galleryList";
 //    }
 
-    // 동진 페이징
-//    @GetMapping("/")
-//    public String boardList(@PageableDefault(size = 10) Pageable pageable, Model model) {
-//        List<BoardDto> boardList = boardService.findAll(pageable).toList();
-//        model.addAttribute("boardList", boardList);
-//        return "board/galleryList";
-//    }
 
 
     //검색 페이징
@@ -151,6 +143,153 @@ public class BoardController {
 
         return "board/galleryList";
     }
+
+    @GetMapping("/sort/{sortType}")
+    public String sortedList(
+            @PathVariable("sortType") Long sortType,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.Direction.DESC, "id");
+
+        Page<Board> sortPage = null;
+
+        if (sortType == 1) {
+            sortPage = boardService.findAllByOrderByName(pageable);
+        } else if (sortType == 2) {
+            sortPage = boardService.findAllByOrderByTitle(pageable);
+        } else if (sortType == 3) {
+            sortPage = boardService.findAllByOrderByIdDesc(pageable);
+        } else if (sortType == 4) {
+            sortPage = boardService.findAllByOrderByLikesDesc(pageable);
+        } else if (sortType == 5) {
+            sortPage = boardService.findAllByOrderByViewsDesc(pageable);
+        }
+
+        List<BoardDto> boardDtoList = sortPage.getContent()
+                .stream()
+                .map(board -> {
+                    BoardDto boardDto = BoardDto.of(board);
+                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId())); // 댓글 개수
+                    return boardDto;
+                })
+                .collect(Collectors.toList());
+
+        Page<BoardDto> list  = new PageImpl<>(boardDtoList, pageable, sortPage.getTotalElements());
+
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+        int lastPage = list.getTotalPages() - 1;
+
+        if (nowPage < 5) {
+            endPage = 10;
+        } else if (nowPage < 10) {
+            endPage = 10 + (nowPage - 5);
+        }
+        if (nowPage == 0) {
+            startPage = 1;
+        }
+
+        model.addAttribute("boardList", list.getContent());
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("sortType", sortType);
+
+        return "board/galleryList";
+    }
+
+
+
+// 정렬 레퍼런스 1
+
+//    @GetMapping("/{page}/{sort-type}")
+//    public String boardList2(@PathVariable("sort-type") String sortType, Model model, @PageableDefault(page=0, size=10, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
+//
+//        Page<Board> sortPage = null;
+//
+//        if (sortType.equals("name")) {
+//            sortPage = boardService.findAllByOrderByName(pageable);
+//        } else if (sortType.equals("title")) {
+//            sortPage = boardService.findAllByOrderByTitleAsc(pageable);
+//        } else if (sortType.equals("id")) {
+//            sortPage = boardService.findAllByOrderByIdDesc(pageable);
+//        } else if (sortType.equals("likes")) {
+//            sortPage = boardService.findAllByOrderByLikesDesc(pageable);
+//        } else if (sortType.equals("views")) {
+//            sortPage = boardService.findAllByOrderByViewsDesc(pageable);
+//        }
+//
+//        List<BoardDto> boardDtoList = sortPage.getContent()
+//                .stream()
+//                .map(board -> {
+//                    BoardDto boardDto = BoardDto.of(board);
+//                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId())); // 댓글 개수
+//                    return boardDto;
+//                })
+//                .collect(Collectors.toList());
+//        Page<BoardDto> list = new PageImpl<>(boardDtoList, pageable, sortPage.getTotalElements());
+//
+//        //페이지블럭 처리
+//        //1을 더해주는 이유는 pageable은 0부터라 1을 처리하려면 1을 더해서 시작해주어야 한다.
+//        int nowPage = list.getPageable().getPageNumber() + 1;
+//        //-1값이 들어가는 것을 막기 위해서 max값으로 두 개의 값을 넣고 더 큰 값을 넣어주게 된다.
+//        int startPage =  Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+//        int lastPage = list.getTotalPages() - 1;
+//
+//        if (nowPage < 5) {
+//            endPage = 10;
+//        }
+//        else if (nowPage < 10) {
+//            endPage = 10 + (nowPage - 5);
+//        }
+//        if (nowPage == 0) {
+//            startPage = 1;
+//        }
+//
+//        model.addAttribute("boardList", list.getContent());
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("lastPage", lastPage);
+//
+//        return "board/galleryList";
+//    }
+
+//    @GetMapping("/sorted-by-title")
+//    public String boardListSortedByTitle(Model model,
+//                                         @RequestParam(value = "page", defaultValue = "1") int pageNum) {
+//        Page<Board> list = boardService.getAllBoardsSortedByTitle(pageNum);
+//
+//        //페이지블럭 처리
+//        //1을 더해주는 이유는 pageable은 0부터라 1을 처리하려면 1을 더해서 시작해주어야 한다.
+//        int nowPage = list.getPageable().getPageNumber() + 1;
+//        //-1값이 들어가는 것을 막기 위해서 max값으로 두 개의 값을 넣고 더 큰 값을 넣어주게 된다.
+//        int startPage =  Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+//        int lastPage = list.getTotalPages() - 1;
+//
+//        if (nowPage < 5){
+//            endPage = 10;
+//        }
+//        else if (nowPage < 10){
+//            endPage = 10 + (nowPage - 5);
+//        }
+//        if (nowPage == 0) {
+//            startPage = 1;
+//        }
+//
+//        model.addAttribute("boardList", list.getContent());
+//        model.addAttribute("nowPage", pageNum);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("lastPage", lastPage);
+//        return "board/galleryList";
+//    }
 
     //게시글 조회 페이지
     @GetMapping("/board/{id}")

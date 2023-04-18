@@ -11,6 +11,20 @@
 <!--            <h2 th:text="#{page.boards}">글 목록</h2>-->
         </div>
 
+        <div class="sort">
+            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">
+                <label for="sort-type">Sort By:</label>
+                <select name="sortType" id="sort-type" onchange="this.form.submit()">
+                    <option value="1" th:selected="${sortType == 1}">Name</option>
+                    <option value="2" th:selected="${sortType == 2}">Title</option>
+                    <option value="3" th:selected="${sortType == 3}">Index</option>
+                    <option value="4" th:selected="${sortType == 4}">Likes</option>
+                    <option value="5" th:selected="${sortType == 5}">Views</option>
+                </select>
+            </form>
+        </div>
+
+
         <div class="card-deck">
             <div class="card" th:each="board: ${boardList}">
 <!--                <img class="card-img-top" th:if="${not #strings.isEmpty(board.image)}" th:src="${board.image}" alt="게시물 이미지">-->
@@ -25,7 +39,7 @@
                 <small class="text-muted" th:text="${board.regdate}" style="color:#4F5E5A">등록일</small>
                 <div class="views">
                     <img src="../../css/eye.png" class="eye" alt="eye">
-                    <span th:text="${board.view_cnt}" style="color:#4F5E5A">조회수</span>
+                    <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
                 </div>
             </div>
             </div>
