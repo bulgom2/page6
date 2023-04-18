@@ -72,7 +72,6 @@ public class BoardService {
         boardRepository.updateView(id);
     }
 
-    // 동진 페이징
    // 페이징 리스트 조회 기능
     public Page<BoardDto> findAll(Pageable pageable) {
         Page<Board> boardPage = boardRepository.findAll(pageable);
@@ -86,6 +85,45 @@ public class BoardService {
                 .collect(Collectors.toList());
         return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
     }
+
+    // 이름 정렬 페이징
+//    public Page<BoardDto> findAllByOrderByNameAsc(Pageable pageable) {
+//        Page<Board> boardPage = boardRepository.findAllByOrderByNameAsc(pageable);
+//        List<BoardDto> boardDtoList = boardPage.getContent()
+//                .stream()
+//                .map(board -> {
+//                    BoardDto boardDto = BoardDto.of(board);
+//                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId())); // 댓글 개수
+//                    return boardDto;
+//                })
+//                .collect(Collectors.toList());
+//        return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
+//    }
+//    public List<Board> findAllByOrderByName() {
+//        return boardRepository.findAllByOrderByName();
+//    }
+
+    public Page<Board> findAllByOrderByName(Pageable pageable) {
+
+        return boardRepository.findAllByOrderByName(pageable);
+    }
+    public Page<Board> findAllByOrderByTitle(Pageable pageable) {
+        return boardRepository.findAllByOrderByTitle(pageable);
+    }
+
+    public Page<Board> findAllByOrderByIdDesc(Pageable pageable) {
+        return boardRepository.findAllByOrderByIdDesc(pageable);
+    }
+
+    public Page<Board> findAllByOrderByLikesDesc(Pageable pageable) {
+        return boardRepository.findAllByOrderByLikesDesc(pageable);
+    }
+
+    public Page<Board> findAllByOrderByViewsDesc(Pageable pageable) {
+        return boardRepository.findAllByOrderByViewsDesc(pageable);
+    }
+
+
 
 //    // 내 페이징
 //    public Page<Board> boardList(Pageable pageable){

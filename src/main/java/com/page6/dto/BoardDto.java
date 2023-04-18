@@ -18,9 +18,9 @@ public class BoardDto {
 
     public String content;       // 본문 내용
 
-    public int like_cnt;     // 좋아요 개수
+    public int likes;     // 좋아요 개수
 
-    public int view_cnt;     // 조회수
+    public int views;     // 조회수
 
     public String regdate;    // 생성일자
     
@@ -34,8 +34,8 @@ public class BoardDto {
                 .title(board.getTitle())
                 .writer(board.getMember().getName())
                 .content(board.getContent())
-                .like_cnt(board.getLike_cnt())
-                .view_cnt(board.getView_cnt())
+                .likes(board.getLikes())
+                .views(board.getViews())
                 .regdate(board.getRegdate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }

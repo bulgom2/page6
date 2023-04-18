@@ -9,7 +9,7 @@
         <div class="py-5 text-center">
             <h2 th:text="${board.title}" style="color:#4F5E5A">게시물 제목</h2>
             <hr class="my-4">
-            <div th:text="'작성자: ' + ${board.writer} + ' | 조회수: ' + ${board.view_cnt} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
+            <div th:text="'작성자: ' + ${board.writer} + ' | 조회수: ' + ${board.views} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
         </div>
 
         <div class="jumbotron jumbotron-fluid" style="background-color:transparent">
@@ -32,7 +32,7 @@
             <i class="bi bi-suit-heart" id="heart-icon-false" th:if="${!likeFlag}" onclick="addLike(event); return;"></i>
             <!-- 좋아요 눌렀을 때 -->
             <i class="bi bi-suit-heart-fill" id="heart-icon-true" th:if="${likeFlag}"></i>
-            <span style="margin: 0 0 2px 5px; color: #4F5E5A;" th:text="${board.like_cnt}"></span>
+            <span style="margin: 0 0 2px 5px; color: #4F5E5A;" th:text="${board.likes}"></span>
             <form id="like-form" method="post" th:action="@{/like/add}">
             <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
