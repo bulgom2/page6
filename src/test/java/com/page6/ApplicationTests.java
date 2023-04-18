@@ -12,6 +12,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 
@@ -52,6 +56,17 @@ public class ApplicationTests {
         boolean flag = heartService.heartFlag(1L, "test@test");
         System.out.println("flag값=" + flag);
     }
+
+//    @DisplayName("정렬 테스트")
+//    @Test
+//    void 정렬() {
+//        List<Board> nameSort = boardService.findAllByOrderByName();
+//        for(int i = 0; i < nameSort.size(); i++)
+//            System.out.println(nameSort.get(i).toString());
+//
+//    }
+
+
 //    @DisplayName("조회수 테스트")
 //    @Test
 //    void 조회수_테스트() {
