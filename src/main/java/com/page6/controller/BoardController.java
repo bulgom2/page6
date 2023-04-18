@@ -27,6 +27,7 @@ import java.io.File;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -58,7 +59,7 @@ public class BoardController {
         String[] tagArr = tags.split("#");
         tagArr = Arrays.stream(tagArr)
                 .filter(s -> !s.isEmpty())      //빈칸 없애줌
-                .collect(Collectors.toSet())    //중복 없애줌
+                .collect(Collectors.toCollection(LinkedHashSet::new))    //중복 없애줌
                 .toArray(String[]::new);
 
         for(int i = 0; i < tagArr.length; i++)
