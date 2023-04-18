@@ -70,14 +70,14 @@
         <div class="paging-btn">
             <div class="blank-space"></div>
 <!--            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>-->
-            <a th:if="${nowPage > 5}" th:href="@{/search(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}">처음</a>
+            <a th:if="${nowPage > 5}" th:href="@{/search(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
             <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
 <!--                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>-->
-                <a th:if="${page != nowPage}" th:href="@{/search(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}" th:text="${page}"></a>
+                <a th:if="${page != nowPage}" th:href="@{/search(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}" th:text="${page}"></a>
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
 <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}">마지막</a>
+            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
             <div class="blank-space"></div>
         </div>
     </div> <!-- /container -->
