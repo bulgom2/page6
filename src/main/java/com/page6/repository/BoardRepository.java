@@ -26,6 +26,15 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     //작성자 포함 검색
     Page<Board> findByMemberNameContainingIgnoreCase(String keyword, Pageable pageable);
 
+    //해시태그 검색
+    @Query("SELECT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name = :name")
+    List<Board> findByTagName(@Param("name") String name);
+
+    //해시태그 포함 검색
+    @Query("SELECT DISTINCT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name LIKE %:name%")
+    List<Board> findByTagContaing(@Param("name") String name);
+
+
     //조회수 개수 플러스
     @Modifying
     @Query("update Board b set b.view_cnt = b.view_cnt + 1 where b.id = :id")

@@ -96,23 +96,39 @@ public class BoardService {
 
     ////////////////////////    서치    ////////////////////////
     //제목 포함 검색
-    public Page<Board> searchByTitle(String title, Pageable pageable) {
+    @Transactional
+    public Page<Board> searchByTitleContaing(String title, Pageable pageable) {
         return boardRepository.findByTitleContainingIgnoreCase(title, pageable);
     }
 
     //본문 포함 검색
-    public Page<Board> searchByContent(String content, Pageable pageable) {
+    @Transactional
+    public Page<Board> searchByContentContaing(String content, Pageable pageable) {
         return boardRepository.findByContentContainingIgnoreCase(content, pageable);
     }
 
     //제목+본문 포함 검색
-    public Page<Board> searchByTitleContent(String keyword, Pageable pageable) {
+    @Transactional
+    public Page<Board> searchByTitleContentContaing(String keyword, Pageable pageable) {
         return boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
     }
 
     //작성자 포함 검색
-    public Page<Board> searchByWriter(String keyword, Pageable pageable) {
+    @Transactional
+    public Page<Board> searchByWriterContaing(String keyword, Pageable pageable) {
         return boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
+    }
+
+    //해시태그 포함 검색
+    @Transactional
+    public List<Board> searchByTagContaing(String keyword) {
+        return boardRepository.findByTagContaing(keyword);
+    }
+
+    //해시태그 검색
+    @Transactional
+    public List<Board> searchByTag(String keyword) {
+        return boardRepository.findByTagName(keyword);
     }
 
 }

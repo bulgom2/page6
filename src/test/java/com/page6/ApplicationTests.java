@@ -56,10 +56,10 @@ public class ApplicationTests {
     @DisplayName("검색 테스트")
     @Test
     void 검색_테스트() {
-//        String keyword = "불곰";
-//        List<Board> list = boardService.searchByWriter(keyword);
-//        for(int i = 0; i < list.size(); i++)
-//            System.out.println(list.get(i).toString());
+        String keyword = "테스트";
+        List<Board> list = boardService.searchByTagContaing(keyword);
+        for(int i = 0; i < list.size(); i++)
+            System.out.println(list.get(i).toString());
     }
 //    @DisplayName("조회수 테스트")
 //    @Test
