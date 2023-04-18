@@ -78,35 +78,49 @@ public class BoardController {
 
 
 
-    //검색 페이징
+    //검색&정렬&페이징
     @GetMapping({"/search", "/search/{page}"})
-    public String searchList(Model model, @PageableDefault(page=0, size=10, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
+    public String searchList(Model model,
+                                 @RequestParam(defaultValue = "id") String sortType,
+                                 @RequestParam(defaultValue = "desc") String sortOrder,
+                                 @RequestParam(defaultValue = "") String keyword,
+                                 @RequestParam(defaultValue = "1") int page) {
+        Sort sort;
+        if (sortType.equals("member")) { // member의 name으로 정렬하는 경우
+            sort = sortOrder.equalsIgnoreCase("desc") ?
+                    Sort.by("member.name").descending() : Sort.by("member.name").ascending();
+        } else { // 기본적으로 sortType으로 정렬하는 경우
+            sort = sortOrder.equalsIgnoreCase("desc") ? Sort.by(sortType).descending() : Sort.by(sortType);
+        }
+        Pageable pageable = PageRequest.of(page - 1, 10, sort);
+        Page<BoardDto> list = boardService.findAll(keyword, pageable);
 
-        Page<BoardDto> list = boardService.findAll(pageable);
-
-        //페이지블럭 처리
-        //1을 더해주는 이유는 pageable은 0부터라 1을 처리하려면 1을 더해서 시작해주어야 한다.
         int nowPage = list.getPageable().getPageNumber() + 1;
-        //-1값이 들어가는 것을 막기 위해서 max값으로 두 개의 값을 넣고 더 큰 값을 넣어주게 된다.
-        int startPage =  Math.max(nowPage - 4, 1);
+        int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
-        int lastPage = list.getTotalPages() - 1;
+        int lastPage = list.getTotalPages();
 
-        if (nowPage < 5){
-            endPage = 10;
+        int maxPage = 10; // 최대 페이지 수
+        if (list.getTotalPages() < maxPage) {
+            endPage = list.getTotalPages();
+        } else {
+            endPage = Math.min(nowPage + 5, list.getTotalPages());
+            if (nowPage < 5)
+                endPage = maxPage;
+            else if (nowPage < maxPage - 5)
+                endPage = maxPage;
         }
-        else if (nowPage < 10){
-            endPage = 10 + (nowPage - 5);
-        }
-        if (nowPage == 0) {
-            startPage = 1;
-        }
+
+        if (nowPage == 0) startPage = 1;
 
         model.addAttribute("boardList", list.getContent());
-        model.addAttribute("nowPage",nowPage);
+        model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("lastPage", lastPage);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("sortType", sortType);
+        model.addAttribute("sortOrder", sortOrder);
 
         return "board/galleryList";
     }

@@ -11,18 +11,18 @@
 <!--            <h2 th:text="#{page.boards}">글 목록</h2>-->
         </div>
 
-        <div class="sort">
-            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">
-                <label for="sort-type">Sort By:</label>
-                <select name="sortType" id="sort-type" onchange="this.form.submit()">
-                    <option value="1" th:selected="${sortType == 1}">Name</option>
-                    <option value="2" th:selected="${sortType == 2}">Title</option>
-                    <option value="3" th:selected="${sortType == 3}">Index</option>
-                    <option value="4" th:selected="${sortType == 4}">Likes</option>
-                    <option value="5" th:selected="${sortType == 5}">Views</option>
-                </select>
-            </form>
-        </div>
+<!--        <div class="sort">-->
+<!--            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">-->
+<!--                <label for="sort-type">Sort By:</label>-->
+<!--                <select name="sortType" id="sort-type" onchange="this.form.submit()">-->
+<!--                    <option value="1" th:selected="${sortType == 1}">Name</option>-->
+<!--                    <option value="2" th:selected="${sortType == 2}">Title</option>-->
+<!--                    <option value="3" th:selected="${sortType == 3}">Index</option>-->
+<!--                    <option value="4" th:selected="${sortType == 4}">Likes</option>-->
+<!--                    <option value="5" th:selected="${sortType == 5}">Views</option>-->
+<!--                </select>-->
+<!--            </form>-->
+<!--        </div>-->
 
 
         <div class="card-deck">
@@ -49,12 +49,15 @@
 
         <div class="paging-btn">
             <div class="blank-space"></div>
-            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>
+<!--            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>-->
+            <a th:if="${nowPage > 5}" th:href="@{/search(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}">처음</a>
             <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>
+<!--                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>-->
+                <a th:if="${page != nowPage}" th:href="@{/search(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}" th:text="${page}"></a>
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
-            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>
+<!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
+            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword})}">마지막</a>
             <div class="blank-space"></div>
         </div>
     </div> <!-- /container -->
@@ -67,14 +70,41 @@
     </span>
     </div>
 
-    <div style="margin: 0 auto; width: 290px">
-        <form id="searchForm" class="form-inline my-2 my-lg-0" th:action="@{/}" method="post" style="align-content: center;">
+    <form th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
+        <div class="sort">
+            <label for="sort-type">Sort By:</label>
+            <select name="sortType" class="form-control mb-2" id="sort-type" onchange="this.form.submit()">
+                <option value="id" th:selected="${sortType == 'index'}">날짜</option>
+                <option value="member" th:selected="${sortType == 'member'}">작성자</option>
+                <option value="title" th:selected="${sortType == 'title'}">제목</option>
+                <option value="likes" th:selected="${sortType == 'likes'}">좋아요</option>
+                <option value="views" th:selected="${sortType == 'views'}">조회수</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="sortOrder" class="sr-only">Sort order</label>
+            <select class="form-control mb-2" id="sortOrder" name="sortOrder"
+                    onchange="this.form.submit()">
+                <option value="asc" th:selected="${sortOrder=='asc'}">오름차순</option>
+                <option value="desc" th:selected="${sortOrder=='desc'}">내림차순</option>
+            </select>
+        </div>
+        <div style="margin: 0 auto; width: 290px">
             <div class="search-btn-div">
-                <input class="box" name="searchQuery" type="search" placeholder="키워드를 입력하세요" aria-label="Search">
+                <label for="keyword" class="sr-only">Search</label>
+                <input class="box" id="keyword" name="keyword" type="search" placeholder="키워드를 입력하세요" aria-label="Search" th:value="${keyword}">
                 <button class="btn" type="submit">검색</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+<!--    <div style="margin: 0 auto; width: 290px">-->
+<!--        <form id="searchForm" class="form-inline my-2 my-lg-0" th:action="@{/}" method="post" style="align-content: center;">-->
+<!--            <div class="search-btn-div">-->
+<!--                <input class="box" name="searchQuery" type="search" placeholder="키워드를 입력하세요" aria-label="Search">-->
+<!--                <button class="btn" type="submit">검색</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
     <br>
 
 

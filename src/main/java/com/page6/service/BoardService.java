@@ -73,8 +73,24 @@ public class BoardService {
     }
 
    // 페이징 리스트 조회 기능
-    public Page<BoardDto> findAll(Pageable pageable) {
-        Page<Board> boardPage = boardRepository.findAll(pageable);
+   public Page<BoardDto> findAll(Pageable pageable) {
+       Page<Board> boardPage = boardRepository.findAll(pageable);
+       List<BoardDto> boardDtoList = boardPage.getContent()
+               .stream()
+               .map(board -> {
+                   BoardDto boardDto = BoardDto.of(board);
+                   boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                   return boardDto;
+               })
+               .collect(Collectors.toList());
+       return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
+   }
+
+   //키워드 검색
+    public Page<BoardDto> findAll(String keyword, Pageable pageable) {
+        Page<Board> boardPage = keyword == null || keyword.isEmpty() || "".equals(keyword) ?
+                boardRepository.findAll(pageable) :
+                boardRepository.findByTitleContainingIgnoreCase(keyword, pageable);
         List<BoardDto> boardDtoList = boardPage.getContent()
                 .stream()
                 .map(board -> {
@@ -103,6 +119,19 @@ public class BoardService {
 //        return boardRepository.findAllByOrderByName();
 //    }
 
+    //BoardDto 이름 찾기
+    public Page<BoardDto> findAllByName(Pageable pageable) {
+        Page<Board> boardPage = boardRepository.findAllByOrderByName(pageable);
+        List<BoardDto> boardDtoList = boardPage.getContent()
+                .stream()
+                .map(board -> {
+                    BoardDto boardDto = BoardDto.of(board);
+                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                    return boardDto;
+                })
+                .collect(Collectors.toList());
+        return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
+    }
     public Page<Board> findAllByOrderByName(Pageable pageable) {
 
         return boardRepository.findAllByOrderByName(pageable);
