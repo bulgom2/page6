@@ -11,6 +11,26 @@
 <!--            <h2 th:text="#{page.boards}">글 목록</h2>-->
         </div>
 
+        <form th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
+            <div class="sort">
+                <label for="sort-type">Sort By:</label>
+                <select name="sortType" class="form-control mb-2" id="sort-type" onchange="this.form.submit()">
+                    <option value="id" th:selected="${sortType == 'index'}">날짜</option>
+                    <option value="member" th:selected="${sortType == 'member'}">작성자</option>
+                    <option value="title" th:selected="${sortType == 'title'}">제목</option>
+                    <option value="likes" th:selected="${sortType == 'likes'}">좋아요</option>
+                    <option value="views" th:selected="${sortType == 'views'}">조회수</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <label for="sortOrder" class="sr-only">Sort order</label>
+                <select class="form-control mb-2" id="sortOrder" name="sortOrder"
+                        onchange="this.form.submit()">
+                    <option value="asc" th:selected="${sortOrder=='asc'}">오름차순</option>
+                    <option value="desc" th:selected="${sortOrder=='desc'}">내림차순</option>
+                </select>
+            </div>
+        </form>
 <!--        <div class="sort">-->
 <!--            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">-->
 <!--                <label for="sort-type">Sort By:</label>-->
@@ -70,25 +90,8 @@
     </span>
     </div>
 
-    <form th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
-        <div class="sort">
-            <label for="sort-type">Sort By:</label>
-            <select name="sortType" class="form-control mb-2" id="sort-type" onchange="this.form.submit()">
-                <option value="id" th:selected="${sortType == 'index'}">날짜</option>
-                <option value="member" th:selected="${sortType == 'member'}">작성자</option>
-                <option value="title" th:selected="${sortType == 'title'}">제목</option>
-                <option value="likes" th:selected="${sortType == 'likes'}">좋아요</option>
-                <option value="views" th:selected="${sortType == 'views'}">조회수</option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <label for="sortOrder" class="sr-only">Sort order</label>
-            <select class="form-control mb-2" id="sortOrder" name="sortOrder"
-                    onchange="this.form.submit()">
-                <option value="asc" th:selected="${sortOrder=='asc'}">오름차순</option>
-                <option value="desc" th:selected="${sortOrder=='desc'}">내림차순</option>
-            </select>
-        </div>
+
+    <form id="searchForm" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
         <div style="margin: 0 auto; width: 290px">
             <div class="search-btn-div">
                 <label for="keyword" class="sr-only">Search</label>
