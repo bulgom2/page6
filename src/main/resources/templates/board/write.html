@@ -71,8 +71,7 @@
       let target = ev.target;
       if(target.tagName === "SPAN" && target.className === "close"){
         let textNode = target.previousElementSibling.innerText.trim();
-        tagValue.value = tagValue.value.replace("#" + textNode, "");
-        console.log(tagValue.value);
+        tagValue.value = tagValue.value.replace(textNode, "");
         tags = tags.filter(tag=> textNode !== tag);
         render();
       }
