@@ -219,18 +219,6 @@ public class BoardService {
         return boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
     }
 
-    //해시태그 포함 검색
-//    @Transactional
-//    public List<Board> searchByTagContaing(String keyword) {
-//        return boardRepository.findByTagContaing(keyword);
-//    }
-//
-//    //해시태그 검색
-//    @Transactional
-//    public List<Board> searchByTag(String keyword) {
-//        return boardRepository.findByTagName(keyword);
-//    }
-
 
     ///////////////////////다중 해시태그 검색////////////////////////
     @Transactional
@@ -263,7 +251,7 @@ public class BoardService {
         //set에 저장된 값을 모두 Board형으로 찾아서 boardList에 넣기
         List<Long> boardIds = new ArrayList<>(boardIdSet);
         List<Board> boardList = new ArrayList<>();
-//        Page<Board> boardPage = boardRepository.findAllById(boardIds, pageable);
+        Collections.sort(boardIds);
         for(int i = 0; i < boardIdSet.size(); i++) {
             Board board = boardRepository.findById(boardIds.get(i)).get();
             boardList.add(board);
@@ -274,6 +262,43 @@ public class BoardService {
 //        if (sort != null) {
 //            boardList.sort(sort);
 //        }
+        // 정렬
+        String sortType = pageable.getSort().toString().split(":")[0];
+        String sortOrder = pageable.getSort().toString().split(":")[1];
+        Comparator<Board> comparator = null;
+
+        switch (sortType) {
+            case "id":
+                comparator = Comparator.comparing(Board::getId);
+                break;
+            case "member":
+                comparator = Comparator.comparing(b -> b.getMember().getName());
+                break;
+            case "title":
+                comparator = Comparator.comparing(Board::getTitle);
+                break;
+            case "likes":
+                comparator = Comparator.comparing(Board::getLikes);
+                break;
+            case "views":
+                comparator = Comparator.comparing(Board::getViews);
+                break;
+            default:
+                comparator = Comparator.comparing(Board::getId);
+                break;
+        }
+
+        if (sortOrder.replaceAll(" ", "").equalsIgnoreCase("DESC")) {
+            comparator = comparator.reversed();
+        }
+        System.out.println("sortOrder = " + sortOrder);
+
+        // 두 개 이상의 속성으로 정렬
+        comparator = comparator.thenComparing(Comparator.comparing(Board::getId));
+        boardList.sort(comparator);
+
+
+
 
         //Page형으로 변환
         int pageSize = pageable.getPageSize();
@@ -289,8 +314,7 @@ public class BoardService {
             currentPageList = boardList.subList(startItem, toIndex);
         }
 
-        Page<Board> boardPage = new PageImpl<>(currentPageList, pageable, boardList.size());
-        return boardPage;
+        return new PageImpl<>(currentPageList, pageable, boardList.size());
     }
 
 }
