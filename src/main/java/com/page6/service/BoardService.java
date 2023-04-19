@@ -258,11 +258,6 @@ public class BoardService {
         }
 
         //Board 객체들을 정렬
-//        Sort sort = pageable.getSort();
-//        if (sort != null) {
-//            boardList.sort(sort);
-//        }
-        // 정렬
         String sortType = pageable.getSort().toString().split(":")[0];
         String sortOrder = pageable.getSort().toString().split(":")[1];
         Comparator<Board> comparator = null;
@@ -291,14 +286,10 @@ public class BoardService {
         if (sortOrder.replaceAll(" ", "").equalsIgnoreCase("DESC")) {
             comparator = comparator.reversed();
         }
-        System.out.println("sortOrder = " + sortOrder);
 
         // 두 개 이상의 속성으로 정렬
         comparator = comparator.thenComparing(Comparator.comparing(Board::getId));
         boardList.sort(comparator);
-
-
-
 
         //Page형으로 변환
         int pageSize = pageable.getPageSize();
