@@ -289,7 +289,8 @@ public class BoardService {
             currentPageList = boardList.subList(startItem, toIndex);
         }
 
-        return new PageImpl<>(currentPageList, pageable, boardList.size());
+        Page<Board> boardPage = new PageImpl<>(currentPageList, pageable, boardList.size());
+        return boardPage;
     }
 
 }
