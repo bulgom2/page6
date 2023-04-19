@@ -48,7 +48,12 @@
         </form>
 
 
-        <div class="card-deck">
+        <!-- 게시물이 없을 때 -->
+        <div th:if="${boardList.isEmpty()}" class="empty-message">
+            게시물이 없습니다.
+        </div>
+        <!-- 게시물이 있을 때 -->
+        <div th:if="${not boardList.isEmpty()}" class="card-deck">
             <div class="card" th:each="board: ${boardList}">
 <!--                <img class="card-img-top" th:if="${not #strings.isEmpty(board.image)}" th:src="${board.image}" alt="게시물 이미지">-->
 <!--                <img class="card-img-top" th:if="${#strings.isEmpty(board.image)}" src="" alt="이미지 없음">-->
@@ -71,7 +76,7 @@
         <br>
 
 <!--   페이징 버튼     -->
-        <div class="paging-btn">
+        <div class="paging-btn" th:if="${not boardList.isEmpty()}">
             <div class="blank-space"></div>
 <!--            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>-->
             <a th:if="${nowPage > 5}" th:href="@{/(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
@@ -83,7 +88,7 @@
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
 <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-            <a th:if="${nowPage < lastPage}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
+            <a th:if="${nowPage < lastPage - 4}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
 <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
             <div class="blank-space"></div>
         </div>
