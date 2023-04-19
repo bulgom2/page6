@@ -85,9 +85,31 @@ a:hover{
 .sort-tab {
 
 }
+/* 리스트 반응형*/
+
+/*@media (max-width: 1200px) {*/
+/*    .card-deck {*/
+/*    grid-template-columns: repeat(3, 330px);*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 992px) {*/
+/*    .card-deck {*/
+/*    grid-template-columns: repeat(2, 330px);*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 576px) {*/
+/*    .card-deck {*/
+/*    grid-template-columns: repeat(1, 330px);*/
+/*    }*/
+/*}*/
 
 .card-deck {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, 330px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
+    grid-gap: 20px; /* 각 열과 행(row) 사이의 간격을 설정 */
+    flex-wrap: wrap;
 }
 
 .card {
@@ -104,6 +126,7 @@ a:hover{
 .card-deck > .card {
     margin-bottom: 1rem;
 }
+
 .card-img-top {
     max-width: 295px;
 }
