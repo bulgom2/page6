@@ -76,8 +76,16 @@ a:hover{
     height: 70vh;
 }
 
+.sort-tab {
+
+}
+
+.card-deck {
+    justify-content: space-between;
+}
+
 .card {
-    min-width: 250px;
+    min-width: 300px;
     max-width: 300px;
 }
 
@@ -98,7 +106,7 @@ a:hover{
 input {
     border:none;
     outline: none;
-    outline-style:none;/*크롬 브라우져 input 주황색 테두리 없애는법*/
+    outline-style: none;/*크롬 브라우져 input 주황색 테두리 없애는법*/
     border-radius:0px 0px; /* 아이폰의 input 라운드 초기화 */
     -webkit-appearance:none; /* form 요소의 디바이스 기반 스타일 초기화 */
     border: 0;
@@ -120,6 +128,10 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+input#keyword.box {
+    width: 230px;
 }
 
 .btn {
@@ -277,7 +289,8 @@ ul {
     font-size: 1rem;
 }
 
-.box{
+/*
+.tagBox{
     border: 1px solid rgba(0,0,0,0.2);
     padding: .3rem;
     border-radius: 0.3rem;
@@ -286,6 +299,7 @@ ul {
     -ms-border-radius: 0.3rem;
     -o-border-radius: 0.3rem;
 }
+*/
 
 .tag{
     display: inline-block;
@@ -294,7 +308,7 @@ ul {
     padding: .3rem .5rem;
     margin: auto;
     font-size: .9rem;
-    background-color: rgba(29, 212, 105, 0.719);
+    background-color: rgba(79, 108, 87, 0.719);
     color: white;
     font-weight: 700;
     border-radius: 0.3rem;
@@ -312,4 +326,12 @@ ul {
 
 .close{
     cursor: pointer;
+    height: 18px;
+    line-height: 0.7;
 }
+
+/*span.tag {*/
+/*    display: flex;*/
+/*    justify-content: center; !* 플랙스 박스 정렬 *!*/
+/*    align-items: center; !* 플랙스 아이템 정렬 *!*/
+/*}*/

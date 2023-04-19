@@ -6,8 +6,22 @@
     <!--  본문 영역 시작  -->
 
     <div class="container">
+        <!-- 좋아요 -->
+        <div style="display:flex; justify-content:center; align-items:center">
+            <!-- 좋아요 누르지 않았을 때 -->
+            <i class="bi bi-suit-heart" id="heart-icon-false" th:if="${!likeFlag}" onclick="addLike(event); return;"></i>
+            <!-- 좋아요 눌렀을 때 -->
+            <i class="bi bi-suit-heart-fill" id="heart-icon-true" th:if="${likeFlag}"></i>
+            <span style="margin: 0 0 2px 5px; color: #4F5E5A;" th:text="${board.likes}"></span>
+            <form id="like-form" method="post" th:action="@{/like/add}">
+                <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="bid" th:name="bid" th:value="${board.id}" />
+            </form>
+        </div>
+
         <div class="py-5 text-center">
-            <h2 th:text="${board.title}" style="color:#4F5E5A">게시물 제목</h2>
+            <h1 th:text="${board.title}" style="color:#4F5E5A">게시물 제목</h1>
             <hr class="my-4">
             <div th:text="'작성자: ' + ${board.writer} + ' | 조회수: ' + ${board.views} + ' | 등록일: ' + ${board.regdate}" style="color:#4F5E5A">게시물 정보</div>
         </div>
@@ -20,25 +34,10 @@
         </div>
 
         <!-- 해시태그 영역 -->
-        <div th:each="tag : ${tagList}" style="display: flex">
+        <div th:each="tag : ${tagList}" style="display: inline; font-style:italic">
             <span th:text="'#' + ${tag}" style="color: gray"></span>
         </div>
         <!-- 해시태그 영역 끝 -->
-
-
-        <!-- 좋아요 -->
-        <div style="display: flex">
-            <!-- 좋아요 누르지 않았을 때 -->
-            <i class="bi bi-suit-heart" id="heart-icon-false" th:if="${!likeFlag}" onclick="addLike(event); return;"></i>
-            <!-- 좋아요 눌렀을 때 -->
-            <i class="bi bi-suit-heart-fill" id="heart-icon-true" th:if="${likeFlag}"></i>
-            <span style="margin: 0 0 2px 5px; color: #4F5E5A;" th:text="${board.likes}"></span>
-            <form id="like-form" method="post" th:action="@{/like/add}">
-            <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <input type="hidden" name="bid" th:name="bid" th:value="${board.id}" />
-            </form>
-        </div>
 
         <!-- 자바 스크립트 영역 -->
         <script>
@@ -56,8 +55,6 @@
         </script>
 
         <!-- 좋아요 영역 끝 -->
-
-
 
         <br><br>
 

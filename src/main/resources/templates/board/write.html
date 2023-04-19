@@ -11,9 +11,9 @@
         <div id="content-view-inner">
           <input required type="text" id="write-title" name="title" placeholder="글 제목" maxlength="30" style="width: 100%; max-width: 800px; border:none; outline: none; font-size:20px; color:#4F5E5A;"><hr>
           <!-- 해시 태그 영역 -->
+          <input class="tagInput" type="text" placeholder="#">
           <div class="tagBox" style="display: flex">
             <span class="innerBox"></span>
-            <input class="tagInput" type="text" placeholder="해시태그를 입력하세요. 엔터와 #로 구분합니다.">
             <input class="tagValue" type="hidden" name="tags">
           </div>
           <!-- 해시 태그 영역 끝 -->
@@ -80,7 +80,7 @@
     // 출력부
     function render(){
       let tmp = '';
-      let template = tag => `<span class="tag"><span>${tag}</span><span class="close">&times;</span></span>`;
+      let template = tag => `<span class="tag"><span>${tag}</span><span class="close"> &times;</span></span>`;
       tags.forEach(tag=>{
         tmp += template(tag);
       });

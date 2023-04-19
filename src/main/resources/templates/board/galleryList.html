@@ -7,13 +7,13 @@
     <!--  본문 영역 시작  -->
 
     <div class="container">
-        <div class="py-5 text-center">
-<!--            <h2 th:text="#{page.boards}">글 목록</h2>-->
-        </div>
+<!--        <div class="py-5 text-center">-->
+<!--&lt;!&ndash;            <h2 th:text="#{page.boards}">글 목록</h2>&ndash;&gt;-->
+<!--        </div>-->
 
         <form th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
             <div class="sort">
-                <label for="sort-type">Sort By:</label>
+                <label for="sort-type"></label>
                 <select name="sortType" class="form-control mb-2" id="sort-type" onchange="this.form.submit()">
                     <option value="id" th:selected="${sortType == 'index'}">날짜</option>
                     <option value="member" th:selected="${sortType == 'member'}">작성자</option>
@@ -31,6 +31,7 @@
                 </select>
             </div>
         </form>
+
 <!--        <div class="sort">-->
 <!--            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">-->
 <!--                <label for="sort-type">Sort By:</label>-->
@@ -70,7 +71,7 @@
         <div class="paging-btn">
             <div class="blank-space"></div>
 <!--            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>-->
-            <a th:if="${nowPage > 5}" th:href="@{/search(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
+            <a th:if="${nowPage > 5}" th:href="@{/search(page=1, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
             <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
 <!--                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>-->
                 <a th:if="${page != nowPage}" th:href="@{/search(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}" th:text="${page}"></a>
@@ -92,10 +93,10 @@
 
 
     <form id="searchForm" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
-        <div style="margin: 0 auto; width: 290px">
+        <div style="margin: 0 auto; width: 500px">
             <div class="search-btn-div">
                 <div class="sort">
-                    <label for="searchType">Search By:</label>
+                    <label for="searchType"></label>
                     <select name="searchType" class="form-control mb-2" id="searchType">
                         <option th:selected="${searchType == 'title'}" value="title">제목</option>
                         <option th:selected="${searchType == 'content'}" value="content">본문</option>
@@ -104,7 +105,7 @@
                         <option th:selected="${searchType == 'tag'}" value="tag">태그</option>
                     </select>
                 </div>
-                <label for="keyword" class="sr-only">Search</label>
+                <label for="keyword" class="sr-only">검색</label>
                 <input class="box" id="keyword" name="keyword" type="search" placeholder="키워드를 입력하세요" aria-label="Search" th:value="${keyword}">
                 <button class="btn" type="submit">검색</button>
             </div>

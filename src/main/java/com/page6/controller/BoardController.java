@@ -93,7 +93,7 @@ public class BoardController {
         } else { // 기본적으로 sortType으로 정렬하는 경우
             sort = sortOrder.equalsIgnoreCase("desc") ? Sort.by(sortType).descending() : Sort.by(sortType);
         }
-        Pageable pageable = PageRequest.of(page - 1, 10, sort);
+        Pageable pageable = PageRequest.of(page - 1, 12, sort);
         Page<BoardDto> list = boardService.findAll(keyword, searchType, pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -128,7 +128,7 @@ public class BoardController {
 
 //    // 내 페이징
     @GetMapping({"/", "/{page}"})
-    public String boardList(Model model, @PageableDefault(page=0, size=10, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
+    public String boardList(Model model, @PageableDefault(page=0, size=12, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
 
         Page<BoardDto> list = boardService.findAll(pageable);
 
@@ -163,10 +163,10 @@ public class BoardController {
     public String sortedList(
             @PathVariable("sortType") Long sortType,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "size", defaultValue = "12") int size,
             Model model) {
 
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page - 1, 12, Sort.Direction.DESC, "id");
 
         Page<Board> sortPage = null;
 
