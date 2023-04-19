@@ -23,12 +23,21 @@ public class BoardDto {
     public int views;     // 조회수
 
     public String regdate;    // 생성일자
+
+    public String dateBefore;   // 날짜 차이
     
     public Long comment_cnt;    //댓글 개수
 
 //    public boolean delete_flag;      // 삭제여부
 
     public static BoardDto of(Board board) {
+        //현재 날짜 저장하기
+        //board.getRegdate() db에서 받은 LocaldateTime 형식 시간 받기
+        //현재 날짜와 받은 날짜 차이 구하기
+        //1시간 이하면 분단위로 해서 datebefore에 넣기
+        //24시간 이하면 시간단위로 datebefore에 넣기
+        // 이후는 그냥 등록일 표시
+
         return BoardDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
