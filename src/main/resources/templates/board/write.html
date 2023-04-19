@@ -58,8 +58,9 @@
         ev.preventDefault();
         let arr = tagInput.value.split("#").filter(item => item !== "");
         for(let i = 0; i < arr.length; i++) {
-          tags.push("#" + arr[i]);
-          tagValue.value = tagValue.value + "#" + arr[i];
+          let value = "#" + arr[i].replaceAll(" ", "");
+          tags.push(value);
+          tagValue.value = tagValue.value + value;
         }
         render();
         tagInput.value = "";
