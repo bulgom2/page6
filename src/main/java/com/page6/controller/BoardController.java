@@ -72,17 +72,6 @@ public class BoardController {
         return "redirect:/board/" + board.getId();
     }
 
-    // 기본 목록
-//    @GetMapping("/")
-//    public String boardList(Model model) {
-//        List<BoardDto> boardList = boardService.getBoardList();
-//        model.addAttribute("boardList", boardList);
-//
-//        return "board/galleryList";
-//    }
-
-
-
     //검색&정렬&페이징
     @GetMapping({"/", "/{page}"})
     public String searchList(Model model,
