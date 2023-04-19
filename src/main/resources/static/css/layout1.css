@@ -13,8 +13,14 @@ body {
     display: none;
 }
 
-.eye {
+.eye, .heart {
     width: 17px;
+    height: 12px;
+    margin-bottom: 3px;
+}
+
+.heart {
+    width: 14px;
     height: 12px;
     margin-bottom: 3px;
 }
@@ -87,6 +93,12 @@ a:hover{
 .card {
     min-width: 300px;
     max-width: 300px;
+}
+
+.likes {
+    padding: 12px 20px;
+    display: inline;
+    text-align: right;
 }
 
 .card-deck > .card {
@@ -335,3 +347,8 @@ ul {
 /*    justify-content: center; !* 플랙스 박스 정렬 *!*/
 /*    align-items: center; !* 플랙스 아이템 정렬 *!*/
 /*}*/
+
+.form-inline{
+    display: flex;
+    justify-content: flex-end;
+}

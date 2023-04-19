@@ -94,11 +94,11 @@
     ClassicEditor
             .create(document.querySelector('#editor'), {
               ckfinder: {
-                uploadUrl : '/image/upload'
+                uploadUrl : '/uploadImage'
               }
             })
             .then(editor => {
-              console.log('Editor was initialized');
+              console.log(editor);
             })
             .catch(error => {
               console.error(error);

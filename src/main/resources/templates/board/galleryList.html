@@ -48,6 +48,10 @@
 
         <div class="card-deck">
             <div class="card" th:each="board: ${boardList}">
+                <div class="likes">
+                    <img src="../../css/heart.png" class="heart" alt="heart">
+                    <span th:text="${board.likes}" style="color:#4F5E5A">좋아요수</span>
+                </div>
 <!--                <img class="card-img-top" th:if="${not #strings.isEmpty(board.image)}" th:src="${board.image}" alt="게시물 이미지">-->
 <!--                <img class="card-img-top" th:if="${#strings.isEmpty(board.image)}" src="" alt="이미지 없음">-->
                 <img src="../../css/garlic6.jpg" class="card-img-top" alt="garlic6">

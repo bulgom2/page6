@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
@@ -336,10 +337,8 @@ public class BoardController {
         return "/board/board";
     }
 
-
-
     //이미지 오류 났을 시 write.html에서 uploadUrl에 '/image/upload' -> '/board/image/upload'
-    @PostMapping(value = "/image/upload")
+    @PostMapping(value = "/uploadImage")
     public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
 
         // ckeditor는 이미지 업로드 후 이미지 표시하기 위해 uploaded 와 url을 json 형식으로 받아야 함
