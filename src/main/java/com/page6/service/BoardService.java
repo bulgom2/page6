@@ -267,10 +267,10 @@ public class BoardService {
         }
 
         //Board 객체들을 정렬
-        Sort sort = pageable.getSort();
-        if (sort != null) {
-            boardList.sort(sort);
-        }
+//        Sort sort = pageable.getSort();
+//        if (sort != null) {
+//            boardList.sort(sort);
+//        }
 
         //Page형으로 변환
         int pageSize = pageable.getPageSize();
