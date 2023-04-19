@@ -2,8 +2,12 @@ package com.page6.service;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
+import com.page6.entity.Tag;
+import com.page6.entity.TagMap;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.MemberRepository;
+import com.page6.repository.TagMapRepository;
+import com.page6.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,11 +15,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -26,6 +30,8 @@ public class BoardService {
 
     private final MemberRepository memberRepository;
     private final CommentService commentService;
+    private final TagRepository tagRepository;
+    private final TagMapRepository tagMapRepository;
 
 
     //글쓰기 저장 기능
@@ -110,7 +116,11 @@ public class BoardService {
                     boardPage = boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
                     break;
                 case "tag":
-                    boardPage = boardRepository.findByTagContaing(keyword, pageable);
+                    String[] tags = keyword.split("[#\\s]+");
+                    tags = Arrays.stream(tags)
+                            .filter(tag -> !tag.isEmpty())
+                            .toArray(String[]::new);
+                    boardPage = searchBoardByTags(tags, pageable);
                     break;
             }
         }
@@ -220,5 +230,66 @@ public class BoardService {
 //    public List<Board> searchByTag(String keyword) {
 //        return boardRepository.findByTagName(keyword);
 //    }
+
+
+    ///////////////////////다중 해시태그 검색////////////////////////
+    @Transactional
+    public Page<Board> searchBoardByTags(String[] tags, Pageable pageable) {
+        //tags에 담긴 keyword를 포함한 태그를 찾아 id 값을 set에 저장(중복값 제거)
+        Set<Long> tagIdSet = new HashSet<>();
+        for (String tag : tags) {
+            List<Tag> foundTags = tagRepository.findByNameContaining(tag);
+            for (Tag t : foundTags) {
+                tagIdSet.add(t.getId());
+            }
+        }
+
+        //set에 담긴 태그들과 이어진 board의 id값을 set에 저장(중복값 제거)
+        Set<Long> boardIdSet = new HashSet<>();
+        for (Long tagId : tagIdSet) {
+            Tag tag = tagRepository.findById(tagId).orElse(null);
+            if (tag != null) {
+                List<TagMap> tagMaps = tagMapRepository.findAllByTag(tag);
+                for (TagMap tagMap : tagMaps) {
+                    Long boardId = tagMap.getBoard().getId();
+//                삭제 기능 추가하면 넣기
+//                if (!board.isDeleted()) {
+                    boardIdSet.add(boardId);
+//                }
+                }
+            }
+        }
+
+        //set에 저장된 값을 모두 Board형으로 찾아서 boardList에 넣기
+        List<Long> boardIds = new ArrayList<>(boardIdSet);
+        List<Board> boardList = new ArrayList<>();
+//        Page<Board> boardPage = boardRepository.findAllById(boardIds, pageable);
+        for(int i = 0; i < boardIdSet.size(); i++) {
+            Board board = boardRepository.findById(boardIds.get(i)).get();
+            boardList.add(board);
+        }
+
+        //Board 객체들을 정렬
+//        Sort sort = pageable.getSort();
+//        if (sort != null) {
+//            boardList.sort(sort);
+//        }
+
+        //Page형으로 변환
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<Board> currentPageList;
+
+        if (boardList.size() < startItem) {
+            currentPageList = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, boardList.size());
+            currentPageList = boardList.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(currentPageList, pageable, boardList.size());
+    }
 
 }

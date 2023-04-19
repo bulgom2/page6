@@ -324,18 +324,6 @@ ul {
     font-size: 1rem;
 }
 
-/*
-.tagBox{
-    border: 1px solid rgba(0,0,0,0.2);
-    padding: .3rem;
-    border-radius: 0.3rem;
-    -webkit-border-radius: 0.3rem;
-    -moz-border-radius: 0.3rem;
-    -ms-border-radius: 0.3rem;
-    -o-border-radius: 0.3rem;
-}
-*/
-
 .tag{
     display: inline-block;
     text-align: center;

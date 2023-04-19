@@ -7,11 +7,8 @@
     <!--  본문 영역 시작  -->
 
     <div class="container">
-<!--        <div class="py-5 text-center">-->
-<!--&lt;!&ndash;            <h2 th:text="#{page.boards}">글 목록</h2>&ndash;&gt;-->
-<!--        </div>-->
-
-        <form th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
+<!--    정렬 조건    -->
+        <form th:action="@{/}" method="get" class="form-inline my-2 my-lg-0">
             <div class="sort">
                 <label for="sort-type"></label>
                 <select name="sortType" class="form-control mb-2" id="sort-type" onchange="this.form.submit()">
@@ -30,23 +27,16 @@
                     <option value="desc" th:selected="${sortOrder=='desc'}">내림차순</option>
                 </select>
             </div>
+            <input type="hidden" name="keyword" th:value="${keyword}" />
+            <input type="hidden" name="searchType" th:value="${searchType}" />
         </form>
 
-<!--        <div class="sort">-->
-<!--            <form th:action="@{/sort/{sortType}(sortType=${sortType})}" method="get">-->
-<!--                <label for="sort-type">Sort By:</label>-->
-<!--                <select name="sortType" id="sort-type" onchange="this.form.submit()">-->
-<!--                    <option value="1" th:selected="${sortType == 1}">Name</option>-->
-<!--                    <option value="2" th:selected="${sortType == 2}">Title</option>-->
-<!--                    <option value="3" th:selected="${sortType == 3}">Index</option>-->
-<!--                    <option value="4" th:selected="${sortType == 4}">Likes</option>-->
-<!--                    <option value="5" th:selected="${sortType == 5}">Views</option>-->
-<!--                </select>-->
-<!--            </form>-->
-<!--        </div>-->
-
-
-        <div class="card-deck">
+        <!-- 게시물이 없을 때 -->
+        <div th:if="${boardList.isEmpty()}" class="empty-message">
+            게시물이 없습니다.
+        </div>
+        <!-- 게시물이 있을 때 -->
+        <div th:if="${not boardList.isEmpty()}" class="card-deck">
             <div class="card" th:each="board: ${boardList}">
                 <div class="likes">
                     <img src="../../css/heart.png" class="heart" alt="heart">
@@ -72,17 +62,21 @@
 
         <br>
 
-        <div class="paging-btn">
+<!--   페이징 버튼     -->
+        <div class="paging-btn" th:if="${not boardList.isEmpty()}">
             <div class="blank-space"></div>
-<!--            <a th:if="${nowPage > 5}" th:href="'/?page=0'">처음</a>-->
-            <a th:if="${nowPage > 5}" th:href="@{/search(page=1, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
+
+<!--            <a th:if="${nowPage > 5}" th:href="@{/search(page=1, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>-->
+
+            <a th:if="${nowPage > 5}" th:href="@{/(page=0, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>
             <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-<!--                <a th:if="${page != nowPage}" th:href="@{/(page=${page - 1})}" th:text ="${page}"></a>-->
-                <a th:if="${page != nowPage}" th:href="@{/search(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}" th:text="${page}"></a>
+                <a th:if="${page != nowPage}" th:href="@{/(page=${page}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}" th:text="${page}"></a>
+<!--                <a th:if="${page != nowPage}" th:href="@{/search(page=${page})}" th:text="${page}"></a>-->
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
 <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
+            <a th:if="${nowPage < lastPage - 4}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
+<!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
             <div class="blank-space"></div>
         </div>
     </div> <!-- /container -->
@@ -95,8 +89,8 @@
     </span>
     </div>
 
-
-    <form id="searchForm" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
+<!--        서치          -->
+    <form id="searchForm" th:action="@{/}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
         <div style="margin: 0 auto; width: 500px">
             <div class="search-btn-div">
                 <div class="sort">
@@ -115,52 +109,7 @@
             </div>
         </div>
     </form>
-<!--    <div style="margin: 0 auto; width: 290px">-->
-<!--        <form id="searchForm" class="form-inline my-2 my-lg-0" th:action="@{/}" method="post" style="align-content: center;">-->
-<!--            <div class="search-btn-div">-->
-<!--                <input class="box" name="searchQuery" type="search" placeholder="키워드를 입력하세요" aria-label="Search">-->
-<!--                <button class="btn" type="submit">검색</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
     <br>
-
-
-<!--    <div class="pagination" th:with="start=${(pages.number/maxPage)*maxPage + 1},-->
-<!--                  end=(${(pages.totalPages == 0) ? 1 : (start + (maxPage - 1) < pages.totalPages ? start + (maxPage - 1) : pages.totalPages)})" >-->
-<!--        <ul>-->
-<!--            <li th:if="${start > 1}">-->
-<!--                <a th:href="@{/galleryList?(page=${start - maxPage})}" th:text="'<'"></a>-->
-<!--            </li>-->
-
-<!--            <li th:each="page: ${#numbers.sequence(start, end)}">-->
-<!--                <a th:href="@{/galleryList?(page=${page-1})}" th:text="${page}"></a>-->
-<!--            </li>-->
-
-<!--            <li th:if="${end < pages.totalPages}">-->
-<!--                <a th:href="@{/galleryList?(page=${start + maxPage})}" th:text="'>'"></a>-->
-<!--            </li>-->
-
-<!--            <li th:if="${end < pages.totalPages}">-->
-<!--                <a th:href="@{/galleryList?(page=${pages.totalPages-1})}" th:text="'>>'"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-
-
-
-
-<!--        <ul>-->
-<!--            <li th:each="page:${#numbers.sequence(0, totalPage -1)}">-->
-<!--                <a th:href="@{|/?page=${pageStat.index}|}" th:text="${pageStat.index + 1}" style="color:#4F5E5A"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-
-<!--    <button class="btn btn-primary float-end"-->
-<!--            th:onclick="|location.href='@{/write}'|"-->
-<!--            type="button">글 등록</button>-->
-                <!--type="button" th:text="#{page.addBoard}">글 등록</button>-->
-
-
     <!--  본문 영역 끝  -->
 </div>
 
