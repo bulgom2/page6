@@ -6,12 +6,14 @@ import com.page6.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
@@ -35,6 +37,12 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     //해시태그 포함 검색
     @Query("SELECT DISTINCT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name LIKE %:name%")
     Page<Board> findByTagContaing(@Param("name") String name, Pageable pageable);
+
+    //다중 해시태그 포함 검색
+//    Page<Board> findByTagMapTagNameIn(String[] tags, Pageable pageable);
+    @Query("SELECT DISTINCT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name IN :tags")
+    List<Board> findByTagsContaining(@Param("tags") List<String> tags);
+//    Page<Board> findByTagNamesContaining(String[] tags, Pageable pageable);
 
 
     //조회수 개수 플러스
@@ -68,6 +76,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 조회수 내림차순 정렬
     Page<Board> findAllByOrderByViewsDesc(Pageable pageable);
+
 
 //
 

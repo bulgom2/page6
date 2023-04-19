@@ -5,13 +5,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="BOARD_TB")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Board {
 
@@ -44,9 +44,12 @@ public class Board {
     @Column(name="BOARD_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("regdate asc")
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OrderBy("regdate asc")
+//    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<TagMap> tagMaps = new ArrayList<>();
 
     @Builder
     public Board(String title, String content) {
@@ -54,9 +57,20 @@ public class Board {
         this.content = content;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", member=" + member +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", likes=" + likes +
+                ", views=" + views +
+                '}';
     }
+    //    public List<Comment> getComments() {
+//        return comments;
+//    }
 }
 /*
 @Entity

@@ -5,6 +5,7 @@ import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Comment;
+import com.page6.repository.BoardRepository;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
 import com.page6.service.HeartService;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -57,6 +59,19 @@ public class ApplicationTests {
         System.out.println("flag값=" + flag);
     }
 
+//    @Test
+//    @DisplayName("다중 해시태그 테스트")
+//    void 해시태그_조회_테스트(@Autowired BoardRepository boardRepository) {
+//        BoardSpecification boardSpecification = new BoardSpecification(boardRepository);
+//        System.out.println("///////////////////////////////////테스트 시작///////////////////////////////////");
+//        String[] tags = {"해태", "해테"};
+//        String[] excludedTags = {};
+//        List<Board> list = boardSpecification.findByTagsContaining(tags, excludedTags);
+//        for(int i = 0; i < list.size(); i++)
+//            System.out.println(list.get(i).toString());
+//        System.out.println("///////////////////////////////////테스트 종료///////////////////////////////////");
+//    }
+
 //    @DisplayName("정렬 테스트")
 //    @Test
 //    void 정렬() {
@@ -72,5 +87,17 @@ public class ApplicationTests {
 //    void 조회수_테스트() {
 //        boardService.viewCntUpdate(2);
 //        System.out.println("테스트 끝");
+//    }
+
+//    @Test
+//    @DisplayName("해시태그 서치 테스트")
+//    void 서치_테스트() {
+//        System.out.println("///////////////////////////////////테스트 시작///////////////////////////////////");
+//        String[] tags = {"해테", "해태"};
+//        List<Board> list = boardService.searchBoardByTags(tags);
+//        System.out.println("///////////////////////////////////출력시작///////////////////////////////////");
+//        for(int i = 0; i < list.size(); i++)
+//            System.out.println(list.get(i).toString());
+//        System.out.println("///////////////////////////////////테스트 끝///////////////////////////////////");
 //    }
 }

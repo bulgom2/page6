@@ -31,15 +31,19 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/")
 public class BoardController {
 
-    private final BoardService boardService;
-    private final CommentService commentService;
-    private final HeartService heartService;
-    private final TagService tagService;
+    @Autowired
+    private BoardService boardService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private HeartService heartService;
+    @Autowired
+    private TagService tagService;
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -93,7 +97,7 @@ public class BoardController {
         } else { // 기본적으로 sortType으로 정렬하는 경우
             sort = sortOrder.equalsIgnoreCase("desc") ? Sort.by(sortType).descending() : Sort.by(sortType);
         }
-        page = page < 1 ? 1 : page;
+        page = page < 1 ? 1 : page; //페이지가 1보다 작으면 1로 만들어주기
         Pageable pageable = PageRequest.of(page - 1, 10, sort);
         Page<BoardDto> list = boardService.findAll(keyword, searchType, pageable);
 
