@@ -143,11 +143,6 @@ public class BoardController {
     public String board(@PathVariable("id") long id, Model model, Principal principal) {
         String email = "";
 
-        //조회 페이지 받기
-        BoardDto board = boardService.BoardOne(id);
-        board.setComment_cnt(commentService.getCommentCount(id));
-        model.addAttribute("board", board);
-
         //댓글 리스트 받기
         List<CommentFormDto> list = commentService.getCommentList(id);
         model.addAttribute("commentList", list);
@@ -169,8 +164,14 @@ public class BoardController {
         model.addAttribute("fileList", fileList);
 
         //조회수 증가 (로그인한 유저 and 글 작성자가 아니라면)
-        if(email.length() > 0 && !boardService.isWriter(id, email))
+        if(email.length() == 0 || !boardService.isWriter(id, email))
             boardService.viewCntUpdate(id);
+
+        //조회 페이지 받기
+        BoardDto board = boardService.BoardOne(id);
+        board.setComment_cnt(commentService.getCommentCount(id));
+        model.addAttribute("board", board);
+
         return "/board/board";
     }
 
