@@ -4,7 +4,10 @@ import com.page6.entity.Board;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.Clock;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Data
@@ -31,12 +34,6 @@ public class BoardDto {
 //    public boolean delete_flag;      // 삭제여부
 
     public static BoardDto of(Board board) {
-        //현재 날짜 저장하기
-        //board.getRegdate() db에서 받은 LocaldateTime 형식 시간 받기
-        //현재 날짜와 받은 날짜 차이 구하기
-        //1시간 이하면 분단위로 해서 datebefore에 넣기
-        //24시간 이하면 시간단위로 datebefore에 넣기
-        // 이후는 그냥 등록일 표시
 
         return BoardDto.builder()
                 .id(board.getId())
@@ -46,6 +43,38 @@ public class BoardDto {
                 .likes(board.getLikes())
                 .views(board.getViews())
                 .regdate(board.getRegdate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateBefore(dateBefore(board.getRegdate()))
                 .build();
     }
+
+    //localdatetime을 원하는 형식으로 반환해주는 메소드
+    public static String dateBefore(LocalDateTime regdate) {
+        String displayRegdate = "";
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+
+        LocalDateTime now = LocalDateTime.now(Clock.system(zoneId)); //현재시간
+        Duration duration = Duration.between(regdate, now);
+        long diffHours = duration.toHours();
+        long diffMinutes = Math.abs(duration.toMinutes());
+
+        if (diffHours < 24) {
+            if (diffHours < 1) {
+                displayRegdate = diffMinutes + "분 전";
+            }
+            else {
+                displayRegdate = diffHours + "시간 전";
+            }
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            displayRegdate = regdate.format(formatter);
+        }
+
+        if (diffMinutes == 0) {
+            displayRegdate = "방금";
+        }
+
+
+        return displayRegdate;
+    }
+
 }
