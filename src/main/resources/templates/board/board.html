@@ -56,6 +56,29 @@
 
         <!-- 좋아요 영역 끝 -->
 
+        <!-- 첨부파일 영역 -->
+        <h5>첨부파일</h5>
+<!--        <ul>-->
+<!--            <li th:each="file : ${fileList}">-->
+<!--                <a th:href="@{'/board/file/' + ${file.id}}"-->
+<!--                   onclick="window.open(this.href, 'popup', 'width=500, height=500'); return false;">-->
+<!--                    <img th:src="@{'file://' + ${file.filePath}}" width="100" height="100" alt="file">-->
+<!--                    <p th:text="${file.filePath}"></p>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </ul>-->
+        <ul>
+            <li th:each="file : ${fileList}">
+                <a th:href="@{'/board/file/' + ${file.id}}">
+                    <img th:src="@{${file.filePath}}" width="100" height="100" alt="file">
+                    <span th:text="${file.oriFileName}"></span>
+                </a>
+            </li>
+        </ul>
+
+
+        <!-- 첨부파일 영역 끝 -->
+
         <br><br>
 
         <!-- 댓글 영역 시작 -->

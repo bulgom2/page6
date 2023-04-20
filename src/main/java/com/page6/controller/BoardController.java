@@ -3,7 +3,9 @@ package com.page6.controller;
 import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
+import com.page6.entity.BoardFile;
 import com.page6.entity.Member;
+import com.page6.repository.BoardFileRepository;
 import com.page6.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,9 @@ public class BoardController {
 
     @Autowired
     private BoardFileService boardFileService;
+    @Autowired
+    private BoardFileRepository boardFileRepository;
+
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -159,7 +164,10 @@ public class BoardController {
         //태그 리스트 받기
         List<String> tagList = tagService.getTagList(id);
         model.addAttribute("tagList", tagList);
-//        log.info("board={}", board);
+
+        //파일 리스트 받기
+        List<BoardFile> fileList = boardFileService.getFileList(id);
+        model.addAttribute("fileList", fileList);
         return "/board/board";
     }
 
@@ -175,31 +183,33 @@ public class BoardController {
 
         // ckeditor 에서 파일을 보낼 때 upload : [파일] 형식으로 해서 넘어오기 때문에 upload라는 키의 밸류를 받아서 uploadFile에 저장함
         MultipartFile uploadFile = request.getFile("upload");
+        Long imgId = boardFileService.saveFile(uploadFile, 1L);
+        String uploadPath = boardFileRepository.findById(imgId).get().getFilePath();
 
-        // 파일의 오리지널 네임
-        String originalFileName = uploadFile.getOriginalFilename();
-
-        // 파일의 확장자
-        String ext = originalFileName.substring(originalFileName.indexOf("."));
-
-        // 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
-        String newFileName = UUID.randomUUID() + ext;
-
-        // 이미지를 현재 경로와 연관된 파일에 저장하기 위해 현재 경로를 알아냄
-        String realPath = request.getServletContext().getRealPath("/");
-
-        // 현재경로/upload/파일명이 저장 경로
-        String savePath = realPath + "/" + newFileName;
-
-        // 브라우저에서 이미지 불러올 때 절대 경로로 불러오면 보안의 위험 있어 상대경로를 쓰거나 이미지 불러오는 jsp 또는 클래스 파일을 만들어 가져오는 식으로 우회해야 함
-        // 때문에 savePath와 별개로 상대 경로인 uploadPath 만들어줌
-        String uploadPath = "./" + newFileName;
-
-        // 저장 경로로 파일 객체 생성
-        File file = new File(savePath);
-
-        // 파일 업로드
-        uploadFile.transferTo(file);
+//        // 파일의 오리지널 네임
+//        String originalFileName = uploadFile.getOriginalFilename();
+//
+//        // 파일의 확장자
+//        String ext = originalFileName.substring(originalFileName.indexOf("."));
+//
+//        // 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
+//        String newFileName = UUID.randomUUID() + ext;
+//
+//        // 이미지를 현재 경로와 연관된 파일에 저장하기 위해 현재 경로를 알아냄
+//        String realPath = request.getServletContext().getRealPath("/");
+//
+//        // 현재경로/upload/파일명이 저장 경로
+//        String savePath = realPath + "/" + newFileName;
+//
+//        // 브라우저에서 이미지 불러올 때 절대 경로로 불러오면 보안의 위험 있어 상대경로를 쓰거나 이미지 불러오는 jsp 또는 클래스 파일을 만들어 가져오는 식으로 우회해야 함
+//        // 때문에 savePath와 별개로 상대 경로인 uploadPath 만들어줌
+//        String uploadPath = "./" + newFileName;
+//
+//        // 저장 경로로 파일 객체 생성
+//        File file = new File(savePath);
+//
+//        // 파일 업로드
+//        uploadFile.transferTo(file);
 
         // uploaded, url 값을 modelandview를 통해 보냄
         mav.addObject("uploaded", true); // 업로드 완료
