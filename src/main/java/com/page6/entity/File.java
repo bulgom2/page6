@@ -1,13 +1,15 @@
 package com.page6.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="FILE_TB")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class File {
     @Id
