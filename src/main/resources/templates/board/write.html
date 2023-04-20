@@ -20,7 +20,11 @@
           <hr>
           <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-          <textarea id="editor" name="content" placeholder="내용을 입력하세요" style="color:#4F5E5A"></textarea><hr>
+          <!-- 에디터 영역 -->
+          <textarea id="editor" name="content" placeholder="내용을 입력하세요" style="color:#4F5E5A"></textarea>
+          <!-- 파일 업로드 영역 -->
+          <div th:replace="board/fileupload::#fileupload" th:with="boardFileDto=${boardFileDto}"></div><hr>
+          <!-- 파일 업로드 영역 끝 -->
           <div class="board-btn-div">
             <input type="button" class="btn" value="작성취소" />
             <input type="submit" class="btn" value="작성완료" />
