@@ -123,9 +123,13 @@ a:hover{
     min-width: 300px;
     max-width: 300px;
     width: calc(25% - 20px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
-    margin: 0 10px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
+    margin: 0 20px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.card:nth-child(4n) {
+    margin-right: 0;
 }
 
 .likes {
@@ -374,3 +378,5 @@ ul {
     display: flex;
     justify-content: flex-end;
 }
+
+/* 파일 추가 */
