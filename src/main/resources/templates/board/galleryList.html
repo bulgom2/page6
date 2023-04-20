@@ -33,7 +33,7 @@
 
         <!-- 게시물이 없을 때 -->
         <div th:if="${boardList.isEmpty()}" class="empty-message">
-            게시물이 없습니다.
+            <h2 style="color:#4F5E5A">첫 게시물을 올려 보세요!</h2>
         </div>
         <!-- 게시물이 있을 때 -->
         <div th:if="${not boardList.isEmpty()}" class="card-deck">
@@ -51,7 +51,7 @@
                     <h5 class="card-text" th:text="${board.writer}" style="color:#4F5E5A">작성자</h5>
                 </div>
             <div class="card-footer">
-                <small class="text-muted" th:text="${board.regdate}" style="color:#4F5E5A">등록일</small>
+                <small class="text-muted" th:text="${board.dateBefore}" style="color:#4F5E5A">등록일</small>
                 <div class="views">
                     <img src="../../css/eye.png" class="eye" alt="eye">
                     <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
@@ -75,7 +75,7 @@
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
 <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-            <a th:if="${nowPage < lastPage - 4}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
+            <a th:if="${nowPage < lastPage - 5}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
 <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
             <div class="blank-space"></div>
         </div>
