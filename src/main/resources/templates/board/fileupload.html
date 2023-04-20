@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/board/board}">
+<div id="fileupload" layout:fragment="comment">
+<!-- 파일 업로드 영역 시작 -->
+
+    <h5>파일 업로드</h5>
+    <input type="file" multiple="multiple" name="files">
+
+<!-- 파일 업로드 영역 끝 -->
+</div>
+</html>

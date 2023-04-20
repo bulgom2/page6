@@ -18,12 +18,10 @@ public class BoardFile {
     private Long id;        //파일 인덱스
 
     @Column(name="FILE_NAME", nullable = false)
-    private String fileName; //원본 이미지 파일명
+    private String fileName; //파일명
 
     @Column(name="ORI_FILE_NAME", nullable = false)
     private String oriFileName; //원본 파일명
-
-    //파일 확장자?
 
     @Column(name="FILE_PATH", nullable = false)
     private String filePath;    //파일 조회 경로(책에서 imgUrl)
