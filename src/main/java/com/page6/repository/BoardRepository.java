@@ -77,7 +77,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 조회수 내림차순 정렬
     Page<Board> findAllByOrderByViewsDesc(Pageable pageable);
 
-
-//
-
 }

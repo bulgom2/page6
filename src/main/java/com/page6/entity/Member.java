@@ -30,7 +30,6 @@ public class Member {
     private String email;             // 이메일
 
 
-
     private String number;
 
 
@@ -59,5 +58,4 @@ public class Member {
         this.email = email;
 
     }
-
 }

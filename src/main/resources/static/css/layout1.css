@@ -123,7 +123,7 @@ a:hover{
     min-width: 300px;
     max-width: 300px;
     width: calc(25% - 20px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
-    margin: 0 20px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
+    margin: 0 30px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -254,6 +254,9 @@ ul {
     vertical-align: middle;
     font-weight: bolder;
 }
+
+
+
 #logo-img {
     width: 200px;
     height: 112px;
@@ -380,3 +383,14 @@ ul {
 }
 
 /* 파일 추가 */
+.input-file-btn {
+    padding: 6px 25px;
+    background-color: #4F5E5A;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.comments {
+    border: 1px solid #4F5E5A;
+}

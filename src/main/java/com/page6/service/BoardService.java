@@ -2,6 +2,7 @@ package com.page6.service;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
+import com.page6.entity.Member;
 import com.page6.entity.Tag;
 import com.page6.entity.TagMap;
 import com.page6.repository.BoardRepository;
@@ -32,7 +33,6 @@ public class BoardService {
     private final CommentService commentService;
     private final TagRepository tagRepository;
     private final TagMapRepository tagMapRepository;
-
 
     //글쓰기 저장 기능
     public void write(Board board, String email){

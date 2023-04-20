@@ -50,13 +50,13 @@
                     <h3 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.comment_cnt > 0 ? board.title + ' [' + board.comment_cnt + ']' : board.title}" style="color:#4F5E5A">제목</a></h3>
                     <h5 class="card-text" th:text="${board.writer}" style="color:#4F5E5A">작성자</h5>
                 </div>
-            <div class="card-footer">
-                <small class="text-muted" th:text="${board.dateBefore}" style="color:#4F5E5A">등록일</small>
-                <div class="views">
-                    <img src="../../css/eye.png" class="eye" alt="eye">
-                    <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
+                <div class="card-footer">
+                    <small class="text-muted" th:text="${board.dateBefore}" style="color:#4F5E5A">등록일</small>
+                    <div class="views">
+                        <img src="../../css/eye.png" class="eye" alt="eye">
+                        <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 

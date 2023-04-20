@@ -24,14 +24,24 @@
     <div class="header-content">
 <!--      <div class="noleft">-->
 
-      <div class="main-logo">
+    <div class="main-logo">
         <a href="/"><img src="../../css/page6.png" id="logo-img"></a>
-      </div>
+    </div>
 
-      <div class="login-out">
-        <div class="login-btn"><a class="nav-link" href="/members/login" sec:authorize="isAnonymous()" style="font-size:25px; font-weight:900; color:#4F5E5A;">로그인</a></div>
-        <div class="logout-btn"><a class="nav-link" href="/members/logout" sec:authorize="isAuthenticated()" style="font-size:25px; font-weight:900; color:#4F5E5A;">로그아웃</a></div>
-      </div>
+    <div class="mypage">
+        <a class="nav-link" href="/members/mypage" sec:authorize="isAuthenticated()" style="font-size:25px; font-weight:900; color:#4F5E5A; text-align: center;">
+            <img src="../../css/mypage6.png">
+        </a>
+    </div>
+
+    <div class="login-out">
+        <div class="login-btn">
+            <a class="nav-link" href="/members/login" sec:authorize="isAnonymous()" style="font-size:25px; font-weight:900; color:#4F5E5A;">로그인</a>
+        </div>
+        <div class="logout-btn">
+            <a class="nav-link" href="/members/logout" sec:authorize="isAuthenticated()" style="font-size:25px; font-weight:900; color:#4F5E5A;">로그아웃</a>
+        </div>
+    </div>
 
 <!--      </div>-->
     </div>

@@ -6,8 +6,10 @@
 <div id="fileupload" layout:fragment="fileupload">
 <!-- 파일 업로드 영역 시작 -->
 
-    <h5>파일 업로드</h5>
-    <input type="file" multiple="multiple" name="files" id="file_input">
+    <br>
+
+    <label class="btn" for="file_input">파일 업로드</label>
+    <input type="file" multiple="multiple" name="files" id="file_input" style="display: none">
     <div id="file_container"></div>
 
     <script>
