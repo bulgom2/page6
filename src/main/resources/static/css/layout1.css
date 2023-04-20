@@ -105,16 +105,27 @@ a:hover{
 /*    }*/
 /*}*/
 
+/*.card-deck {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(4, 330px); !* 한 줄에 4개의 열(column)이 나열되도록 설정 *!*/
+/*    grid-gap: 20px; !* 각 열과 행(row) 사이의 간격을 설정 *!*/
+/*    flex-wrap: wrap;*/
+/*}*/
+
 .card-deck {
-    display: grid;
-    grid-template-columns: repeat(4, 330px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
-    grid-gap: 20px; /* 각 열과 행(row) 사이의 간격을 설정 */
+    display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start; /* 각각의 열(column)을 균등한 간격으로 배치 */
+    margin: 0 -10px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
 }
 
 .card {
     min-width: 300px;
     max-width: 300px;
+    width: calc(25% - 20px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
+    margin: 0 10px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .likes {

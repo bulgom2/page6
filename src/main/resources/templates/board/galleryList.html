@@ -75,7 +75,7 @@
                 <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
             </th:block>
 <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-            <a th:if="${nowPage < lastPage - 4}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
+            <a th:if="${nowPage < lastPage - 5}" th:href="@{/(page=${lastPage}, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">마지막</a>
 <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
             <div class="blank-space"></div>
         </div>
