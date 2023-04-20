@@ -46,6 +46,9 @@ public class BoardController {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private BoardFileService boardFileService;
+
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
     public String boardWriteForm(){
@@ -54,7 +57,8 @@ public class BoardController {
 
     //글쓰기 요청
     @PostMapping("/write")
-    public String boardWritePro(@RequestParam ("tags") String tags, Board board, Principal principal){
+    public String boardWritePro(@RequestParam ("files") List<MultipartFile> files,
+                                @RequestParam ("tags") String tags, Board board, Principal principal) throws IOException {
         //글 저장
         String email = principal.getName();
         boardService.write(board, email);
@@ -68,6 +72,11 @@ public class BoardController {
 
         for(int i = 0; i < tagArr.length; i++)
             tagService.addTag(board.getId(), tagArr[i]);
+
+        //파일 업로드
+        for(MultipartFile file : files) {
+            boardFileService.saveFile(file, board.getId());
+        }
 
         return "redirect:/board/" + board.getId();
     }

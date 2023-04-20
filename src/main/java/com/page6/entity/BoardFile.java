@@ -26,16 +26,18 @@ public class BoardFile {
     @Column(name="FILE_PATH", nullable = false)
     private String filePath;    //파일 조회 경로(책에서 imgUrl)
 
-    @Column(name="FILE_ORI_NAME", nullable = false)
-    private String repimgYn;    //대표 이미지 여부
+    @Column(name="FILE_THUMBNAIL", nullable = false)
+    private boolean thumbnail;    //대표 이미지 여부
 
     @ManyToOne
     @JoinColumn(name = "BOARD_FK", nullable = false)
     private Board board;    // 작성 게시글
 
-    public void updateFile(String oriFileName, String fileName, String filePath) {
+    public void updateFile(String oriFileName, String fileName, String filePath, Board board, boolean thumbnail) {
         this.oriFileName = oriFileName;
         this.fileName = fileName;
         this.filePath = filePath;
+        this.board = board;
+        this.thumbnail = thumbnail;
     }
 }
