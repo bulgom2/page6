@@ -141,8 +141,7 @@ public class BoardController {
     //게시글 조회 페이지
     @GetMapping("/board/{id}")
     public String board(@PathVariable("id") long id, Model model, Principal principal) {
-        //조회수 증가
-        boardService.viewCntUpdate(id);
+        String email = "";
 
         //조회 페이지 받기
         BoardDto board = boardService.BoardOne(id);
@@ -156,7 +155,7 @@ public class BoardController {
         //좋아요 플래그 받기
         boolean likeFlag = false;
         if(principal != null) {
-            String email = principal.getName();
+            email = principal.getName();
             likeFlag = heartService.heartFlag(id, email);
         }
         model.addAttribute("likeFlag", likeFlag);
@@ -168,6 +167,10 @@ public class BoardController {
         //파일 리스트 받기
         List<BoardFile> fileList = boardFileService.getFileList(id);
         model.addAttribute("fileList", fileList);
+
+        //조회수 증가 (로그인한 유저 and 글 작성자가 아니라면)
+        if(email.length() > 0 && !boardService.isWriter(id, email))
+            boardService.viewCntUpdate(id);
         return "/board/board";
     }
 

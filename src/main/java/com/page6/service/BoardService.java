@@ -2,6 +2,7 @@ package com.page6.service;
 
 import com.page6.dto.BoardDto;
 import com.page6.entity.Board;
+import com.page6.entity.Member;
 import com.page6.entity.Tag;
 import com.page6.entity.TagMap;
 import com.page6.repository.BoardRepository;
@@ -308,4 +309,10 @@ public class BoardService {
         return new PageImpl<>(currentPageList, pageable, boardList.size());
     }
 
+    //로그인 인물이 글 작성자인지 판정 (true면 작성자, false면 작성자가 아님)
+    public boolean isWriter(Long bid, String email) {
+        Board board = boardRepository.findById(bid).get();
+        Member loginUser = memberRepository.findByEmail(email);
+        return board.getMember().getId() == loginUser.getId();
+    }
 }
