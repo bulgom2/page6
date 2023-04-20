@@ -2,14 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{/board/board}">
-<div id="fileupload" layout:fragment="comment">
+      layout:decorate="~{/board/write}">
+<div id="fileupload" layout:fragment="fileupload">
 <!-- 파일 업로드 영역 시작 -->
 
     <h5>파일 업로드</h5>
-    <input type="file" multiple="multiple" name="files">
+    <input type="file" multiple="multiple" name="files" onchange="displayFiles()">
     <div id="file_container"></div>
 
+<!--  스크립트 영역  -->
+    <script>
+        function displayFiles() {
+            const fileList = document.querySelector('input[type=file]').files;
+            const fileContainer = document.querySelector('#file_container');
+
+            for (let i = 0; i < fileList.length; i++) {
+                const file = fileList[i];
+                const fileName = file.name;
+                const fileSize = file.size;
+                const fileItem = document.createElement('div');
+                fileItem.innerHTML = `File name: ${fileName}, File size: ${fileSize} bytes`;
+                fileContainer.appendChild(fileItem);
+            }
+        }
+    </script>
 <!-- 파일 업로드 영역 끝 -->
 </div>
 </html>
