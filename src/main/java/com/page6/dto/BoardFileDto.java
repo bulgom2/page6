@@ -12,8 +12,6 @@ public class BoardFileDto {
 
     private String filePath;    //파일 조회 경로(책에서 imgUrl)
 
-    private String repimgYn;    //대표 이미지 여부
-
     private static ModelMapper modelMapper = new ModelMapper();
 
     public static BoardFileDto of(BoardFile boardFile) {

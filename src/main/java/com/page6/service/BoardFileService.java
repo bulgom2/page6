@@ -49,7 +49,7 @@ public class BoardFileService {
         // 파일 엔티티 생성
         BoardFile file = new BoardFile();
         Board board = boardRepository.findById(boardId).get();
-        file.updateFile(originalFileName, newFileName, savePath, board, false);
+        file.updateFile(originalFileName, newFileName, savePath, board);
         BoardFile savedFile = boardFileRepository.save(file);
 
         return savedFile.getId();
