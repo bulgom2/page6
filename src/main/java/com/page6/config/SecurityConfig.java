@@ -71,11 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-
-       return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//
+//       return new BCryptPasswordEncoder();
+//    }
 
 
 
