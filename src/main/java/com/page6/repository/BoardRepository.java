@@ -17,6 +17,9 @@ import java.util.Set;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
+    // 특정 멤버가 작성한 글 모두 찾기
+    Page<Board> findAllByMember(Member member, Pageable pageable);
+
     ////////////////////// 검색 //////////////////////
     //제목 포함 검색
     Page<Board> findByTitleContainingIgnoreCase(String title, Pageable pageable);

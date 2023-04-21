@@ -33,6 +33,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static org.springframework.data.domain.Sort.by;
+
 //@RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/")
@@ -49,6 +51,50 @@ public class BoardController {
 
     @Autowired
     private BoardFileService boardFileService;
+
+
+    // 마이페이지
+    @GetMapping({"/mypage", "/mypage/{page}"})
+    public String myPage(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
+
+        // 한 페이지당 보여줄 게시물 수
+        int size = 10;
+        page = page < 1 ? 1 : page;
+
+        // 페이지 번호는 0부터 시작하므로 1을 빼준다
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
+
+        // 리스트 불러오기
+        String email = principal.getName();
+        Page<BoardDto> myBoardPage = boardService.getMyBoard(email, pageable);
+
+        // 페이징 번호
+        int nowPage = myBoardPage.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage;
+        int lastPage = myBoardPage.getTotalPages();
+
+        int maxPage = 10; // 최대 페이지 수
+        if (myBoardPage.getTotalPages() < maxPage) {
+            endPage = myBoardPage.getTotalPages();
+        } else {
+            endPage = Math.min(nowPage + 5, myBoardPage.getTotalPages());
+            if (nowPage < 5)
+                endPage = maxPage;
+            else if (nowPage < maxPage - 5)
+                endPage = maxPage;
+        }
+
+        if (nowPage == 0) startPage = 1;
+
+
+        model.addAttribute("myBoardList", myBoardPage);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        return "board/mypage";
+    }
 
     //글 작성 페이지
     @GetMapping("/write") //localhost:8090/board/write
@@ -93,9 +139,9 @@ public class BoardController {
         Sort sort;
         if (sortType.equals("member")) { // member의 name으로 정렬하는 경우
             sort = sortOrder.equalsIgnoreCase("desc") ?
-                    Sort.by("member.name").descending() : Sort.by("member.name").ascending();
+                    by("member.name").descending() : by("member.name").ascending();
         } else { // 기본적으로 sortType으로 정렬하는 경우
-            sort = sortOrder.equalsIgnoreCase("desc") ? Sort.by(sortType).descending() : Sort.by(sortType);
+            sort = sortOrder.equalsIgnoreCase("desc") ? by(sortType).descending() : by(sortType);
         }
 
         page = page < 1 ? 1 : page; //페이지가 1보다 작으면 1로 만들어주기

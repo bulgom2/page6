@@ -42,12 +42,6 @@ public class MemberController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // 마이페이지
-    @GetMapping("/mypage")
-    public String myPage() {
-        return "member/mypage";
-    }
-
     @GetMapping(value = "/new")
     public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());

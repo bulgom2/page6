@@ -52,6 +52,23 @@ public class BoardService {
 //                .collect(Collectors.toList());
 //    }
 
+    // 마이페이지 내 글 보기
+    public Page<BoardDto> getMyBoard(String email, Pageable pageable) {
+        Member member = memberRepository.findByEmail(email);
+        Page<Board> myList = boardRepository.findAllByMember(member, pageable);
+
+        List<BoardDto> boardDtoList = myList.getContent()
+                .stream()
+                .map(board -> {
+                    BoardDto boardDto = BoardDto.of(board);
+                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                    return boardDto;
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(boardDtoList, pageable, myList.getTotalElements());
+    }
+
     public List<BoardDto> getBoardList() {
         List<Board> list = boardRepository.findAll();
         return list
