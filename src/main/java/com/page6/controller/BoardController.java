@@ -6,8 +6,10 @@ import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.BoardFile;
 import com.page6.entity.Member;
+import com.page6.entity.TagMap;
 import com.page6.repository.BoardFileRepository;
 import com.page6.repository.BoardRepository;
+import com.page6.repository.TagMapRepository;
 import com.page6.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,7 @@ public class BoardController {
     @Autowired  private BoardFileService boardFileService;
     @Autowired private BoardFileRepository boardFileRepository;
     @Autowired private BoardRepository boardRepository;
+    @Autowired private TagMapRepository tagMapRepository;
 
 
     //글 작성 페이지
@@ -66,14 +69,31 @@ public class BoardController {
         boardService.write(board, email);
 
         //태그 저장
+        //태그 나누기
         String[] tagArr = tags.split("#");
         tagArr = Arrays.stream(tagArr)
                 .filter(s -> !s.isEmpty())      //빈칸 없애줌
                 .collect(Collectors.toCollection(LinkedHashSet::new))    //중복 없애줌
                 .toArray(String[]::new);
 
-        for(int i = 0; i < tagArr.length; i++)
-            tagService.addTag(board.getId(), tagArr[i]);
+        List<TagMap> tagMaps = tagMapRepository.findAllByBoardId(board.getId());
+
+        //태그 저장
+        for(int i = 0; i < tagArr.length; i++) {
+            //게시물에 태그가 없으면, 태그 추가
+            if(!tagService.hasTag(board.getId(), tagArr[i]))
+                tagService.addTag(board.getId(), tagArr[i]);
+        }
+
+        //존재하지 않는 태그 삭제
+        for (TagMap tagMap : tagMaps) {
+            String tagName = tagMap.getTag().getName();
+            if (!Arrays.asList(tagArr).contains(tagName)) {
+                // tagArr에 해당 tagName이 포함되어 있지 않은 경우
+                Long tagMapId = tagMap.getId();
+                tagMapRepository.deleteById(tagMapId);
+            }
+        }
 
         //파일 업로드
         for(MultipartFile file : files) {

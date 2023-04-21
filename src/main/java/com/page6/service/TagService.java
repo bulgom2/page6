@@ -43,5 +43,10 @@ public class TagService {
     public List<String> getTagList(Long bid) {
         return tagRepository.findTagNamesByBoardId(bid);
     }
+
+    //특정 게시물에 특정 태그가 있는지 확인. 있으면 true, 없으면 false
+    public boolean hasTag(Long bid, String tagName) {
+        return tagMapRepository.findByBoardIdAndTagName(bid, tagName).isPresent();
+    }
 }
 
