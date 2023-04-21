@@ -163,7 +163,7 @@ public class BoardController {
         List<BoardFile> fileList = boardFileService.getFileList(id);
         model.addAttribute("fileList", fileList);
 
-        //조회수 증가 (로그인한 유저 and 글 작성자가 아니라면)
+        //조회수 증가 (로그인한 유저가 아니거나 글 작성자가 아니라면)
         if(email.length() == 0 || !boardService.isWriter(id, email))
             boardService.viewCntUpdate(id);
 
