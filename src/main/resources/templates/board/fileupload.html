@@ -17,6 +17,9 @@
             const fileList = fileInput.files;
             const fileContainer = document.querySelector('#file_container');
 
+            //기존에 있는 내용을 모두 지움
+            fileContainer.innerHTML = '';
+
             for (let i = 0; i < fileList.length; i++) {
                 const file = fileList[i];
                 const fileName = file.name;

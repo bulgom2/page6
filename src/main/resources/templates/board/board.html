@@ -35,8 +35,11 @@
 
         <!-- 해시태그 영역 -->
         <div th:each="tag : ${tagList}" style="display: inline; font-style:italic">
-            <span th:text="'#' + ${tag}" style="color: gray"></span>
+            <a th:href="@{'/?searchType=tag&keyword=%23' + ${tag}}" style="color: gray">
+                <span th:text="'#' + ${tag}"></span>
+            </a>
         </div>
+
         <!-- 해시태그 영역 끝 -->
 
         <!-- 자바 스크립트 영역 -->

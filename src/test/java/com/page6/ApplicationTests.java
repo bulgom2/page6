@@ -5,7 +5,9 @@ import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Comment;
+import com.page6.entity.Heart;
 import com.page6.repository.BoardRepository;
+import com.page6.repository.HeartRepository;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
 import com.page6.service.HeartService;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +57,13 @@ public class ApplicationTests {
 
     @DisplayName("좋아요 조회 테스트")
     @Test
-    void 좋아요_조회(@Autowired HeartService heartService) {
-        boolean flag = heartService.heartFlag(1L, "test@test");
-        System.out.println("flag값=" + flag);
+    @Transactional
+    void 좋아요_조회(@Autowired HeartRepository heartRepository) {
+        heartRepository.deleteById(1L);
+        List<Heart> heartList = heartRepository.findAll();
+        for(int i = 0; i < heartList.size(); i++)
+        System.out.println(heartList.get(i).toString());
+        System.out.println("테스트 끝");
     }
 
 //    @Test
