@@ -92,6 +92,8 @@ public class BoardController {
         model.addAttribute("board", board);
 
         List<String> tagList = tagService.getTagList(id);
+        String tags = "#" + String.join("#", tagList);
+        model.addAttribute("tags", tags);
         return "board/edit";
     }
 

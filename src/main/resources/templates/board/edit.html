@@ -15,7 +15,7 @@
           <input class="tagInput" type="text" placeholder="#">
           <div class="tagBox" style="display: flex">
             <span class="innerBox"></span>
-            <input class="tagValue" type="hidden" name="tags">
+            <input class="tagValue" type="hidden" name="tags" th:value="${tags}">
           </div>
           <!-- 해시 태그 영역 끝 -->
           <hr>
@@ -54,6 +54,11 @@
       box.addEventListener('click', ()=>{ tagInput.focus() });
       box.addEventListener('click', removeTagHandler);
       tagInput.addEventListener('keydown', addTagHandler);
+      let arr = tagValue.value.split(/[#,]+/).filter(item => item !== "");
+      for(let i = 0; i < arr.length; i++) {
+        let value = "#" + arr[i].replaceAll(" ", "");
+        tags.push(value);
+      }
       render();
     }
 
