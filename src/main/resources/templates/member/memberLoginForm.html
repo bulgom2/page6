@@ -28,7 +28,6 @@
     <!-- CSRF 공격에 대비한 임의의 난수 생성 -->
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <a href="https://kauth.kakao.com/oauth/authorize?client_id=6ee1d611c8e35830f26c3bc84f8b7e9a&redirect_uri=http://localhost:8080/members/auth/kakao/callback&response_type=code"><img src="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png"/></a>
-    <button type="button" class="btn btn-primary" onclick="location.href='/members/new'">회원가입</button>
   </form>
 </div>
 

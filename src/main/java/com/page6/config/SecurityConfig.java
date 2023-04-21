@@ -1,11 +1,13 @@
 package com.page6.config;
 
+import com.page6.config.auth.PrincipalDetailService;
 import com.page6.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +19,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private PrincipalDetailService principalDetailService;
 
     @Autowired
     MemberService memberService;
@@ -32,15 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder encodePWD() {
         return new BCryptPasswordEncoder();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService).passwordEncoder(encodePWD());
+        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD());
     }
-
-    //@Override
-    //protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-     //   auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
-    //}
 
 
     @Override
@@ -66,16 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers("/css/**");
+//    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-
-       return new BCryptPasswordEncoder();
-    }
 
 
 

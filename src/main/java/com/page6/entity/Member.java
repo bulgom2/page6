@@ -37,7 +37,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private String oauth;
+    private String oauth;   //로그인 타입
 
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
@@ -53,10 +53,11 @@ public class Member {
 
     }
     @Builder
-    public Member(String name, String email) {
+    public Member(String name, String email, String oauth) {
 
         this.name = name;
         this.email = email;
+        this.oauth = oauth;
 
     }
 

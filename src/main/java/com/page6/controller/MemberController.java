@@ -10,11 +10,15 @@ import com.page6.entity.OAuthToken;
 import com.page6.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,12 +37,12 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberService memberService;           //final 임시수정
+    private  MemberService memberService;           //final 임시수정
     private final PasswordEncoder passwordEncoder;       // final 임시수정
 
 
-   // @Value("${cos.key}")
-    //private String cosKey;
+    @Value("${cos.key}")
+    private String cosKey;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -160,31 +164,35 @@ public class MemberController {
         String email = kakaoProfile.getKakao_account().getEmail();
         String nickname = kakaoProfile.getProperties().getNickname();
 
-        // Member 오브젝트 : username,password,email
+        // Member 오브젝트 : name,password,email
         System.out.println("카카오 아이디(번호):" + nickname);
         System.out.println("카카오 이메일:" + email);
-
-
-
-//        System.out.println("블로그서버 패스워드 :" +cosKey);
+        System.out.println("블로그서버 패스워드 :" +cosKey);
 
         Member kakaoMember = Member.builder()
                 .name(nickname)
                 .email(email)
+                .oauth("kakao")
                 .build();
 
          //가입자 혹은 비가입자 체크 해서 처리
-      int a = memberService.fineMember(email);
-      if(a ==  0){
-      System.out.println("회원이 아니기에 자동 회원가입을 진행합니다");
-           memberService.singUp(kakaoMember);
-      }
+//      int a = memberService.fineMember(email);
+//      if(a == 1){
+//      System.out.println("회원이 아니기에 자동 회원가입을 진행합니다");
+//           memberService.singUp(kakaoMember);
+//      }
+        Member originMember = memberService.findMember(kakaoMember.getEmail());
+
+        if(originMember.getEmail() == null) {
+            System.out.println("기존 회원이 아니기에 자동 회원가입을 진행합니다");
+            memberService.findMember(kakaoMember.getEmail());
+        }
 
       System.out.println("자동 로그인을 진행합니다.");
-      // 로그인 처리
 
-//      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getName(), cosKey));
-//       SecurityContextHolder.getContext().setAuthentication(authentication);
+      // 로그인 처리
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getName(), cosKey));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/";
 
