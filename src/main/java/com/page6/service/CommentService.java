@@ -69,4 +69,9 @@ public class CommentService {
         return commentRepository.countCommentByBoard(board);
     }
 
+    // 특정 유저가 작성한 댓글 얻기
+    public List<Comment> findAllByWriterEmail(String email) {
+        return commentRepository.findAllByWriterEmail(email);
+    }
+
 }

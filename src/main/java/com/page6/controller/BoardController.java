@@ -3,24 +3,15 @@ package com.page6.controller;
 import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
-import com.page6.entity.Member;
 import com.page6.service.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.io.File;
@@ -29,7 +20,6 @@ import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,10 +42,17 @@ public class BoardController {
     @Autowired
     private BoardFileService boardFileService;
 
-
     // 마이페이지
-    @GetMapping({"/mypage", "/mypage/{page}"})
-    public String myPage(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
+    @GetMapping("/mypage")
+    public String myPage() {
+        return "mypage";
+    }
+
+
+
+    // 내 글 보기
+    @GetMapping({"/mypage/myboard", "/mypage/myboard/{page}"})
+    public String myBoardList(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
 
         // 한 페이지당 보여줄 게시물 수
         int size = 10;
@@ -93,7 +90,7 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("lastPage", lastPage);
-        return "board/mypage";
+        return "board/myboard";
     }
 
     //글 작성 페이지

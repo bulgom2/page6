@@ -1,55 +1,19 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <div layout:fragment="content">
 
-  <h1> 마이페이지 </h1>
-  <div>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>No</th>
-        <th style="width: 50%;">제목</th>
-<!--        <th>작성자</th>-->
-        <th>조회수</th>
-        <th>좋아요</th>
-        <th>등록일</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="board : ${myBoardList}">
-        <td><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</a></td>
-        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.comment_cnt > 0 ? board.title + ' [' + board.comment_cnt + ']' : board.title}">제목</a></td>
-<!--        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title + ' [' + board.comment_cnt + ']'}">제목</a></td>-->
-<!--        <td th:text="${board.writer}">작성자</td>-->
-        <td th:text="${board.views}">조회수</td>
-        <td th:text="${board.likes}">좋아요</td>
-        <td th:text="${board.regdate}">등록일</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <hr>
-
-  <!-- 페이징 버튼 -->
-  <div class="paging-btn" th:if="${not myBoardList.isEmpty()}">
-    <div class="blank-space"></div>
-
-    <!--            <a th:if="${nowPage > 5}" th:href="@{/search(page=1, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>-->
-
-    <a th:if="${nowPage > 5}" th:href="@{/mypage/(page=0)}">처음</a>
-    <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-      <a th:if="${page != nowPage}" th:href="@{/mypage/(page=${page})}" th:text="${page}"></a>
-      <!--                <a th:if="${page != nowPage}" th:href="@{/search(page=${page})}" th:text="${page}"></a>-->
-      <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
-    </th:block>
-    <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-    <a th:if="${nowPage < lastPage - 5}" th:href="@{/mypage/(page=${lastPage})}">마지막</a>
-    <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
-    <div class="blank-space"></div>
-  </div>
+    <h1> 마이페이지 </h1>
 
 </div>
 </html>

@@ -7,6 +7,7 @@ import com.page6.entity.Board;
 import com.page6.entity.Comment;
 import com.page6.entity.Member;
 import com.page6.repository.BoardRepository;
+import com.page6.repository.CommentRepository;
 import com.page6.repository.MemberRepository;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
@@ -106,6 +107,22 @@ public class ApplicationTests {
 //            System.out.println(list.get(i).toString());
 //        System.out.println("///////////////////////////////////테스트 끝///////////////////////////////////");
 //    }
+
+    @Test
+    void 댓글불러오기테스트(@Autowired CommentService commentService) {
+
+        String email = "bulgomi@bulgomi";
+//        Member writer = memberRepository.findByEmail(email);
+        List<Comment> cList = commentService.findAllByWriterEmail(email);
+
+        System.out.println("///////////////테스트 시작///////////////");
+        for (int i = 0; i < cList.size(); i++) {
+            System.out.println(cList.get(i).getContent());
+        }
+        System.out.println("///////////////테스트 끝///////////////");
+
+
+    }
 
     @Test
     void 아무_테스트(@Autowired BoardRepository boardRepository) {
