@@ -1,27 +1,41 @@
 package com.page6.dto;
 
+import com.page6.entity.Board;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
+@Builder
 public class BoardFormDto {
 
-    public long no;            //게시글 인덱스
+    public Long id;            //게시글 인덱스
 
-    public long writer;        // 작성자
+    public String email;        // 작성자 이메일
 
     public String title;       // 제목
 
-    public long content;       // 본문 내용
+    public String content;       // 본문 내용
 
-    public int likes;     // 좋아요 개수
 
-    public int views;     // 조회수
+    public static BoardFormDto of(Board board) {
 
-    public String regdt;    // 생성일자
+        return BoardFormDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .email(board.getMember().getEmail())
+                .content(board.getContent())
+                .build();
+    }
 
-    public String moddt;    // 수정일자
-
-    public boolean delfl;      // 삭제여부
+    public Board toEntity() {
+        Board board = new Board();
+        board.setId(this.getId());
+        board.setTitle(this.getTitle());
+        board.setContent(this.getContent());
+        return board;
+    }
 }

@@ -1,6 +1,7 @@
 package com.page6.service;
 
 import com.page6.dto.BoardDto;
+import com.page6.dto.BoardFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Member;
 import com.page6.entity.Tag;
@@ -74,6 +75,12 @@ public class BoardService {
     public BoardDto BoardOne(long id) {
         Optional<Board> board = boardRepository.findById(id);
         return BoardDto.of(board.get());
+    }
+
+    //게시글 조회 시 하나만 선택해서 from으로 넘겨주는 기능
+    public BoardFormDto BoardOneEdit(Long id) {
+        Board board = boardRepository.findById(id).get();
+        return BoardFormDto.of(board);
     }
 
     //게시물 조회수 증가

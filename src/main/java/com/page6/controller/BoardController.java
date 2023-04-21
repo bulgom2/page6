@@ -1,11 +1,13 @@
 package com.page6.controller;
 
 import com.page6.dto.BoardDto;
+import com.page6.dto.BoardFormDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.BoardFile;
 import com.page6.entity.Member;
 import com.page6.repository.BoardFileRepository;
+import com.page6.repository.BoardRepository;
 import com.page6.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +41,14 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/")
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService;
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private HeartService heartService;
-    @Autowired
-    private TagService tagService;
+    @Autowired private BoardService boardService;
+    @Autowired private CommentService commentService;
+    @Autowired private HeartService heartService;
+    @Autowired private TagService tagService;
 
-    @Autowired
-    private BoardFileService boardFileService;
-    @Autowired
-    private BoardFileRepository boardFileRepository;
+    @Autowired  private BoardFileService boardFileService;
+    @Autowired private BoardFileRepository boardFileRepository;
+    @Autowired private BoardRepository boardRepository;
 
 
     //글 작성 페이지
@@ -85,6 +82,19 @@ public class BoardController {
 
         return "redirect:/board/" + board.getId();
     }
+
+    //수정 페이지
+    @GetMapping("/edit/{id}")
+    public String boardEditForm(@PathVariable("id") long id, Model model) {
+        //TODO: 접근하려는 사람이 작성자인지 확인하기
+        //Board, Tag, 파일정보 받아오기
+        BoardFormDto board = boardService.BoardOneEdit(id);
+        model.addAttribute("board", board);
+
+        List<String> tagList = tagService.getTagList(id);
+        return "board/edit";
+    }
+
 
     //검색&정렬&페이징
     @GetMapping({"/", "/{page}"})
