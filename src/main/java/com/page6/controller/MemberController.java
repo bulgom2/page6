@@ -174,7 +174,7 @@ public class MemberController {
                 .build();
 
          //가입자 혹은 비가입자 체크 해서 처리
-      int a = memberService.fineMember(email);
+      int a = memberService.findMember(email);
       if(a ==  0){
       System.out.println("회원이 아니기에 자동 회원가입을 진행합니다");
            memberService.singUp(kakaoMember);

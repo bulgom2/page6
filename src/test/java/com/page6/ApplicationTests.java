@@ -110,18 +110,17 @@ public class ApplicationTests {
 
     @Test
     void 댓글불러오기테스트(@Autowired CommentService commentService) {
-
-        String email = "bulgomi@bulgomi";
-//        Member writer = memberRepository.findByEmail(email);
-        List<Comment> cList = commentService.findAllByWriterEmail(email);
-
-        System.out.println("///////////////테스트 시작///////////////");
-        for (int i = 0; i < cList.size(); i++) {
-            System.out.println(cList.get(i).getContent());
-        }
-        System.out.println("///////////////테스트 끝///////////////");
-
-
+//
+//        String email = "bulgomi@bulgomi";
+////        Member writer = memberRepository.findByEmail(email);
+//        List<Comment> cList = commentService.findAllByWriterEmail(email);
+//
+//        System.out.println("///////////////테스트 시작///////////////");
+//        for (int i = 0; i < cList.size(); i++) {
+//            System.out.println(cList.get(i).getContent());
+//        }
+//        System.out.println("///////////////테스트 끝///////////////");
+//
     }
 
     @Test

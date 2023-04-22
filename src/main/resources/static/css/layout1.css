@@ -82,9 +82,23 @@ a:hover{
     height: 70vh;
 }
 
-.sort-tab {
-
+.nickname-container {
+    white-space: nowrap;
 }
+
+.nickname {
+    display: inline-block;
+}
+
+table {
+    border-color: #4F5E5A;
+    color: #4F5E5A;
+}
+
+table th, table td, table tr {
+    border-color: #4F5E5A;
+}
+
 /* 리스트 반응형*/
 
 /*@media (max-width: 1200px) {*/

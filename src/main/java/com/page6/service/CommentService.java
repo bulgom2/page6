@@ -1,5 +1,6 @@
 package com.page6.service;
 
+import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Comment;
@@ -8,6 +9,9 @@ import com.page6.repository.BoardRepository;
 import com.page6.repository.CommentRepository;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -70,8 +74,11 @@ public class CommentService {
     }
 
     // 특정 유저가 작성한 댓글 얻기
-    public List<Comment> findAllByWriterEmail(String email) {
-        return commentRepository.findAllByWriterEmail(email);
+    public Page<Comment> findAllByWriter(String email, Pageable pageable) {
+        Member member = memberRepository.findByEmail(email);
+        Page<Comment> myCmtList = commentRepository.findAllByWriter(member, pageable);
+
+        return new PageImpl<>(myCmtList.getContent(), pageable, myCmtList.getTotalElements());
     }
 
 }

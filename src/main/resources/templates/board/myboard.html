@@ -4,7 +4,11 @@
       layout:decorate="~{layouts/layout1}">
 <div layout:fragment="content">
 
-  <h1> 마이페이지 </h1>
+  <div class="nickname-container">
+    <div class="nickname">
+      <h3 th:text="${nickname} + ' 님의 게시글'" style="color:#4F5E5A;"></h3>
+    </div>
+  </div>
   <div>
     <table class="table">
       <thead>

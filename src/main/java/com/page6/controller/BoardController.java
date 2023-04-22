@@ -3,6 +3,7 @@ package com.page6.controller;
 import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
+import com.page6.entity.Comment;
 import com.page6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -38,17 +39,24 @@ public class BoardController {
     private HeartService heartService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private BoardFileService boardFileService;
 
     // 마이페이지
     @GetMapping("/mypage")
-    public String myPage() {
-        return "mypage";
+    public String myPage(Model model, Principal principal) {
+
+        String email = principal.getName();
+        String nickname = memberService.getMemberNameByEmail(email);
+
+        model.addAttribute("nickname", nickname);
+        model.addAttribute("email", email);
+
+        return "board/mypage";
     }
-
-
 
     // 내 글 보기
     @GetMapping({"/mypage/myboard", "/mypage/myboard/{page}"})
@@ -84,13 +92,63 @@ public class BoardController {
 
         if (nowPage == 0) startPage = 1;
 
+        // 닉네임 가져오기
+        String nickname = memberService.getMemberNameByEmail(email);
 
+
+        model.addAttribute("nickname", nickname);
         model.addAttribute("myBoardList", myBoardPage);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("lastPage", lastPage);
         return "board/myboard";
+    }
+
+    // 내 댓글 보기
+    @GetMapping("/mypage/mycomment")
+    public String myCommentList(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
+        // 한 페이지당 보여줄 게시물 수
+        int size = 10;
+        page = page < 1 ? 1 : page;
+
+        // 페이지 번호는 0부터 시작하므로 1을 빼준다
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
+
+        // 리스트 불러오기
+        String email = principal.getName();
+        Page<Comment> myCommentPage = commentService.findAllByWriter(email, pageable);
+
+        // 페이징 번호
+        int nowPage = myCommentPage.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage;
+        int lastPage = myCommentPage.getTotalPages();
+
+        int maxPage = 10; // 최대 페이지 수
+        if (myCommentPage.getTotalPages() < maxPage) {
+            endPage = myCommentPage.getTotalPages();
+        } else {
+            endPage = Math.min(nowPage + 5, myCommentPage.getTotalPages());
+            if (nowPage < 5)
+                endPage = maxPage;
+            else if (nowPage < maxPage - 5)
+                endPage = maxPage;
+        }
+
+        if (nowPage == 0) startPage = 1;
+
+        // 닉네임 가져오기
+        String nickname = memberService.getMemberNameByEmail(email);
+
+
+        model.addAttribute("nickname", nickname);
+        model.addAttribute("myCommentList", myCommentPage);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        return "board/mycomment";
     }
 
     //글 작성 페이지
