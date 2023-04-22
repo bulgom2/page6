@@ -49,7 +49,7 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             uri = savedRequest.getRedirectUrl();
         } else if (prevPage != null && !prevPage.equals("")) {
             // 회원가입 - 로그인으로 넘어온 경우 "/"로 redirect
-            if (prevPage.contains("/auth/join")) {
+            if (prevPage.contains("/members/new")) {
                 uri = "/";
             } else {
                 uri = prevPage;

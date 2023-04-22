@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
-
 public class Member {
 
     @Id

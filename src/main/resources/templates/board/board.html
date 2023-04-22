@@ -82,6 +82,14 @@
 
         <!-- 첨부파일 영역 끝 -->
 
+        <!-- 수정 버튼 -->
+        <!-- board의 작성자가 로그인한 사용자일 경우 수정 버튼 보여주기 -->
+        <button class="btn" style="font-weight:500;"
+                th:if="${isWriter eq true}"
+                th:onclick="|location.href='@{/edit/{id}(id=${board.id})}'|"
+                type="button">수정</button>
+
+
         <br><br>
 
         <!-- 댓글 영역 시작 -->

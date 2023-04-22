@@ -319,7 +319,8 @@ public class BoardService {
     //로그인 인물이 글 작성자인지 판정 (true면 작성자, false면 작성자가 아님)
     public boolean isWriter(Long bid, String email) {
         Board board = boardRepository.findById(bid).get();
-        Member loginUser = memberRepository.findByEmail(email);
-        return board.getMember().getId() == loginUser.getId();
+        boolean flag = board.getMember().getEmail().equals(email);
+        System.out.println("작성자인지 여부 = " + flag); //콘솔 로그 확인을 위한 코드
+        return flag;
     }
 }
