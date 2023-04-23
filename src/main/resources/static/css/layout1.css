@@ -90,6 +90,13 @@ a:hover{
     display: inline-block;
 }
 
+.mylist {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 table {
     border-color: #4F5E5A;
     color: #4F5E5A;

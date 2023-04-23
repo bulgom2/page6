@@ -74,11 +74,21 @@ public class CommentService {
     }
 
     // 특정 유저가 작성한 댓글 얻기
-    public Page<Comment> findAllByWriter(String email, Pageable pageable) {
+    public Page<CommentFormDto> findAllByWriter(String email, Pageable pageable) {
         Member member = memberRepository.findByEmail(email);
         Page<Comment> myCmtList = commentRepository.findAllByWriter(member, pageable);
 
-        return new PageImpl<>(myCmtList.getContent(), pageable, myCmtList.getTotalElements());
+        List<CommentFormDto> commentFormDtoList = myCmtList.getContent()
+                .stream()
+                .map(comment -> {
+                    CommentFormDto commentFormDto = CommentFormDto.of(comment);
+                    return commentFormDto;
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(commentFormDtoList, pageable, myCmtList.getTotalElements());
     }
+
+
 
 }

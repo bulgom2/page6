@@ -13,7 +13,7 @@
     <table class="table">
       <thead>
       <tr>
-        <th>No</th>
+        <th>게시글 번호</th>
         <th style="width: 50%;">제목</th>
 <!--        <th>작성자</th>-->
         <th>조회수</th>
@@ -43,14 +43,14 @@
 
     <!--            <a th:if="${nowPage > 5}" th:href="@{/search(page=1, sortType=${sortType}, sortOrder=${sortOrder}, keyword=${keyword}, searchType=${searchType})}">처음</a>-->
 
-    <a th:if="${nowPage > 5}" th:href="@{/mypage/(page=0)}">처음</a>
+    <a th:if="${nowPage > 5}" th:href="@{/mypage/myboard/(page=0)}">처음</a>
     <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-      <a th:if="${page != nowPage}" th:href="@{/mypage/(page=${page})}" th:text="${page}"></a>
+      <a th:if="${page != nowPage}" th:href="@{/mypage/myboard/(page=${page})}" th:text="${page}"></a>
       <!--                <a th:if="${page != nowPage}" th:href="@{/search(page=${page})}" th:text="${page}"></a>-->
       <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
     </th:block>
     <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-    <a th:if="${nowPage < lastPage - 5}" th:href="@{/mypage/(page=${lastPage})}">마지막</a>
+    <a th:if="${nowPage < lastPage - 5}" th:href="@{/mypage/myboard/(page=${lastPage})}">마지막</a>
     <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
     <div class="blank-space"></div>
   </div>

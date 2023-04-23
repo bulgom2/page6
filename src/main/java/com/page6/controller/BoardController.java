@@ -106,7 +106,7 @@ public class BoardController {
     }
 
     // 내 댓글 보기
-    @GetMapping("/mypage/mycomment")
+    @GetMapping({"/mypage/mycomment", "/mypage/mycomment/{page}"})
     public String myCommentList(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
         // 한 페이지당 보여줄 게시물 수
         int size = 10;
@@ -117,7 +117,7 @@ public class BoardController {
 
         // 리스트 불러오기
         String email = principal.getName();
-        Page<Comment> myCommentPage = commentService.findAllByWriter(email, pageable);
+        Page<CommentFormDto> myCommentPage = commentService.findAllByWriter(email, pageable);
 
         // 페이징 번호
         int nowPage = myCommentPage.getPageable().getPageNumber() + 1;
