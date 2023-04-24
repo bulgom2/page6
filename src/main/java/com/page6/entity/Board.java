@@ -66,8 +66,21 @@ public class Board {
                 ", content='" + content + '\'' +
                 ", likes=" + likes +
                 ", views=" + views +
+                ", deleted=" + deleted +
+                ", regdate=" + regdate +
                 '}';
     }
+//    @Override
+//    public String toString() {
+//        return "Board{" +
+//                "id=" + id +
+//                ", member=" + member +
+//                ", title='" + title + '\'' +
+//                ", content='" + content + '\'' +
+//                ", likes=" + likes +
+//                ", views=" + views +
+//                '}';
+//    }
     //    public List<Comment> getComments() {
 //        return comments;
 //    }
