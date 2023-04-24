@@ -324,13 +324,16 @@ public class BoardController {
         //좋아요 및 작성자 플래그 받기
         boolean likeFlag = false;
         boolean isWriter = false;
+        boolean isAdmin = false;
         if(principal != null) {
             email = principal.getName();
             likeFlag = heartService.heartFlag(id, email);
             isWriter = boardService.isWriter(id, email);
+            isAdmin = memberService.isAdmin(email);
         }
         model.addAttribute("isWriter", isWriter);
         model.addAttribute("likeFlag", likeFlag);
+        model.addAttribute("isAdmin", isAdmin);
 
         System.out.println("isWriter flag=" + isWriter);
 
