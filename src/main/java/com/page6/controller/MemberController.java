@@ -199,7 +199,7 @@ public class MemberController {
       // 로그인 처리
 
         UserDetails userDetails =memberService.loadUserByUsername(email);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,"@codehows213", userDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,"$2a$10$wlSDJdnkdcUoPAwUlr99dDnv3/cCbYXONhvJhm10LLcYzc6", userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 //      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getEmail(), cosKey));
 //       SecurityContextHolder.getContext().setAuthentication(authentication);
