@@ -56,7 +56,7 @@ public class BoardService {
     // 마이페이지 내 글 보기
     public Page<BoardDto> getMyBoard(String email, Pageable pageable) {
         Member member = memberRepository.findByEmail(email);
-        Page<Board> myList = boardRepository.findAllByMember(member, pageable);
+        Page<Board> myList = boardRepository.findAllByMemberAndDeletedFalse(member, pageable);
 
         List<BoardDto> boardDtoList = myList.getContent()
                 .stream()
