@@ -244,7 +244,7 @@ public class BoardController {
             return "exception/errorpage";
         }
 
-        deletedService.updateDeletedLog(id, email);
+        deletedService.updateDeletedLog(id, email, false);
         boardService.boardDelete(id);
         return "redirect:/";
     }

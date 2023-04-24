@@ -2,6 +2,7 @@ package com.page6.controller;
 
 import com.page6.dto.BoardDto;
 import com.page6.service.BoardService;
+import com.page6.service.DeletedService;
 import com.page6.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,8 @@ public class AdminController {
 
     private final MemberService memberService;
     private final BoardService boardService;
+
+    private final DeletedService deletedService;
 
 
     //휴지통 기능
@@ -85,6 +88,7 @@ public class AdminController {
             return "exception/errorpage";
         }
 
+        deletedService.updateDeletedLog(id, email, true);
         boardService.boardUndelete(id);
         return "redirect:/";
     }

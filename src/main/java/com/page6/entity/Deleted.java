@@ -35,8 +35,9 @@ public class Deleted {
     @Column(name="DELETED_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
 
-    public Deleted(Board board, Member member) {
+    public Deleted(Board board, Member member, boolean flag) {
         this.board = board;
         this.member = member;
+        this.flag = flag;
     }
 }

@@ -16,10 +16,10 @@ public class DeletedService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
-    public void updateDeletedLog(Long bid, String email) {
+    public void updateDeletedLog(Long bid, String email, boolean flag) {
         Board board = boardRepository.findById(bid).get();
         Member member = memberRepository.findByEmail(email);
-        Deleted deleted = new Deleted(board, member);
+        Deleted deleted = new Deleted(board, member, flag);
         deletedRepository.save(deleted);
     }
 }
