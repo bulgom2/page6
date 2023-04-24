@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<div layout:fragment="content">
+  <!--  본문 영역 시작  -->
+
+  <div class="nickname-container">
+    <div class="nickname">
+      <h3 style="color:#4F5E5A;">휴지통</h3>
+    </div>
+  </div>
+  <div>
+    <table class="table" style="table-layout: fixed">
+      <thead>
+      <tr>
+        <th style="width: 5%;">게시글 번호</th>
+        <th style="width: 40%;">제목</th>
+        <th style="width: 10%;">삭제자</th>
+        <th style="width: 10%;">이력</th>
+        <th style="width: 25%;">등록일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="board : ${historyList}">
+        <td><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</a></td>
+        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a></td>
+        <!--        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title + ' [' + board.comment_cnt + ']'}">제목</a></td>-->
+                <td th:text="${board.member}">작성자</td>
+        <td th:text="${board.flag}">삭제/복구</td>
+        <td th:text="${board.regdate}">등록일</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- 페이징 버튼 -->
+  <div class="paging-btn" th:if="${not recycleList.isEmpty()}">
+    <div class="blank-space"></div>
+    <a th:if="${nowPage > 5}" th:href="@{/admin/(page=0)}">처음</a>
+    <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+      <a th:if="${page != nowPage}" th:href="@{/admin/(page=${page})}" th:text="${page}"></a>
+      <!--                <a th:if="${page != nowPage}" th:href="@{/search(page=${page})}" th:text="${page}"></a>-->
+      <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
+    </th:block>
+    <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
+    <a th:if="${nowPage < lastPage - 5}" th:href="@{/admin/(page=${lastPage})}">마지막</a>
+    <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
+    <div class="blank-space"></div>
+  </div>
+
+
+  <!--  본문 영역 끝  -->
+</div>
+</html>
