@@ -7,6 +7,7 @@ import com.page6.dto.MemberFormDto;
 import com.page6.entity.KakaoProfile;
 import com.page6.entity.Member;
 import com.page6.entity.OAuthToken;
+import com.page6.members.Role;
 import com.page6.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
+
 
 import javax.validation.Valid;
 
@@ -37,8 +44,8 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;       // final 임시수정
 
 
-   // @Value("${cos.key}")
-    //private String cosKey;
+   @Value("${cos.key}")
+   private String cosKey;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -128,9 +135,9 @@ public class MemberController {
         RestTemplate rt2 = new RestTemplate();
 //
 //        // HttpHeader 오브젝트 생성
-		HttpHeaders headers2 = new HttpHeaders();
-		headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
-		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 
 //
@@ -166,24 +173,31 @@ public class MemberController {
 
 
 
-//        System.out.println("블로그서버 패스워드 :" +cosKey);
+        System.out.println("블로그서버 패스워드 :" +cosKey);
 
         Member kakaoMember = Member.builder()
                 .name(nickname)
                 .email(email)
+                .oauth("kakao")
+                .password(cosKey)//패스워드키 넣어주기
+                .role(Role.USER)
                 .build();
 
          //가입자 혹은 비가입자 체크 해서 처리
-      int a = memberService.findMember(email);
-      if(a ==  0){
+      int a = memberService.fineMember(email);
+      if(a ==  1){
       System.out.println("회원이 아니기에 자동 회원가입을 진행합니다");
            memberService.singUp(kakaoMember);
       }
 
       System.out.println("자동 로그인을 진행합니다.");
+
       // 로그인 처리
 
-//      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getName(), cosKey));
+        UserDetails userDetails =memberService.loadUserByUsername(email);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "cos1234", userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+//      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getEmail(), cosKey));
 //       SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/";
