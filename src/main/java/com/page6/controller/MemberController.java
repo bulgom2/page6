@@ -44,8 +44,8 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;       // final 임시수정
 
 
-   @Value("${cos.key}")
-   private String cosKey;
+   @Value("${garlic6.key}")
+   private String garlic6key;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -173,13 +173,13 @@ public class MemberController {
 
 
 
-        System.out.println("블로그서버 패스워드 :" +cosKey);
+//        System.out.println("블로그서버 패스워드 :" +cosKey);
 
         Member kakaoMember = Member.builder()
                 .name(nickname)
                 .email(email)
                 .oauth("kakao")
-                .password(cosKey)//패스워드키 넣어주기
+                .password(garlic6key)//패스워드키 넣어주기
                 .role(Role.USER)
                 .build();
 
@@ -195,7 +195,7 @@ public class MemberController {
       // 로그인 처리
 
         UserDetails userDetails =memberService.loadUserByUsername(email);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "cos1234", userDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,"@codehows213", userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 //      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getEmail(), cosKey));
 //       SecurityContextHolder.getContext().setAuthentication(authentication);
