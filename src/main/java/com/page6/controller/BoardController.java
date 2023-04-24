@@ -18,6 +18,7 @@ import com.page6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -209,7 +210,7 @@ public class BoardController {
 
     //수정 페이지
     @GetMapping("/edit/{id}")
-    public String boardEditForm(@PathVariable("id") long id, Model model) {
+    public String boardEditForm(@PathVariable("id") long id, Model model, Principal principal) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         //Board, Tag, 파일정보 받아오기
         BoardFormDto board = boardService.BoardOneEdit(id);
@@ -219,6 +220,14 @@ public class BoardController {
         String tags = "#" + String.join("#", tagList);
         model.addAttribute("tags", tags);
         return "board/edit";
+    }
+
+    //삭제 요청
+    @GetMapping("/delete/{id}")
+    public String boardDelete(@PathVariable("id") Long id, Model model) {
+        //TODO: 접근하려는 사람이 작성자인지 확인하기
+        boardService.boardDelete(id);
+        return "redirect:/";
     }
 
 
@@ -315,6 +324,7 @@ public class BoardController {
 
         return "/board/board";
     }
+
 
     //이미지 오류 났을 시 write.html에서 uploadUrl에 '/image/upload' -> '/board/image/upload'
     @PostMapping(value = "/uploadImage")

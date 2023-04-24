@@ -101,6 +101,11 @@
                     type="button">수정</button>
 
             <button class="btn" style="font-weight:500;"
+                    th:if="${isWriter eq true}"
+                    th:onclick="|location.href='@{/delete/{id}(id=${board.id})}'|"
+                    type="button">삭제</button>
+
+            <button class="btn" style="font-weight:500;"
                     th:onclick="|location.href='@{/}'|"
                     type="button">목록</button>
         </div>

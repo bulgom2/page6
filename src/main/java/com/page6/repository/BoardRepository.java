@@ -22,16 +22,16 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     ////////////////////// 검색 //////////////////////
     //제목 포함 검색
-    Page<Board> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+    Page<Board> findByTitleContainingIgnoreCaseAndDeletedFalse(String title, Pageable pageable);
 
     //본문 포함 검색
-    Page<Board> findByContentContainingIgnoreCase(String content, Pageable pageable);
+    Page<Board> findByContentContainingIgnoreCaseAndDeletedFalse(String content, Pageable pageable);
 
     //제목+본문 포함 검색
-    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content, Pageable pageable);
+    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(String title, String content, Pageable pageable);
 
     //작성자 포함 검색
-    Page<Board> findByMemberNameContainingIgnoreCase(String keyword, Pageable pageable);
+    Page<Board> findByMemberNameContainingIgnoreCaseAndDeletedFalse(String keyword, Pageable pageable);
 
     //해시태그 검색
     @Query("SELECT b FROM Board b JOIN TagMap tm ON b.id = tm.board.id JOIN Tag t ON tm.tag.id = t.id WHERE t.name = :name")
@@ -59,6 +59,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     int updateLike(@Param("id") Long id);
 
     // 페이징
+    Page<Board> findAllByDeletedFalse(Pageable pageable);
+
     Page<Board> findAll(Pageable pageable);
 
 
@@ -79,5 +81,16 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 조회수 내림차순 정렬
     Page<Board> findAllByOrderByViewsDesc(Pageable pageable);
+
+
+    // 삭제 기능
+//    @Modifying
+//    @Query("update Board b set b.deleted = true where b.id = :id")
+//    int updateDeleted(@Param("id") Long id);
+    // 삭제 기능
+    @Modifying
+    @Query("update Board b set b.deleted = :deleted where b.id = :id")
+    int updateDeleted(@Param("id") Long id, @Param("deleted") boolean deleted);
+
 
 }

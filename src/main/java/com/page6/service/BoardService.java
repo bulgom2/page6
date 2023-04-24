@@ -124,20 +124,20 @@ public class BoardService {
     public Page<BoardDto> findAll(String keyword, String searchType, Pageable pageable) {
         Page<Board> boardPage = null;
         if(keyword == null || keyword.isEmpty() || "".equals(keyword))
-            boardPage = boardRepository.findAll(pageable);
+            boardPage = boardRepository.findAllByDeletedFalse(pageable);
         else {
             switch (searchType) {
                 case "title":
-                    boardPage = boardRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+                    boardPage = boardRepository.findByTitleContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
                     break;
                 case "content":
-                    boardPage = boardRepository.findByContentContainingIgnoreCase(keyword, pageable);
+                    boardPage = boardRepository.findByContentContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
                     break;
                 case "titleContent":
-                    boardPage = boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+                    boardPage = boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
                     break;
                 case "member":
-                    boardPage = boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
+                    boardPage = boardRepository.findByMemberNameContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
                     break;
                 case "tag":
                     String[] tags = keyword.split("[#\\s]+");
@@ -176,71 +176,32 @@ public class BoardService {
 //        return boardRepository.findAllByOrderByName();
 //    }
 
-    //BoardDto 이름 찾기
-    public Page<BoardDto> findAllByName(Pageable pageable) {
-        Page<Board> boardPage = boardRepository.findAllByOrderByName(pageable);
-        List<BoardDto> boardDtoList = boardPage.getContent()
-                .stream()
-                .map(board -> {
-                    BoardDto boardDto = BoardDto.of(board);
-                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
-                    return boardDto;
-                })
-                .collect(Collectors.toList());
-        return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
-    }
-    public Page<Board> findAllByOrderByName(Pageable pageable) {
 
-        return boardRepository.findAllByOrderByName(pageable);
-    }
-    public Page<Board> findAllByOrderByTitle(Pageable pageable) {
-        return boardRepository.findAllByOrderByTitle(pageable);
-    }
-
-    public Page<Board> findAllByOrderByIdDesc(Pageable pageable) {
-        return boardRepository.findAllByOrderByIdDesc(pageable);
-    }
-
-    public Page<Board> findAllByOrderByLikesDesc(Pageable pageable) {
-        return boardRepository.findAllByOrderByLikesDesc(pageable);
-    }
-
-    public Page<Board> findAllByOrderByViewsDesc(Pageable pageable) {
-        return boardRepository.findAllByOrderByViewsDesc(pageable);
-    }
-
-
-
-//    // 내 페이징
-//    public Page<Board> boardList(Pageable pageable){
-//        //기존 List<Board>값으로 넘어가지만 페이징 설정을 해주면 Page<Board>로 넘어갑니다.
-//        return boardRepository.findAll(pageable);
-//    }
 
 
     ////////////////////////    서치    ////////////////////////
     //제목 포함 검색
     @Transactional
     public Page<Board> searchByTitleContaing(String title, Pageable pageable) {
-        return boardRepository.findByTitleContainingIgnoreCase(title, pageable);
+        return boardRepository.findByTitleContainingIgnoreCaseAndDeletedFalse(title, pageable);
     }
 
     //본문 포함 검색
     @Transactional
     public Page<Board> searchByContentContaing(String content, Pageable pageable) {
-        return boardRepository.findByContentContainingIgnoreCase(content, pageable);
+        return boardRepository.findByContentContainingIgnoreCaseAndDeletedFalse(content, pageable);
     }
 
     //제목+본문 포함 검색
     @Transactional
     public Page<Board> searchByTitleContentContaing(String keyword, Pageable pageable) {
-        return boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+        return boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
     }
 
     //작성자 포함 검색
     @Transactional
     public Page<Board> searchByWriterContaing(String keyword, Pageable pageable) {
-        return boardRepository.findByMemberNameContainingIgnoreCase(keyword, pageable);
+        return boardRepository.findByMemberNameContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
     }
 
 
@@ -338,5 +299,11 @@ public class BoardService {
         boolean flag = board.getMember().getEmail().equals(email);
         System.out.println("작성자인지 여부 = " + flag); //콘솔 로그 확인을 위한 코드
         return flag;
+    }
+
+    //글 삭제하기
+    @Transactional
+    public void boardDelete(Long id) {
+        boardRepository.updateDeleted(id, true);
     }
 }

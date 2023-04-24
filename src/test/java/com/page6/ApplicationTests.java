@@ -20,7 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +38,17 @@ public class ApplicationTests {
 
     @DisplayName("보드 테스트")
     @Test
-    void 보드_테스트_시작(@Autowired CommentService commentService) {
-        List<CommentFormDto> list = commentService.getCommentList(1L);
+    @Transactional
+    void 보드_테스트_시작(@Autowired BoardRepository boardRepository, @Autowired EntityManager entityManager) {
+        boardRepository.updateDeleted(5L, true);
+//        entityManager.flush();  // 변경사항을 데이터베이스에 반영
+        List<Board> list = boardRepository.findAll();
         for(int i = 0; i < list.size(); i++)
             System.out.println(list.get(i).toString());
         System.out.println("테스트 끝");
     }
-      //  더미데이터 만들기
+
+    //  더미데이터 만들기
 //    @DisplayName("게시글 더미데이터")
 //    @Test
 //    void 게시글_더미데이터() {
