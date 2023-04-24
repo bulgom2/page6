@@ -5,9 +5,10 @@ import com.page6.dto.BoardDto;
 import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 import com.page6.entity.Comment;
-import com.page6.entity.Heart;
+import com.page6.entity.Member;
 import com.page6.repository.BoardRepository;
-import com.page6.repository.HeartRepository;
+import com.page6.repository.CommentRepository;
+import com.page6.repository.MemberRepository;
 import com.page6.service.BoardService;
 import com.page6.service.CommentService;
 import com.page6.service.HeartService;
@@ -19,8 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ApplicationTests {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @DisplayName("보드 테스트")
     @Test
@@ -57,13 +61,9 @@ public class ApplicationTests {
 
     @DisplayName("좋아요 조회 테스트")
     @Test
-    @Transactional
-    void 좋아요_조회(@Autowired HeartRepository heartRepository) {
-        heartRepository.deleteById(1L);
-        List<Heart> heartList = heartRepository.findAll();
-        for(int i = 0; i < heartList.size(); i++)
-        System.out.println(heartList.get(i).toString());
-        System.out.println("테스트 끝");
+    void 좋아요_조회(@Autowired HeartService heartService) {
+        boolean flag = heartService.heartFlag(1L, "test@test");
+        System.out.println("flag값=" + flag);
     }
 
 //    @Test
@@ -107,4 +107,47 @@ public class ApplicationTests {
 //            System.out.println(list.get(i).toString());
 //        System.out.println("///////////////////////////////////테스트 끝///////////////////////////////////");
 //    }
+
+    @Test
+    void 댓글불러오기테스트(@Autowired CommentService commentService) {
+//
+//        String email = "bulgomi@bulgomi";
+////        Member writer = memberRepository.findByEmail(email);
+//        List<Comment> cList = commentService.findAllByWriterEmail(email);
+//
+//        System.out.println("///////////////테스트 시작///////////////");
+//        for (int i = 0; i < cList.size(); i++) {
+//            System.out.println(cList.get(i).getContent());
+//        }
+//        System.out.println("///////////////테스트 끝///////////////");
+//
+    }
+
+    @Test
+    void 아무_테스트(@Autowired BoardRepository boardRepository) {
+//        String email = "bulgomi@bulgomi";
+//        List<Board> list = boardService.getMyBoard(email);
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.println(list.get(i));
+//        }
+
+//        Member member = memberRepository.findByEmail("bulgomi@bulgomi");
+//        Member member2 = memberRepository.findByName("홍길쑨").get();
+//        System.out.println(member.toString());
+//        System.out.println(member2.toString());
+//
+//        List<Board> board = boardRepository.findAllByMember(member);
+//
+//        for (int i = 0; i < board.size(); i++) {
+//            System.out.println(board.get(i));
+//        }
+
+
+//        String[] arr = {"s1", "d2"};
+//
+//        for (int i = 0; i < arr.length; i++) {
+//            System.out.print(arr[i]);
+//        }
+    }
 }

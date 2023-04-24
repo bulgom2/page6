@@ -33,7 +33,7 @@
 
         <!-- 게시물이 없을 때 -->
         <div th:if="${boardList.isEmpty()}" class="empty-message">
-            <h2 style="color:#4F5E5A">첫 게시물을 올려 보세요!</h2>
+            <h2 style="color:#4F5E5A">게시물이 없습니다!</h2>
         </div>
         <!-- 게시물이 있을 때 -->
         <div th:if="${not boardList.isEmpty()}" class="card-deck">
@@ -50,13 +50,13 @@
                     <h3 class="card-title"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.comment_cnt > 0 ? board.title + ' [' + board.comment_cnt + ']' : board.title}" style="color:#4F5E5A">제목</a></h3>
                     <h5 class="card-text" th:text="${board.writer}" style="color:#4F5E5A">작성자</h5>
                 </div>
-            <div class="card-footer">
-                <small class="text-muted" th:text="${board.dateBefore}" style="color:#4F5E5A">등록일</small>
-                <div class="views">
-                    <img src="../../css/eye.png" class="eye" alt="eye">
-                    <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
+                <div class="card-footer">
+                    <small class="text-muted" th:text="${board.dateBefore}" style="color:#4F5E5A">등록일</small>
+                    <div class="views">
+                        <img src="../../css/eye.png" class="eye" alt="eye">
+                        <span th:text="${board.views}" style="color:#4F5E5A">조회수</span>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 
@@ -83,12 +83,6 @@
 
     <hr class="my-4">
 
-    <div class="floating-button">
-    <span class="move-write">
-        <a class="write-btn" href="/write"></a>
-    </span>
-    </div>
-
 <!--        서치          -->
     <form id="searchForm" th:action="@{/}" method="get" class="form-inline my-2 my-lg-0" style="align-content: center;">
         <div style="margin: 0 auto; width: 500px">
@@ -111,7 +105,18 @@
     </form>
     <br>
     <!--  본문 영역 끝  -->
+
+    <!-- 글쓰기 버튼 -->
+    <div class="floating-button">
+    <span class="move-write">
+        <a class="write-btn" href="/write"></a>
+    </span>
+    </div>
 </div>
+
+
+
+
 
 
 </html>

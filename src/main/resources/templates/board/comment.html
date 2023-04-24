@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{/board/board}">
 <div id="comment" layout:fragment="comment">
-  <h3 style="color:#4F5E5A;">COMMENT<span th:text="${' [' + board.comment_cnt + ']'}"></span></h3>
+  <h3 style="color:#4F5E5A;">댓글<span th:text="${' [' + board.comment_cnt + ']'}"></span></h3>
   <hr>
   <!-- 댓글 영역 시작 -->
 <!--  <div class="row">-->
@@ -25,13 +25,16 @@
 <!--    </div>-->
 
 
-  <div class="jumbotron" th:each="comment : ${commentList}">
+  <div th:each="comment : ${commentList}">
     <th:block th:if="${comment.depth} == 1"> 답글 내용 :</th:block>
+  <div class="jumbotron">
+
     <h6 class="display-4" th:text="${comment.content}">
       내용</h6>
     <p class="lead" th:text="${comment.regdate}">등록일</p>
     <hr class="my-4">
     <p class="lead" th:text="${comment.writer}" style="font-weight:bold">작성자</p>
+
     <th:block th:if="${comment.depth} == 0">
       <button type="button" class="btn btn-primary" id="replyBtn" sec:authorize="isAuthenticated()"
               th:attr="data-cid=${comment.cid}" onclick="showRecommentForm(this)">답글</button>
@@ -53,6 +56,8 @@
   <!--  대댓글 입력 폼 끝  -->
 
   </div>
+
+  </div>
   <br>
 <!--  </div>-->
   <!-- 댓글 영역 끝 -->
@@ -68,7 +73,6 @@
     </div>
   </form>
   <!-- 댓글 입력 폼 끝 -->
-
 
   <!-- 답글 JavaScript 영역 -->
   <script>

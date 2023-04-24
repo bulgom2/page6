@@ -21,8 +21,19 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
 
+
+    // 마이페이지 닉네임 불러오기
+    public String getMemberNameByEmail(String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member != null) {
+            return member.getName();
+        } else {
+            return null;
+        }
+    }
+
   @Transactional(readOnly = true)
-  public int fineMember(String email) {
+  public int findMember(String email) {
    Member member = memberRepository.findByEmail(email);
    if(member == null){
       return 1;
