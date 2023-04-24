@@ -183,6 +183,13 @@ input {
     -webkit-appearance:none; /* form 요소의 디바이스 기반 스타일 초기화 */
     border: 0;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-text-fill-color: #4F5E5A;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 
 .box {
     outline: none;
@@ -255,21 +262,13 @@ ul {
 .header-content {
     position: relative;
     width: 100%;
-    /*line-height: 120px;*/
-    /*display: flex;*/
-    /*justify-content: space-between;*/
-    /*align-items: center;*/
-}
-
-.main-logo, .login-out {
-    position: absolute;
-    top: 0;
-}
-
-.paging-btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.main-logo, .login-out {
+    position: relative;
 }
 
 .blank-space {
@@ -277,34 +276,31 @@ ul {
 }
 
 .login-btn, .login-out {
-    right: 0;
-    width: 150px;
+    width: 200px;
     text-align: right;
     vertical-align: middle;
     font-weight: bolder;
 }
 
 .header-center {
-    display: flex;
+    display: inline;
     justify-content: center;
     position: relative;
     z-index: 1;
+    width: fit-content;
 }
 
 #mypage-img {
     width: 200px;
     height: 40px;
     vertical-align: middle;
-    /*margin-right: 123px;*/
 }
 
 #logo-img {
     width: 200px;
     height: 112px;
-    left: 0;
-    /*display: table-cell;*/
-    /*vertical-align: middle;*/
 }
+
 
 
 
@@ -329,6 +325,13 @@ ul {
     content:'\f304';
     color: #4F5E5A;
 }
+
+.paging-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 /*플로팅 버튼 스타일========*/
 .move-write {
