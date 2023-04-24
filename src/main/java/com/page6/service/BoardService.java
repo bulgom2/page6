@@ -105,19 +105,6 @@ public class BoardService {
         boardRepository.updateView(id);
     }
 
-   // 페이징 리스트 조회 기능
-   public Page<BoardDto> findAll(Pageable pageable) {
-       Page<Board> boardPage = boardRepository.findAll(pageable);
-       List<BoardDto> boardDtoList = boardPage.getContent()
-               .stream()
-               .map(board -> {
-                   BoardDto boardDto = BoardDto.of(board);
-                   boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
-                   return boardDto;
-               })
-               .collect(Collectors.toList());
-       return new PageImpl<>(boardDtoList, pageable, boardPage.getTotalElements());
-   }
 
    //키워드 검색
    @Transactional
@@ -238,9 +225,14 @@ public class BoardService {
         List<Board> boardList = new ArrayList<>();
         Collections.sort(boardIds);
         for(int i = 0; i < boardIdSet.size(); i++) {
-            Board board = boardRepository.findById(boardIds.get(i)).get();
+            Optional<Board> boardOptional = boardRepository.findByIdAndDeletedFalse(boardIds.get(i));
+            if(!boardOptional.isPresent()) {
+                continue;
+            }
+            Board board = boardOptional.get();
             boardList.add(board);
         }
+
 
         //Board 객체들을 정렬
         String sortType = pageable.getSort().toString().split(":")[0];

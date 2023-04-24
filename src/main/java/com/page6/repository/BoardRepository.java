@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -92,5 +93,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("update Board b set b.deleted = :deleted where b.id = :id")
     int updateDeleted(@Param("id") Long id, @Param("deleted") boolean deleted);
 
+
+    Optional<Board> findByIdAndDeletedFalse(Long id);
 
 }

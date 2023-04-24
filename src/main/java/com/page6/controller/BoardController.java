@@ -212,6 +212,10 @@ public class BoardController {
     @GetMapping("/edit/{id}")
     public String boardEditForm(@PathVariable("id") long id, Model model, Principal principal) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
+        String email = principal.getName();
+        if(!boardService.isWriter(id, email)) {
+            return "redirect:/board/" + id;
+        }
         //Board, Tag, 파일정보 받아오기
         BoardFormDto board = boardService.BoardOneEdit(id);
         model.addAttribute("board", board);
@@ -224,8 +228,13 @@ public class BoardController {
 
     //삭제 요청
     @GetMapping("/delete/{id}")
-    public String boardDelete(@PathVariable("id") Long id, Model model) {
+    public String boardDelete(@PathVariable("id") Long id, Model model, Principal principal) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
+        String email = principal.getName();
+        if(!boardService.isWriter(id, email)) {
+            return "redirect:/board/" + id;
+        }
+
         boardService.boardDelete(id);
         return "redirect:/";
     }
