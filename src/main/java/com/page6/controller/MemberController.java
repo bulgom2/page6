@@ -58,6 +58,10 @@ public class MemberController {
     @PostMapping(value = "/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 
+        if (!memberFormDto.getPassword().equals(memberFormDto.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "비밀번호가 일치하지 않습니다.");
+        }
+
         if (bindingResult.hasErrors()) {
             return "member/memberForm";
         }
