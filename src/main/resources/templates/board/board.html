@@ -34,11 +34,12 @@
         </div>
 
         <!-- 해시태그 영역 -->
-        <div th:each="tag : ${tagList}" style="display: inline; font-style:italic">
+        <div th:each="tag : ${tagList}" style="display: inline; font-style:italic; margin-right: 10px;">
             <a th:href="@{'/?searchType=tag&keyword=%23' + ${tag}}" style="color: gray">
                 <span th:text="'#' + ${tag}"></span>
             </a>
         </div>
+        <br><br>
 
         <!-- 해시태그 영역 끝 -->
 
@@ -60,7 +61,8 @@
         <!-- 좋아요 영역 끝 -->
 
         <!-- 첨부파일 영역 -->
-        <h5>첨부파일</h5>
+        <br>
+        <p style="color:#4F5E5A;">첨부파일</p>
 <!--        <ul>-->
 <!--            <li th:each="file : ${fileList}">-->
 <!--                <a th:href="@{'/board/file/' + ${file.id}}"-->
@@ -79,17 +81,7 @@
             </li>
         </ul>
 
-
         <!-- 첨부파일 영역 끝 -->
-
-        <!-- 수정 버튼 -->
-        <!-- board의 작성자가 로그인한 사용자일 경우 수정 버튼 보여주기 -->
-        <button class="btn" style="font-weight:500;"
-                th:if="${isWriter eq true}"
-                th:onclick="|location.href='@{/edit/{id}(id=${board.id})}'|"
-                type="button">수정</button>
-
-
         <br><br>
 
         <!-- 댓글 영역 시작 -->
@@ -101,6 +93,12 @@
 <!--            <button class="btn" style="font-weight:500;"-->
 <!--                    th:onclick="|location.href='@{/write}'|"-->
 <!--                    type="button">글쓰기</button>-->
+            <!-- 수정 버튼 -->
+            <!-- board의 작성자가 로그인한 사용자일 경우 수정 버튼 보여주기 -->
+            <button class="btn" style="font-weight:500;"
+                    th:if="${isWriter eq true}"
+                    th:onclick="|location.href='@{/edit/{id}(id=${board.id})}'|"
+                    type="button">수정</button>
 
             <button class="btn" style="font-weight:500;"
                     th:onclick="|location.href='@{/}'|"
