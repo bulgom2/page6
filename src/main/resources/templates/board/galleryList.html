@@ -37,7 +37,7 @@
         </div>
         <!-- 게시물이 있을 때 -->
         <div th:if="${not boardList.isEmpty()}" class="card-deck">
-            <div class="card" th:each="board: ${boardList}">
+            <div id="gallery-card" class="card" th:each="board: ${boardList}">
                 <div class="likes">
                     <img src="../../css/heart.png" class="heart" alt="heart">
                     <span th:text="${board.likes}" style="color:#4F5E5A">좋아요수</span>

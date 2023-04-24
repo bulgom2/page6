@@ -23,6 +23,22 @@
                 alert(errorMessage);
             }
         });
+
+        // 비밀번호 확인
+        const password = document.querySelector('input[name=password]');
+        const confirmPassword = document.querySelector('input[name=confirm-password]');
+
+        function validatePassword() {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            } else {
+                confirmPassword.setCustomValidity("");
+            }
+        }
+
+        password.addEventListener("change", validatePassword);
+        confirmPassword.addEventListener("keyup", validatePassword);
+
     </script>
 
 </th:block>
@@ -45,6 +61,12 @@
             <input type="password" th:field="*{password}" class="box" style="border:none;" placeholder="비밀번호 입력">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
         </div>
+        <div class="form-group py-2">
+            <label th:for="confirm-password" style="color:#4F5E5A; font-weight:bold;"><h3>비밀번호 확인</h3></label>
+            <input type="password" th:field="*{confirmPassword}" class="box" style="border:none;" placeholder="비밀번호 입력">
+            <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="fieldError">Incorrect data</p>
+        </div>
+
         <div style="text-align:center" class="py-3">
             <button type="submit" class="btn">등록</button>
             <button type="button" class="btn" onclick="history.back();">취소</button>
