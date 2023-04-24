@@ -27,7 +27,7 @@
           <div th:replace="board/fileupload::#fileupload" th:with="boardFileDto=${boardFileDto}"></div><hr>
           <!-- 파일 업로드 영역 끝 -->
           <div class="board-btn-div">
-            <input type="button" class="btn" value="작성취소" />
+            <input type="button" class="btn" th:onclick="goBack()" value="작성취소" />
             <input type="submit" class="btn" value="작성완료" />
           </div>
           <hr><br><br>
@@ -96,6 +96,11 @@
         tmp += template(tag);
       });
       innerBox.innerHTML = tmp;
+    }
+
+    // 뒤로가기
+    function goBack() {
+      window.history.back();
     }
   </script>
 

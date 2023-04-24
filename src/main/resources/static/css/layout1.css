@@ -2,6 +2,7 @@ html {
     position: relative;
     min-height: 100%;
     margin: 0;
+
 }
 
 body {
@@ -140,13 +141,13 @@ table th, table td, table tr {
     margin: 0 -10px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
 }
 
-.card {
+#gallery-card {
     min-width: 320px;
     max-width: 320px;
     width: calc(25% - 20px); /* 한 줄에 4개의 열(column)이 나열되도록 설정 */
-    margin: 0 30px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 0 10px; /* 각 카드의 가로 margin 값을 보정하기 위한 CSS */
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .card:nth-child(4n) {
@@ -301,8 +302,19 @@ ul {
     height: 112px;
 }
 
+.card.comment, .card.recomment {
+    margin: 20px 0;
+}
 
+.card.comment {
+    margin-left: 0px;
+    width: 1370px;
+}
 
+.card.recomment {
+    margin-left: 100px;
+    width: 1300px;
+}
 
 /*플로팅 버튼 수정X========*/
 .floating-button {
@@ -352,9 +364,9 @@ ul {
     background-color: #00000000;
     border: 2px solid #4F5E5A;
 }
-/*.table, .table td, .table th {*/
-/*    text-align: center;*/
-/*}*/
+.table, .table td, .table th {
+    text-align: center;
+}
 
 /*좋아요 스타일*/
 #heart-icon-false {
