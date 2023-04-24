@@ -8,6 +8,7 @@ import com.page6.entity.Board;
 import com.page6.entity.BoardFile;
 import com.page6.entity.Member;
 import com.page6.entity.TagMap;
+import com.page6.exception.InvalidAccessException;
 import com.page6.repository.BoardFileRepository;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.TagMapRepository;
@@ -24,8 +25,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
@@ -52,6 +55,8 @@ public class BoardController {
     @Autowired private BoardFileRepository boardFileRepository;
     @Autowired private BoardRepository boardRepository;
     @Autowired private TagMapRepository tagMapRepository;
+
+    @Autowired private DeletedService deletedService;
 
     // 마이페이지
     @GetMapping("/mypage")
@@ -210,11 +215,14 @@ public class BoardController {
 
     //수정 페이지
     @GetMapping("/edit/{id}")
-    public String boardEditForm(@PathVariable("id") long id, Model model, Principal principal) {
+    public String boardEditForm(@PathVariable("id") long id, Model model, Principal principal, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         String email = principal.getName();
-        if(!boardService.isWriter(id, email)) {
-            return "redirect:/board/" + id;
+        if(!boardService.isWriter(id, email) && !memberService.isAdmin(email)) {
+//            redirectAttributes.addFlashAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+//            throw new InvalidAccessException("잘못된 접근입니다. 이전 페이지로 이동합니다.");
         }
         //Board, Tag, 파일정보 받아오기
         BoardFormDto board = boardService.BoardOneEdit(id);
@@ -231,14 +239,29 @@ public class BoardController {
     public String boardDelete(@PathVariable("id") Long id, Model model, Principal principal) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         String email = principal.getName();
-        if(!boardService.isWriter(id, email)) {
-            return "redirect:/board/" + id;
+        if(!boardService.isWriter(id, email) && !memberService.isAdmin(email)) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
         }
 
+        deletedService.updateDeletedLog(id, email);
         boardService.boardDelete(id);
         return "redirect:/";
     }
 
+    //복구 요청
+    @GetMapping("/undelete/{id}")
+    public String boardUndelete(@PathVariable("id") Long id, Model model, Principal principal) {
+        //TODO: 접근하려는 사람이 작성자인지 확인하기
+        String email = principal.getName();
+        if(!memberService.isAdmin(email)) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+        }
+
+        boardService.boardUndelete(id);
+        return "redirect:/";
+    }
 
     //검색&정렬&페이징
     @GetMapping({"/", "/{page}"})
@@ -302,22 +325,31 @@ public class BoardController {
         board.setComment_cnt(commentService.getCommentCount(id));
         model.addAttribute("board", board);
 
-        //댓글 리스트 받기
-        List<CommentFormDto> list = commentService.getCommentList(id);
-        model.addAttribute("commentList", list);
-
         //좋아요 및 작성자 플래그 받기
         boolean likeFlag = false;
         boolean isWriter = false;
+        boolean isAdmin = false;
         if(principal != null) {
             email = principal.getName();
             likeFlag = heartService.heartFlag(id, email);
             isWriter = boardService.isWriter(id, email);
+            isAdmin = memberService.isAdmin(email);
         }
         model.addAttribute("isWriter", isWriter);
         model.addAttribute("likeFlag", likeFlag);
+        model.addAttribute("isAdmin", isAdmin);
 
         System.out.println("isWriter flag=" + isWriter);
+
+        //삭제글이고 관리자가 아니라면 접근 금지
+        if(!isAdmin && board.deleted) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+        }
+
+        //댓글 리스트 받기
+        List<CommentFormDto> list = commentService.getCommentList(id);
+        model.addAttribute("commentList", list);
 
         //태그 리스트 받기
         List<String> tagList = tagService.getTagList(id);

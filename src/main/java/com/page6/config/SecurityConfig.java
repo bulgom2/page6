@@ -68,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()    //권한설정
                 .mvcMatchers("/", "/members/**", "/board/**", "/auth/**","/oauth/**").permitAll()
-                .mvcMatchers("/board/write", "/write").hasRole("USER")
+                .mvcMatchers("/board/write", "/write").hasAnyRole("ADMIN", "USER")
+                .mvcMatchers("/admin", "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
     }

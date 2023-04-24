@@ -96,14 +96,19 @@
             <!-- 수정 버튼 -->
             <!-- board의 작성자가 로그인한 사용자일 경우 수정 버튼 보여주기 -->
             <button class="btn" style="font-weight:500;"
-                    th:if="${isWriter eq true}"
+                    th:if="${isWriter eq true or isAdmin eq true}"
                     th:onclick="|location.href='@{/edit/{id}(id=${board.id})}'|"
                     type="button">수정</button>
 
             <button class="btn" style="font-weight:500;"
-                    th:if="${isWriter eq true}"
+                    th:if="${board.deleted eq false and (isWriter eq true or isAdmin eq true)}"
                     th:onclick="|location.href='@{/delete/{id}(id=${board.id})}'|"
                     type="button">삭제</button>
+
+            <button class="btn" style="font-weight:500;"
+                    th:if="${board.deleted eq true and isAdmin eq true}"
+                    th:onclick="|location.href='@{/delete/{id}(id=${board.id})}'|"
+                    type="button">복구</button>
 
             <button class="btn" style="font-weight:500;"
                     th:onclick="|location.href='@{/}'|"

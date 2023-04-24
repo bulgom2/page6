@@ -29,7 +29,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findByContentContainingIgnoreCaseAndDeletedFalse(String content, Pageable pageable);
 
     //제목+본문 포함 검색
-    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(String title, String content, Pageable pageable);
+    Page<Board> findByTitleContainingIgnoreCaseAndDeletedFalseOrContentContainingIgnoreCaseAndDeletedFalse(String title, String content, Pageable pageable);
 
     //작성자 포함 검색
     Page<Board> findByMemberNameContainingIgnoreCaseAndDeletedFalse(String keyword, Pageable pageable);
@@ -84,15 +84,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findAllByOrderByViewsDesc(Pageable pageable);
 
 
-    // 삭제 기능
-//    @Modifying
-//    @Query("update Board b set b.deleted = true where b.id = :id")
-//    int updateDeleted(@Param("id") Long id);
-    // 삭제 기능
+    // 삭제 & 복구 기능
     @Modifying
     @Query("update Board b set b.deleted = :deleted where b.id = :id")
     int updateDeleted(@Param("id") Long id, @Param("deleted") boolean deleted);
-
 
     Optional<Board> findByIdAndDeletedFalse(Long id);
 

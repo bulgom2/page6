@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<div layout:fragment="content">
+  <!--  본문 영역 시작  -->
+
+  <script th:inline="javascript">
+    $(document).ready(function(){
+      let errorMessage = [[${message}]];
+      console.log('message = ' + errorMessage);
+
+      if(errorMessage == null) {
+        errorMessage = '이전 페이지로 돌아갑니다.';
+      }
+
+      alert(errorMessage);
+      // window.onunload = function() {
+        history.back();
+      // };
+    });
+  </script>
+
+
+  <!--  본문 영역 끝  -->
+</div>
+</html>
