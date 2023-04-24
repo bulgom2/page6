@@ -89,6 +89,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("update Board b set b.deleted = :deleted where b.id = :id")
     int updateDeleted(@Param("id") Long id, @Param("deleted") boolean deleted);
 
+    // 삭제 되지 않은 글 하나 조회하기
     Optional<Board> findByIdAndDeletedFalse(Long id);
+
+    // 삭제된 글 모두 조회
+    Page<Board> findAllByDeletedTrue(Pageable pageable);
 
 }

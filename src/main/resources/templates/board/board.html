@@ -107,7 +107,7 @@
 
             <button class="btn" style="font-weight:500;"
                     th:if="${board.deleted eq true and isAdmin eq true}"
-                    th:onclick="|location.href='@{/delete/{id}(id=${board.id})}'|"
+                    th:onclick="|location.href='@{/admin/undelete/{id}(id=${board.id})}'|"
                     type="button">복구</button>
 
             <button class="btn" style="font-weight:500;"
