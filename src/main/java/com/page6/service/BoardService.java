@@ -304,4 +304,20 @@ public class BoardService {
     public void boardUndelete(Long id) {
         boardRepository.updateDeleted(id, false);
     }
+
+    //삭제 글 확인하기
+    public Page<BoardDto> getDeletedBoard(Pageable pageable) {
+        Page<Board> myList = boardRepository.findAllByDeletedTrue(pageable);
+
+        List<BoardDto> boardDtoList = myList.getContent()
+                .stream()
+                .map(board -> {
+                    BoardDto boardDto = BoardDto.of(board);
+                    boardDto.setComment_cnt(commentService.getCommentCount(board.getId()));
+                    return boardDto;
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(boardDtoList, pageable, myList.getTotalElements());
+    }
 }

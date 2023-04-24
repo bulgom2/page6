@@ -249,20 +249,6 @@ public class BoardController {
         return "redirect:/";
     }
 
-    //복구 요청
-    @GetMapping("/undelete/{id}")
-    public String boardUndelete(@PathVariable("id") Long id, Model model, Principal principal) {
-        //TODO: 접근하려는 사람이 작성자인지 확인하기
-        String email = principal.getName();
-        if(!memberService.isAdmin(email)) {
-            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
-            return "exception/errorpage";
-        }
-
-        boardService.boardUndelete(id);
-        return "redirect:/";
-    }
-
     //검색&정렬&페이징
     @GetMapping({"/", "/{page}"})
     public String searchList(Model model,
