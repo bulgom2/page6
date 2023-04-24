@@ -11,7 +11,6 @@ public class MemberInfoDto {
     private Long id;        // 멤버 인덱스
     private String name;    // 닉네임
     private String email;   // 이메일
-    private String number;   // 폰 번호
     private Role role;
 
     public static MemberInfoDto of(Member member) {
@@ -19,7 +18,6 @@ public class MemberInfoDto {
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
-                .number(member.getNumber())
                 .role(member.getRole())
                 .build();
     }
