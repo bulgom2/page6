@@ -51,6 +51,9 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<TagMap> tagMaps = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board")
+    private List<DeleteLog> deletedList = new ArrayList<>();
+
     @Builder
     public Board(String title, String content) {
         this.title = title;

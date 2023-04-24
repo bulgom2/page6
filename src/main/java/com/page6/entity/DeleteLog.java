@@ -1,6 +1,5 @@
 package com.page6.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +9,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="DELETED_TB")
+@Table(name="DELETE_TB")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Deleted {
+public class DeleteLog {
     @Id
     @Column(name="DELETED_PK", nullable = false, updatable = false, insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +34,7 @@ public class Deleted {
     @Column(name="DELETED_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
 
-    public Deleted(Board board, Member member, boolean flag) {
+    public DeleteLog(Board board, Member member, boolean flag) {
         this.board = board;
         this.member = member;
         this.flag = flag;

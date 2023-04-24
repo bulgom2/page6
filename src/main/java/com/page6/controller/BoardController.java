@@ -6,20 +6,15 @@ import com.page6.dto.CommentFormDto;
 import com.page6.entity.Board;
 
 import com.page6.entity.BoardFile;
-import com.page6.entity.Member;
 import com.page6.entity.TagMap;
-import com.page6.exception.InvalidAccessException;
 import com.page6.repository.BoardFileRepository;
 import com.page6.repository.BoardRepository;
 import com.page6.repository.TagMapRepository;
-
-import com.page6.entity.Comment;
 
 import com.page6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,13 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedHashSet;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.data.domain.Sort.by;
@@ -56,7 +49,7 @@ public class BoardController {
     @Autowired private BoardRepository boardRepository;
     @Autowired private TagMapRepository tagMapRepository;
 
-    @Autowired private DeletedService deletedService;
+    @Autowired private DeleteLogService deletedService;
 
     // 마이페이지
     @GetMapping("/mypage")
