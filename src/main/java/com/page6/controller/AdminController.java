@@ -31,7 +31,7 @@ public class AdminController {
 
 
     //휴지통 기능
-    @GetMapping({"/", "/{page}"})
+    @GetMapping({"/recyclebin", "/recyclebin/{page}"})
     public String recycleList(Model model, Principal principal, @RequestParam(defaultValue = "1") int page) {
         //관리자가 아니면 접근 금지
         String email = principal.getName();
@@ -128,7 +128,7 @@ public class AdminController {
     //복구 요청
     @GetMapping("/undelete/{id}")
     public String boardUndelete(@PathVariable("id") Long id, Model model, Principal principal) {
-        //TODO: 접근하려는 사람이 작성자인지 확인하기
+        //접근하려는 사람이 관리자인지 확인하기
         String email = principal.getName();
         if(!memberService.isAdmin(email)) {
             model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");

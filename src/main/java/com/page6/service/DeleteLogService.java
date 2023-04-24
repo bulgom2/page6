@@ -35,14 +35,11 @@ public class DeleteLogService {
     public Page<DeleteLogDto> getDeletedBoard(Pageable pageable) {
         Page<DeleteLog> myList = deleteLogRepository.findAll(pageable);
 
-        List<DeleteLogDto> dtoList = myList.getContent()
-                .stream()
-                .map(board -> {
-                    DeleteLogDto dto = DeleteLogDto.of(board);
-                    return dto;
-                })
+        List<DeleteLogDto> dtoList = myList.stream()
+                .map(DeleteLogDto::of)
                 .collect(Collectors.toList());
 
         return new PageImpl<>(dtoList, pageable, myList.getTotalElements());
     }
+
 }

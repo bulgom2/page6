@@ -29,6 +29,7 @@ public class DeleteLogDto {
         return DeleteLogDto.builder()
                 .id(log.getId())
                 .title(log.getBoard().getTitle())
+                .member(log.getMember().getName())
                 .flag(log.isFlag() ? "복구" : "삭제")
                 .regdate(log.getRegdate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
