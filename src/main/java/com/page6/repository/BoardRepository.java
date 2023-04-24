@@ -84,15 +84,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findAllByOrderByViewsDesc(Pageable pageable);
 
 
-    // 삭제 기능
-//    @Modifying
-//    @Query("update Board b set b.deleted = true where b.id = :id")
-//    int updateDeleted(@Param("id") Long id);
-    // 삭제 기능
+    // 삭제 & 복구 기능
     @Modifying
     @Query("update Board b set b.deleted = :deleted where b.id = :id")
     int updateDeleted(@Param("id") Long id, @Param("deleted") boolean deleted);
-
 
     Optional<Board> findByIdAndDeletedFalse(Long id);
 

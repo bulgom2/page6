@@ -249,6 +249,19 @@ public class BoardController {
         return "redirect:/";
     }
 
+    //복구 요청
+    @GetMapping("/undelete/{id}")
+    public String boardUndelete(@PathVariable("id") Long id, Model model, Principal principal) {
+        //TODO: 접근하려는 사람이 작성자인지 확인하기
+        String email = principal.getName();
+        if(!memberService.isAdmin(email)) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+        }
+
+        boardService.boardUndelete(id);
+        return "redirect:/";
+    }
 
     //검색&정렬&페이징
     @GetMapping({"/", "/{page}"})
@@ -312,15 +325,6 @@ public class BoardController {
         board.setComment_cnt(commentService.getCommentCount(id));
         model.addAttribute("board", board);
 
-        if(board.deleted) {
-            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
-            return "exception/errorpage";
-        }
-
-        //댓글 리스트 받기
-        List<CommentFormDto> list = commentService.getCommentList(id);
-        model.addAttribute("commentList", list);
-
         //좋아요 및 작성자 플래그 받기
         boolean likeFlag = false;
         boolean isWriter = false;
@@ -336,6 +340,16 @@ public class BoardController {
         model.addAttribute("isAdmin", isAdmin);
 
         System.out.println("isWriter flag=" + isWriter);
+
+        //삭제글이고 관리자가 아니라면 접근 금지
+        if(!isAdmin && board.deleted) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+        }
+
+        //댓글 리스트 받기
+        List<CommentFormDto> list = commentService.getCommentList(id);
+        model.addAttribute("commentList", list);
 
         //태그 리스트 받기
         List<String> tagList = tagService.getTagList(id);

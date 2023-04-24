@@ -298,4 +298,10 @@ public class BoardService {
     public void boardDelete(Long id) {
         boardRepository.updateDeleted(id, true);
     }
+
+    //글 복구하기
+    @Transactional
+    public void boardUndelete(Long id) {
+        boardRepository.updateDeleted(id, false);
+    }
 }
