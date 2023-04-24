@@ -9,32 +9,33 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="member")
+@Table(name="member_tb")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) //연결된 db의 넘버링 전략 따라감
-    @Column(name = "member_id")
+    @Column(name = "member_pk", nullable = false)
     private Long id;    // 시퀀스, auto_increment
 
+    @Column(name="member_name", nullable = false)
     private String name;              // 닉네임
 
+    @Column(name="member_password", nullable = true)
     private String password;          // 비밀번호
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;             // 이메일
 
-
-    private String number;
-
-
     @Enumerated(EnumType.STRING)
+    @Column(name="member_role")
     private Role role;
 
+    @Column(name="member_oauth")
     private String oauth;
 
 
@@ -51,10 +52,14 @@ public class Member {
 
     }
     @Builder
-    public Member(String name, String email) {
+    public Member(String name, String email, String oauth, String password, Role role) {
 
         this.name = name;
         this.email = email;
+        this.oauth = oauth;
+        this.password= password;
+        this.role = role;
 
     }
+
 }
