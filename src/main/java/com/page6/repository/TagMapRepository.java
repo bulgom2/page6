@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface TagMapRepository extends JpaRepository<TagMap, Long> {
     List<TagMap> findAllByTag(Tag tag);
 
+    List<TagMap> findAllByTagName(String tagName);
+
     List<TagMap> findAllByBoardId(Long boardId);
 
     //특정 게시물에 특정 태그가 있는지 확인하는 메소드
