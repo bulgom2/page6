@@ -121,7 +121,7 @@ public class BoardService {
                     boardPage = boardRepository.findByContentContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
                     break;
                 case "titleContent":
-                    boardPage = boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
+                    boardPage = boardRepository.findByTitleContainingIgnoreCaseAndDeletedFalseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
                     break;
                 case "member":
                     boardPage = boardRepository.findByMemberNameContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
@@ -182,7 +182,7 @@ public class BoardService {
     //제목+본문 포함 검색
     @Transactional
     public Page<Board> searchByTitleContentContaing(String keyword, Pageable pageable) {
-        return boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
+        return boardRepository.findByTitleContainingIgnoreCaseAndDeletedFalseOrContentContainingIgnoreCaseAndDeletedFalse(keyword, keyword, pageable);
     }
 
     //작성자 포함 검색

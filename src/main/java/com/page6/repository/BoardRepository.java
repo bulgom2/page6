@@ -29,7 +29,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findByContentContainingIgnoreCaseAndDeletedFalse(String content, Pageable pageable);
 
     //제목+본문 포함 검색
-    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndDeletedFalse(String title, String content, Pageable pageable);
+    Page<Board> findByTitleContainingIgnoreCaseAndDeletedFalseOrContentContainingIgnoreCaseAndDeletedFalse(String title, String content, Pageable pageable);
 
     //작성자 포함 검색
     Page<Board> findByMemberNameContainingIgnoreCaseAndDeletedFalse(String keyword, Pageable pageable);

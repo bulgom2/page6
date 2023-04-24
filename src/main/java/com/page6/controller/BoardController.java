@@ -309,6 +309,11 @@ public class BoardController {
         board.setComment_cnt(commentService.getCommentCount(id));
         model.addAttribute("board", board);
 
+        if(board.deleted) {
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+        }
+
         //댓글 리스트 받기
         List<CommentFormDto> list = commentService.getCommentList(id);
         model.addAttribute("commentList", list);

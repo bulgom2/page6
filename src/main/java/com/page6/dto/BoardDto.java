@@ -31,7 +31,7 @@ public class BoardDto {
     
     public Long comment_cnt;    //댓글 개수
 
-//    public boolean delete_flag;      // 삭제여부
+    public boolean deleted;      // 삭제여부
 
     public static BoardDto of(Board board) {
 
@@ -44,6 +44,7 @@ public class BoardDto {
                 .views(board.getViews())
                 .regdate(board.getRegdate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .dateBefore(dateBefore(board.getRegdate()))
+                .deleted(board.isDeleted())
                 .build();
     }
 
