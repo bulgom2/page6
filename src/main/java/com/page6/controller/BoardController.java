@@ -218,8 +218,9 @@ public class BoardController {
         String email = principal.getName();
         if(!boardService.isWriter(id, email)) {
 //            redirectAttributes.addFlashAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
-//            return "redirect:/errorpage";
-            throw new InvalidAccessException("잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
+//            throw new InvalidAccessException("잘못된 접근입니다. 이전 페이지로 이동합니다.");
         }
         //Board, Tag, 파일정보 받아오기
         BoardFormDto board = boardService.BoardOneEdit(id);
@@ -237,7 +238,8 @@ public class BoardController {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         String email = principal.getName();
         if(!boardService.isWriter(id, email)) {
-            return "redirect:/board/" + id;
+            model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
+            return "exception/errorpage";
         }
 
         boardService.boardDelete(id);
