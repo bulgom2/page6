@@ -1,5 +1,6 @@
 package com.page6.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Deleted {
     @Id
     @Column(name="DELETED_PK", nullable = false, updatable = false, insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;        //삭제 인덱스
+    private Long id;        //삭제 인덱스
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOARD_FK")
@@ -31,4 +32,8 @@ public class Deleted {
     @Column(name="DELETED_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
 
+    public Deleted(Board board, Member member) {
+        this.board = board;
+        this.member = member;
+    }
 }

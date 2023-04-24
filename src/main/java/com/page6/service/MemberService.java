@@ -1,6 +1,7 @@
 package com.page6.service;
 
 import com.page6.entity.Member;
+import com.page6.members.Role;
 import com.page6.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,20 @@ public class MemberService implements UserDetailsService {
 
     }
 
+
+    //로그인 인물이 admin인지 판정
+    public boolean isAdmin(String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            // 해당 이메일을 가진 멤버가 존재하지 않는 경우 처리
+            return false;
+        }
+        Role role = member.getRole();
+        if (Role.ADMIN.equals(role))
+            return true;    // 해당 멤버가 관리자인 경우 처리
+        else
+            return false;   // 해당 멤버가 일반 사용자인 경우 처리
+    }
 
 
 

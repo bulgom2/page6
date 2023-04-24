@@ -56,6 +56,8 @@ public class BoardController {
     @Autowired private BoardRepository boardRepository;
     @Autowired private TagMapRepository tagMapRepository;
 
+    @Autowired private DeletedService deletedService;
+
     // 마이페이지
     @GetMapping("/mypage")
     public String myPage(Model model, Principal principal) {
@@ -216,7 +218,7 @@ public class BoardController {
     public String boardEditForm(@PathVariable("id") long id, Model model, Principal principal, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         String email = principal.getName();
-        if(!boardService.isWriter(id, email)) {
+        if(!boardService.isWriter(id, email) && !memberService.isAdmin(email)) {
 //            redirectAttributes.addFlashAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
             model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
             return "exception/errorpage";
@@ -237,11 +239,12 @@ public class BoardController {
     public String boardDelete(@PathVariable("id") Long id, Model model, Principal principal) {
         //TODO: 접근하려는 사람이 작성자인지 확인하기
         String email = principal.getName();
-        if(!boardService.isWriter(id, email)) {
+        if(!boardService.isWriter(id, email) && !memberService.isAdmin(email)) {
             model.addAttribute("message", "잘못된 접근입니다. 이전 페이지로 이동합니다.");
             return "exception/errorpage";
         }
 
+        deletedService.updateDeletedLog(id, email);
         boardService.boardDelete(id);
         return "redirect:/";
     }
