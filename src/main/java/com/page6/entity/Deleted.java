@@ -28,6 +28,9 @@ public class Deleted {
     @JoinColumn(name = "MEMBER_FK")
     private Member member;  //삭제자 인덱스
 
+    @Column(name="DELETED_FL", columnDefinition = "bit(1) default 0")
+    private boolean flag;   //삭제인지 복구인지 여부. 삭제면 flase, 복구면 true
+
     @CreationTimestamp
     @Column(name="DELETED_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
