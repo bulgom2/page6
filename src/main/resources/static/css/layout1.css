@@ -253,11 +253,17 @@ ul {
 
 
 .header-content {
+    position: relative;
     width: 100%;
-    line-height: 120px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /*line-height: 120px;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+}
+
+.main-logo, .login-out {
+    position: absolute;
+    top: 0;
 }
 
 .paging-btn {
@@ -271,10 +277,18 @@ ul {
 }
 
 .login-btn, .login-out {
+    right: 0;
     width: 150px;
     text-align: right;
     vertical-align: middle;
     font-weight: bolder;
+}
+
+.header-center {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 
 #mypage-img {
@@ -287,9 +301,12 @@ ul {
 #logo-img {
     width: 200px;
     height: 112px;
-    display: table-cell;
-    vertical-align: middle;
+    left: 0;
+    /*display: table-cell;*/
+    /*vertical-align: middle;*/
 }
+
+
 
 /*플로팅 버튼 수정X========*/
 .floating-button {
