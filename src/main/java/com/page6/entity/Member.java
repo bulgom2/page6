@@ -53,11 +53,12 @@ public class Member {
 
     }
     @Builder
-    public Member(String name, String email, String oauth, Role role) {
+    public Member(String name, String email, String oauth, String password, Role role) {
 
         this.name = name;
         this.email = email;
         this.oauth = oauth;
+        this.password= password;
         this.role = role;
 
     }

@@ -179,7 +179,7 @@ public class MemberController {
                 .name(nickname)
                 .email(email)
                 .oauth("kakao")
-                //.password(coskey)//패스워드키 넣어주기
+                .password("coskey")//패스워드키 넣어주기
                 .role(Role.USER)
                 .build();
 
