@@ -14,8 +14,8 @@
     <table class="table" style="table-layout: fixed">
       <thead>
       <tr>
-        <th style="width: 5%;">게시글 번호</th>
-        <th style="width: 40%;">제목</th>
+        <th style="width: 8%;">게시글 번호</th>
+        <th style="width: 20%;">제목</th>
         <th style="width: 10%;">작성자</th>
         <th style="width: 10%;">조회수</th>
         <th style="width: 10%;">좋아요</th>
@@ -41,14 +41,14 @@
   <!-- 페이징 버튼 -->
   <div class="paging-btn" th:if="${not recycleList.isEmpty()}">
     <div class="blank-space"></div>
-    <a th:if="${nowPage > 5}" th:href="@{/admin/(page=0)}">처음</a>
+    <a th:if="${nowPage > 5}" th:href="@{/admin/recyclebin/(page=0)}">처음</a>
     <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-      <a th:if="${page != nowPage}" th:href="@{/admin/(page=${page})}" th:text="${page}"></a>
+      <a th:if="${page != nowPage}" th:href="@{/admin/recyclebin/(page=${page})}" th:text="${page}"></a>
       <!--                <a th:if="${page != nowPage}" th:href="@{/search(page=${page})}" th:text="${page}"></a>-->
       <strong th:if="${page==nowPage}" th:text ="${page}" style="color:#4F5E5A; font-weight: bolder; font-size: larger; margin-bottom: 15px;"></strong>
     </th:block>
     <!--            <a th:if="${nowPage < lastPage - 4}" th:href="'/?page='+${lastPage}">마지막</a>-->
-    <a th:if="${nowPage < lastPage - 5}" th:href="@{/admin/(page=${lastPage})}">마지막</a>
+    <a th:if="${nowPage < lastPage - 5}" th:href="@{/admin/recyclebin/(page=${lastPage})}">마지막</a>
     <!--            <a th:if="${nowPage < lastPage}" th:href="@{/search(page=${lastPage})}">마지막</a>-->
     <div class="blank-space"></div>
   </div>
