@@ -7,7 +7,7 @@
 
   <div class="nickname-container">
     <div class="nickname">
-      <h3 style="color:#4F5E5A;">휴지통</h3>
+      <h3 style="color:#4F5E5A;">삭제/복구 이력</h3>
     </div>
   </div>
   <div th:if="${historyList} == null">
@@ -26,8 +26,8 @@
       </thead>
       <tbody>
       <tr th:each="board : ${historyList}">
-        <td><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.id}">글 ID</a></td>
-        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">제목</a></td>
+        <td><a th:text="${board.id}">글 ID</a></td>
+        <td style="width: 50%;"><a th:text="${board.title}">제목</a></td>
         <!--        <td style="width: 50%;"><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title + ' [' + board.comment_cnt + ']'}">제목</a></td>-->
                 <td th:text="${board.member}">작성자</td>
         <td th:text="${board.flag}">삭제/복구</td>
