@@ -11,6 +11,6 @@ public interface DeleteLogRepository extends JpaRepository<DeleteLog, Long>  {
 
     //삭제글 이력
     @Override
-    //Page<DeleteLog> findAll(Pageable pageable);
-    List<DeleteLog> findAll();
+    Page<DeleteLog> findAll(Pageable pageable);
+//    List<DeleteLog> findAll();
 }
