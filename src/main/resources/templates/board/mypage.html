@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <div layout:fragment="content">
@@ -26,8 +27,8 @@
     </div>
     <div class="mylist">
         <div class="blank-space" style="width:65px;"></div>
-        <p><a href="/admin/recyclebin" style="color:#4F5E5A; font-size:50px; font-weight:bolder;">삭제된 글</a></p>
-        <p><a href="/admin/history" style="color:#4F5E5A; font-size:50px; font-weight:bolder;">삭제/복구 이력</a></p>
+        <p><a href="/admin/recyclebin" style="color:#4F5E5A; font-size:50px; font-weight:bolder;" sec:authorize="hasRole('ADMIN')">삭제된 글</a></p>
+        <p><a href="/admin/history" style="color:#4F5E5A; font-size:50px; font-weight:bolder;" sec:authorize="hasRole('ADMIN')">삭제/복구 이력</a></p>
         <div class="blank-space" style="width:65px;"></div>
     </div>
 
