@@ -1,6 +1,5 @@
 package com.page6.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +9,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="DELETED_TB")
+@Table(name="DELETE_TB")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Deleted {
+public class DeleteLog {
     @Id
     @Column(name="DELETED_PK", nullable = false, updatable = false, insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +27,16 @@ public class Deleted {
     @JoinColumn(name = "MEMBER_FK")
     private Member member;  //삭제자 인덱스
 
+    @Column(name="DELETED_FL", columnDefinition = "bit(1) default 0")
+    private boolean flag;   //삭제인지 복구인지 여부. 삭제면 flase, 복구면 true
+
     @CreationTimestamp
     @Column(name="DELETED_REGDT", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
 
-    public Deleted(Board board, Member member) {
+    public DeleteLog(Board board, Member member, boolean flag) {
         this.board = board;
         this.member = member;
+        this.flag = flag;
     }
 }
