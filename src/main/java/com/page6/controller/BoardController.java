@@ -12,6 +12,7 @@ import com.page6.repository.BoardRepository;
 import com.page6.repository.TagMapRepository;
 
 import com.page6.service.*;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ import static org.springframework.data.domain.Sort.by;
 //@RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/")
+@Log4j2
 public class BoardController {
 
     @Autowired private BoardService boardService;
@@ -358,6 +360,8 @@ public class BoardController {
 
         // ckeditor 에서 파일을 보낼 때 upload : [파일] 형식으로 해서 넘어오기 때문에 upload라는 키의 밸류를 받아서 uploadFile에 저장함
         MultipartFile uploadFile = request.getFile("upload");
+
+        log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+uploadFile);
         Long imgId = boardFileService.saveFile(uploadFile, 1L);
         String uploadPath = boardFileRepository.findById(imgId).get().getFilePath();
 

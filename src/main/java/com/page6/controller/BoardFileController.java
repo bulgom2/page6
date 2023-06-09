@@ -40,13 +40,20 @@ public class BoardFileController {
         Optional<BoardFile> optionalBoardFile = boardFileRepository.findById(id);
         BoardFile boardFile = optionalBoardFile.orElseThrow(() -> new FileNotFoundException("File not found"));
 
-        Resource resource = new UrlResource(boardFile.getFilePath());
-
+//        Resource resource = new UrlResource(boardFile.getFilePath());
+//
         String contentType = null;
+//        try {
+//            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+//        } catch (IOException e) {
+//            logger.info("Could not determine file type.");
+//        }
+
+        Resource resource;
         try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException e) {
-            logger.info("Could not determine file type.");
+            resource = new UrlResource("file:" + boardFile.getFilePath());
+        } catch (MalformedURLException e) {
+            throw new FileNotFoundException("File not found");
         }
 
         if(contentType == null) {

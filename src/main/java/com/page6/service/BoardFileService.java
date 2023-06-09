@@ -50,11 +50,13 @@ public class BoardFileService {
         System.out.println("newFileName=" + newFileName);
 
         // 파일 불러올 때 사용할 파일 경로
-        String savePath = uploadPath + "/" +newFileName;
+//        String savePath = uploadPath + "/" +newFileName;
+        String savePath = "C:\\page6\\src\\main\\resources\\static\\images";
+        File saveFile = new File(savePath, newFileName);
         System.out.println("savePath=" + savePath);
 
         // 파일 업로드
-        uploadFile.transferTo(new File(savePath));
+        uploadFile.transferTo(saveFile);
 
         // 파일 엔티티 생성
         BoardFile file = new BoardFile();
