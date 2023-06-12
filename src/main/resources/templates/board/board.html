@@ -74,8 +74,8 @@
 <!--        </ul>-->
         <ul>
             <li th:each="file : ${fileList}">
-                <a th:href="@{'/board/file/' + ${file.id}}">
-                    <img th:src="@{'file:///' + ${file.filePath}}" width="100" height="100" alt="file">
+                <a th:href="@{'/images/' + ${file.fileName}}" th:download="${file.fileName}">
+                    <img th:src="@{'/images/' + ${file.fileName}}" width="100" height="100" alt="file">
                     <span th:text="${file.oriFileName}"></span>
                 </a>
             </li>
